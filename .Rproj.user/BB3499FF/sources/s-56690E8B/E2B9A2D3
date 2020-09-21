@@ -1,0 +1,24 @@
+{
+    "id": "E2B9A2D3",
+    "path": "~/GitHub/mlr3extralearners/R/learner_pycox_surv_pchazard.R",
+    "project_path": null,
+    "type": "r_source",
+    "hash": "2568197004",
+    "contents": "",
+    "dirty": false,
+    "created": 1600617083610.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "cursorPosition": "72,32",
+        "scrollLine": "97"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1598010856,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1598010856,
+    "read_only": false,
+    "read_only_alternatives": []
+}

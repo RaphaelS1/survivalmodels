@@ -1,0 +1,21 @@
+{
+    "id": "43BC4C0F",
+    "path": "~/GitHub/mlr3extralearners/R/learner_pycox_surv_loghaz.R",
+    "project_path": null,
+    "type": "r_source",
+    "hash": "3831984642",
+    "contents": "",
+    "dirty": false,
+    "created": 1600617083302.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {},
+    "folds": "",
+    "lastKnownWriteTime": 1598010908,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1598010908,
+    "read_only": false,
+    "read_only_alternatives": []
+}
