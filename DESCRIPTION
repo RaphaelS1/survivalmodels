@@ -19,6 +19,8 @@ Suggests:
   reticulate,
   survival,
   testthat
+Remotes:
+  alan-turing-institute/distr6
 License: MIT + file LICENSE
 URL: https://github.com/RaphaelS1/survivalmodels/
 BugReports: https://github.com/RaphaelS1/survivalmodels/issues
