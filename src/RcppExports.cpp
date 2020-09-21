@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // C_Akritas
 NumericVector C_Akritas(NumericMatrix truth, NumericVector times, NumericVector unique_times, NumericVector FX_train, NumericVector FX_predict, double lambda);
-RcppExport SEXP _mlr3extralearners_C_Akritas(SEXP truthSEXP, SEXP timesSEXP, SEXP unique_timesSEXP, SEXP FX_trainSEXP, SEXP FX_predictSEXP, SEXP lambdaSEXP) {
+RcppExport SEXP _survivalmodels_C_Akritas(SEXP truthSEXP, SEXP timesSEXP, SEXP unique_timesSEXP, SEXP FX_trainSEXP, SEXP FX_predictSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,11 +23,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_mlr3extralearners_C_Akritas", (DL_FUNC) &_mlr3extralearners_C_Akritas, 6},
+    {"_survivalmodels_C_Akritas", (DL_FUNC) &_survivalmodels_C_Akritas, 6},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_mlr3extralearners(DllInfo *dll) {
+RcppExport void R_init_survivalmodels(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

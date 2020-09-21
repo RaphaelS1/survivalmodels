@@ -8,12 +8,17 @@ Authors@R:
              email = "raphael.sonabend.15@ucl.ac.uk",
              comment = c(ORCID = "0000-0001-9225-4654")))
 Description: Implements classical and machine learning models for survival analysis.
-
 Imports:
   Rcpp (>= 1.0.5)
 Suggests:
+  checkmate,
   distr6 (>= 1.4.3),
-  survival
+  keras,
+  knitr,
+  pseudo,
+  reticulate,
+  survival,
+  testthat
 License: MIT + file LICENSE
 URL: https://github.com/RaphaelS1/survivalmodels/
 BugReports: https://github.com/RaphaelS1/survivalmodels/issues
@@ -23,3 +28,4 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 LinkingTo:
    Rcpp
+RoxygenNote: 7.1.0

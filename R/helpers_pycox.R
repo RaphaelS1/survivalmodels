@@ -1,11 +1,12 @@
 #' @title Prepare Data for Pycox Model Training
 #' @description Utility function to prepare data for training in a Pycox model.
 #' Generally used internally only.
-#' @param task [mlr3proba::TaskSurv] \cr Survival task for extracting data.
+#' @param x_train `(matrix(1))` \cr Training covariates.
+#' @param y_train `(matrix(1))` \cr Training outcomes.
 #' @param frac `(numeric(1))`\cr Fraction of data to use for validation dataset, default is `0`
 #' and therefore no separate validation dataset.
 #' @param standardize_time `(logical(1))`\cr If `TRUE`, the time outcome be standardized. For use
-#' with [LearnerSurvCoxtime].
+#' with [coxtime].
 #' @param log_duration `(logical(1))`\cr If `TRUE` and `standardize_time` is `TRUE` then time
 #' variable is log transformed.
 #' @param with_mean `(logical(1))`\cr If `TRUE` (default) and `standardize_time` is `TRUE` then time
@@ -13,9 +14,9 @@
 #' @param with_std `(logical(1))`\cr If `TRUE` (default) and `standardize_time` is `TRUE` then time
 #' variable is scaled to unit variance.
 #' @param standardize_time `(logical(1))`\cr If `TRUE`, the time outcome be standardized. For use
-#' with [LearnerSurvCoxtime].
+#' with [coxtime].
 #' @param discretise `(logical(1))`\cr If `TRUE` then time is discretised. For use with the models
-#' [LearnerSurvDeephit], [LearnerSurvPCHazard], and [LearnerSurvLogisticHazard].
+#' [deephit], [pchazard], and [loghaz].
 #' @param cuts `(integer(1))`\cr If `discretise` is `TRUE` then determines number of cut-points
 #' for discretisation.
 #' @param cutpoints `(numeric())` \cr Alternative to `cuts` if `discretise` is true, provide
@@ -39,7 +40,7 @@ prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FAL
   conv = ifelse(discretise, "int64", "float32")
 
   if (frac) {
-    val = sample(seq_len(task$nrow), task$nrow * frac)
+    val = sample(seq_len(nrow(x_train)), nrow(x_train) * frac)
     x_val = x_train[val, ]
     y_val = y_train[val, ]
     x_train = x_train[-val, ]
@@ -50,52 +51,60 @@ prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FAL
 
   x_train = reticulate::r_to_py(x_train)$values$astype("float32")
   y_train = reticulate::tuple(
-    y_train[task$target_names[1L]]$values$astype(conv),
-    y_train[task$target_names[2L]]$values$astype(conv))
+    y_train[, 1L]$values$astype(conv),
+    y_train[, 2L]$values$astype(conv))
 
 
   if (frac) {
     x_val = reticulate::r_to_py(x_val)$values$astype("float32")
     y_val = reticulate::r_to_py(y_val)
     y_val = reticulate::tuple(
-      y_val[task$target_names[1L]]$values$astype(conv),
-      y_val[task$target_names[2L]]$values$astype(conv))
+      y_val[, 1L]$values$astype(conv),
+      y_val[, 2L]$values$astype(conv))
   }
 
   ret = list(x_train = x_train, y_train = y_train)
 
   if (standardize_time || discretise) {
     if (standardize_time) {
-      labtrans = mlr3misc::invoke(
+      labtrans = do.call(
         pycox$models$CoxTime$label_transform,
-        log_duration = log_duration,
-        with_mean = with_mean,
-        with_std = with_std
+        list(
+          log_duration = log_duration,
+          with_mean = with_mean,
+          with_std = with_std
+        )
       )
     } else {
       if (!is.null(cutpoints)) {
         cuts = cutpoints
       }
       if (model == "DeepHit") {
-        labtrans = mlr3misc::invoke(
+        labtrans = do.call(
           pycox$models$DeepHitSingle$label_transform,
-          cuts = as.integer(cuts),
-          scheme = match.arg(scheme),
-          min_ = as.integer(cut_min)
+          list(
+            cuts = as.integer(cuts),
+            scheme = match.arg(scheme),
+            min_ = as.integer(cut_min)
+          )
         )
       } else if (model == "LH") {
-        labtrans = mlr3misc::invoke(
+        labtrans = do.call(
           pycox$models$LogisticHazard$label_transform,
-          cuts = as.integer(cuts),
-          scheme = match.arg(scheme),
-          min_ = as.integer(cut_min)
+          list(
+            cuts = as.integer(cuts),
+            scheme = match.arg(scheme),
+            min_ = as.integer(cut_min)
+          )
         )
       } else if (model == "PCH") {
-        labtrans = mlr3misc::invoke(
+        labtrans = do.call(
           pycox$models$PCHazard$label_transform,
-          cuts = as.integer(cuts),
-          scheme = match.arg(scheme),
-          min_ = as.integer(cut_min)
+          list(
+            cuts = as.integer(cuts),
+            scheme = match.arg(scheme),
+            min_ = as.integer(cut_min)
+          )
         )
       }
     }
@@ -396,7 +405,7 @@ get_pycox_init = function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, val
 
 #' @title Get Torchtuples Callbacks
 #' @description Helper function to return torchtuples callbacks from `torchtuples.callbacks`.
-#' @param early_stoppping `(logical(1))` \cr
+#' @param early_stopping `(logical(1))` \cr
 #' If `TRUE` then constructs `torchtuples.callbacks,EarlyStopping`.
 #' @param best_weights `(logical(1))`\cr
 #' If `TRUE` then returns `torchtuples.callbacks.BestWeights`. Ignored if `early_stopping`
@@ -409,6 +418,9 @@ get_pycox_init = function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, val
 #' @export
 get_pycox_callbacks = function(early_stopping = FALSE, best_weights = FALSE,
                                min_delta = 0, patience = 10L) {
+
+  torchtuples = reticulate::import("torchtuples")
+
   if (early_stopping) {
     callbacks = reticulate::r_to_py(list(
       torchtuples$callbacks$EarlyStopping(min_delta = min_delta, patience = as.integer(patience))
@@ -491,17 +503,21 @@ build_pytorch_net = function(n_in, n_out, nodes = c(32, 32), activation = "relu"
 
   if (length(activation) == 1) {
     checkmate::assert_character(activation)
-    activation = rep(list(mlr3misc::invoke(get_pycox_activation,
-                                           activation = activation,
-                                           construct = TRUE,
-                                           .args = act_pars)), lng)
+    activation = rep(list(do.call(
+      get_pycox_activation,
+      c(list(
+        activation = activation,
+        construct = TRUE
+      ), act_pars))), lng)
   } else {
     checkmate::assert_character(activation, len = lng)
     activation = lapply(activation, function(x) {
-      mlr3misc::invoke(get_pycox_activation,
-                       activation = x,
-                       construct = TRUE,
-                       .args = act_pars)
+      do.call(
+      get_pycox_activation,
+      c(list(
+        activation = x,
+        construct = TRUE), act_pars)
+      )
     })
   }
 
@@ -520,9 +536,8 @@ build_pytorch_net = function(n_in, n_out, nodes = c(32, 32), activation = "relu"
     net$add_module(paste0("A", id), act)
     # batch normalisation
     if (batch_norm) {
-      net$add_module(paste0("BN", id), mlr3misc::invoke(nn$BatchNorm1d,
-                                                        num_features = num_out,
-                                                        .args = batch_pars))
+      net$add_module(paste0("BN", id), do.call(nn$BatchNorm1d, c(list(num_features = num_out),
+                                                                 batch_pars)))
     }
     # dropout layer
     if (!is.null(dropout)) {
@@ -546,7 +561,7 @@ build_pytorch_net = function(n_in, n_out, nodes = c(32, 32), activation = "relu"
     }
   }
 
-  init = mlr3misc::invoke(get_pycox_init, init = init, .args = init_pars)
+  init = do.call(get_pycox_init, c(list(init = init), init_pars))
   reticulate::py_run_string(
     paste0(
       "import torch

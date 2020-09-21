@@ -21,9 +21,7 @@ clean_data = function(formula, data, time_variable, status_variable,
     }
   } else if (!is.null(formula)) {
     f <- stats::as.formula(formula, env = data)
-    mlr3misc::with_package("survival", {
-      y <- eval(f[[2]], envir = data)
-    })
+    y <- eval(f[[2]], envir = data)
 
     if (deparse(f[[3]]) == ".") {
       if (is.null(data)) {

@@ -75,26 +75,29 @@ build_keras_net = function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
                            batch_pars = list()) {
 
   add_module = function(net, num_in, num_out) {
-    mlr3misc::invoke(
+    do.call(
       keras::layer_dense,
-      object = net,
-      units = num_out,
-      input_shape = num_in,
-      .args = layer_pars
+      c(list(
+        object = net,
+        units = num_out,
+        input_shape = num_in),
+        layer_pars)
     )
 
-    mlr3misc::invoke(
+    do.call(
       keras::layer_activation,
-      object = net,
-      activation = activation,
-      .args = act_pars
+      c(list(
+        object = net,
+        activation = activation),
+        act_pars)
     )
 
     if (batch_norm) {
-      mlr3misc::invoke(
+      do.call(
         keras::layer_batch_normalization,
-        object = net,
-        .args = batch_pars
+        c(list(
+          object = net),
+          batch_pars)
       )
     }
 

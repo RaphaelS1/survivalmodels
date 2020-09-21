@@ -1,3 +1,5 @@
+library(survival)
+
 test_that("akritas", {
   expect_error(akritas(Surv(time, status) ~ .))
   expect_silent(akritas(Surv(time, status) ~ ., data = rats[1:10, ]))

@@ -39,6 +39,8 @@
 #' Passed to `pycox.models.Coxtime.fit`, elements in each batch.
 #' @param epochs `(integer(1))`\cr
 #' Passed to `pycox.models.Coxtime.fit`, number of epochs.
+#' @param verbose `(logical(1))`\cr
+#' Passed to `pycox.models.Coxtime.fit`, should information be displayed during fitting.
 #' @param num_workers `(integer(1))`\cr
 #' Passed to `pycox.models.Coxtime.fit`, number of workers used in the dataloader.
 #' @param shuffle `(logical(1))`\cr
@@ -61,7 +63,7 @@ coxtime <- function(formula = NULL, data = NULL, reverse = FALSE,
                     activation = "relu", num_nodes = c(32L, 32L), batch_norm = TRUE,
                     dropout = NULL, device = NULL, shrink = 0, early_stopping = FALSE,
                     best_weights  = FALSE,  min_delta = 0, patience = 10L, batch_size = 256L,
-                    epochs = 1L, num_workers = 0L, shuffle = TRUE, ...) {
+                    epochs = 1L, verbose = TRUE, num_workers = 0L, shuffle = TRUE, ...) {
 
   call <- match.call()
 
@@ -174,7 +176,6 @@ predict.coxtime <- function(object, newdata, batch_size = 256L, num_workers = 0L
   x_test = reticulate::r_to_py(newdata)$values$astype("float32")
 
   # predict survival probabilities
-  pars = self$param_set$get_values(tags = "predict")
   surv = object$model$model$predict_surv_df(
     x_test,
     batch_size = as.integer(batch_size),
@@ -188,8 +189,8 @@ predict.coxtime <- function(object, newdata, batch_size = 256L, num_workers = 0L
       ret$surv <- surv
     } else {
       # cast to distr6
-      x = rep(list(list(x = round(as.numeric(rownames(surv)), 5), pdf = 0)), task$nrow)
-      for (i in seq_len(task$nrow)) {
+      x = rep(list(list(x = round(as.numeric(rownames(surv)), 5), pdf = 0)), nrow(x_test))
+      for (i in seq_len(nrow(x_test))) {
         # fix for infinite hazards - invalidate results for NaNs
         if (any(is.nan(surv[, i]))) {
           x[[i]]$pdf = c(1, numeric(length(x[[i]]$x) - 1))
