@@ -1,4 +1,4 @@
-clean_data = function(formula, data, time_variable, status_variable,
+clean_train_data = function(formula, data, time_variable, status_variable,
                       x, y, reverse) {
 
   if (!is.null(x) | !is.null(y)) {
@@ -46,4 +46,24 @@ clean_data = function(formula, data, time_variable, status_variable,
   }
 
   return(list(x = x, y = y))
+}
+
+clean_test_data = function(object, newdata) {
+  if (missing(newdata)) {
+    newdata <- object$x
+  } else {
+    newdata <- stats::model.matrix(~., newdata)[, -1, drop = FALSE]
+  }
+
+  ord <- match(colnames(newdata), colnames(object$x), nomatch = NULL)
+  newdata <- newdata[, !is.na(ord), drop = FALSE]
+  newdata <- newdata[, ord[!is.na(ord)], drop = FALSE]
+  if (!checkmate::testNames(colnames(newdata), identical.to = colnames(object$x))) {
+    stop(sprintf(
+      "Names in newdata should be identical to {%s}.",
+      paste0(colnames(object$x), collapse = ", ")
+    ))
+  }
+
+  return(newdata)
 }

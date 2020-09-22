@@ -63,7 +63,7 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
 
   call <- match.call()
 
-  data <- clean_data(formula, data, time_variable, status_variable, x, y, reverse)
+  data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
 
   # use multivariate Empirical if multiple covariates otherwise univariate
   if (ncol(data$x) == 1) {
@@ -77,18 +77,9 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
                         Fhat = Fhat,
                         FX = Fhat$cdf(data = data$x),
                         call = call),
-    class = "akritas"
+                   name = "Akritas Estimator",
+                   class = c("akritas", "survivalmodel")
   ))
-}
-
-#' @export
-print.akritas <- function(x, ...) {
-  print.survivalmodels(x, "Akritas Estimator")
-}
-
-#' @export
-summary.akritas <- function(object, ...) {
-  print.akritas(object, ...)
 }
 
 #' @title Predict method for Akritas Estimator
@@ -174,21 +165,7 @@ predict.akritas <- function(object, newdata, times = NULL,
   }
 
   truth <- object$y
-  if (missing(newdata)) {
-    newdata <- object$x
-  } else {
-    newdata <- stats::model.matrix(~., newdata)[, -1, drop = FALSE]
-  }
-
-  ord <- match(colnames(newdata), colnames(object$x), nomatch = NULL)
-  newdata <- newdata[, !is.na(ord), drop = FALSE]
-  newdata <- newdata[, ord[!is.na(ord)], drop = FALSE]
-  if (!checkmate::testNames(colnames(newdata), identical.to = colnames(object$x))) {
-    stop(sprintf(
-      "Names in newdata should be identical to {%s}.",
-      paste0(colnames(object$x), collapse = ", ")
-    ))
-  }
+  newdata <- clean_test_data(object, newdata)
 
   ord <- order(truth[, 1], decreasing = TRUE)
   truth <- truth[ord, ]

@@ -5,7 +5,7 @@
 #' @param y_train `(matrix(1))` \cr Training outcomes.
 #' @param frac `(numeric(1))`\cr Fraction of data to use for validation dataset, default is `0`
 #' and therefore no separate validation dataset.
-#' @param standardize_time `(logical(1))`\cr If `TRUE`, the time outcome be standardized. For use
+#' @param standardize_time `(logical(1))`\cr If `TRUE`, the time outcome to be standardized. For use
 #' with [coxtime].
 #' @param log_duration `(logical(1))`\cr If `TRUE` and `standardize_time` is `TRUE` then time
 #' variable is log transformed.
@@ -13,8 +13,6 @@
 #' variable is centered.
 #' @param with_std `(logical(1))`\cr If `TRUE` (default) and `standardize_time` is `TRUE` then time
 #' variable is scaled to unit variance.
-#' @param standardize_time `(logical(1))`\cr If `TRUE`, the time outcome be standardized. For use
-#' with [coxtime].
 #' @param discretise `(logical(1))`\cr If `TRUE` then time is discretised. For use with the models
 #' [deephit], [pchazard], and [loghaz].
 #' @param cuts `(integer(1))`\cr If `discretise` is `TRUE` then determines number of cut-points
@@ -25,17 +23,17 @@
 #' or `"quantiles"`. See `reticulate::py_help(pycox$models$LogisticHazard$label_transform)`.
 #' @param cut_min `(integer(1))`\cr Starting duration for discretisation, see
 #' `reticulate::py_help(pycox$models$LogisticHazard$label_transform)`.
-#' @param model `(character(1))`\cr Corresponding pycox model, one of `"DeepHit"`, `"LH"`, `"PCH"`,
-#' and `"CoxTime"`.
+#' @param model `(character(1))`\cr Corresponding pycox model.
 #' @export
-prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FALSE,
+pycox_prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FALSE,
                               log_duration = FALSE,
   with_mean = TRUE, with_std = TRUE, discretise = FALSE, cuts = 10L,
   cutpoints = NULL, scheme = c("equidistant", "quantiles"),
-  cut_min = 0L, model) {
+  cut_min = 0L, model = c("coxtime", "deepsurv", "deephit", "loghaz", "pchazard")) {
 
   torchtuples = reticulate::import("torchtuples")
   pycox = reticulate::import("pycox")
+  model = match.arg(model)
 
   conv = ifelse(discretise, "int64", "float32")
 
@@ -79,7 +77,7 @@ prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FAL
       if (!is.null(cutpoints)) {
         cuts = cutpoints
       }
-      if (model == "DeepHit") {
+      if (model == "deephit") {
         labtrans = do.call(
           pycox$models$DeepHitSingle$label_transform,
           list(
@@ -88,7 +86,7 @@ prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FAL
             min_ = as.integer(cut_min)
           )
         )
-      } else if (model == "LH") {
+      } else if (model == "loghaz") {
         labtrans = do.call(
           pycox$models$LogisticHazard$label_transform,
           list(
@@ -97,7 +95,7 @@ prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FAL
             min_ = as.integer(cut_min)
           )
         )
-      } else if (model == "PCH") {
+      } else if (model == "pchazard") {
         labtrans = do.call(
           pycox$models$PCHazard$label_transform,
           list(
@@ -111,17 +109,17 @@ prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FAL
 
     y_train = reticulate::r_to_py(labtrans$fit_transform(y_train[0], y_train[1]))
 
-    if (model %in% c("CoxTime", "DeepHit")) {
+    if (model %in% c("coxtime", "deephit")) {
       y_train = reticulate::tuple(
         y_train[0]$astype(conv),
         y_train[1]$astype(conv)
       )
-    } else if (model == "LH") {
+    } else if (model == "loghaz") {
       y_train = reticulate::tuple(
         y_train[0]$astype("int64"),
         y_train[1]$astype("float32")
       )
-    } else if (model == "PCH") {
+    } else if (model == "pchazard") {
       y_train = reticulate::tuple(
         y_train[0]$astype("int64"),
         y_train[1]$astype("float32"),
@@ -135,17 +133,17 @@ prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FAL
     if (frac) {
       y_val = reticulate::r_to_py(labtrans$transform(y_val[0], y_val[1]))
 
-      if (model %in% c("CoxTime", "DeepHit")) {
+      if (model %in% c("coxtime", "deephit")) {
         y_val = reticulate::tuple(
           y_val[0]$astype(conv),
           y_val[1]$astype(conv)
         )
-      } else if (model == "LH") {
+      } else if (model == "loghaz") {
         y_val = reticulate::tuple(
           y_val[0]$astype("int64"),
           y_val[1]$astype("float32")
         )
-      } else if (model == "PCH") {
+      } else if (model == "pchazard") {
         y_val = reticulate::tuple(
           y_val[0]$astype("int64"),
           y_val[1]$astype("float32"),
@@ -422,14 +420,15 @@ get_pycox_callbacks = function(early_stopping = FALSE, best_weights = FALSE,
   torchtuples = reticulate::import("torchtuples")
 
   if (early_stopping) {
-    callbacks = reticulate::r_to_py(list(
+    return(reticulate::r_to_py(list(
       torchtuples$callbacks$EarlyStopping(min_delta = min_delta, patience = as.integer(patience))
-    ))
+    )))
   } else if (best_weights) {
-    callbacks = reticulate::r_to_py(list(torchtuples$callbacks$BestWeights()))
+    return(reticulate::r_to_py(list(torchtuples$callbacks$BestWeights())))
   } else {
-    callbacks = NULL
+    return(NULL)
   }
+
 }
 
 #' @title Install Pycox With Reticulate
@@ -571,4 +570,121 @@ def init_weights(m):
   net$apply(reticulate::py$init_weights)
 
   return(net)
+}
+
+#' @title Predict Method for pycox Neural Networks
+#'
+#' @description Predicted values from a fitted pycox ANN.
+#'
+#' @param object `(pycox(1))`\cr
+#' Object of class inheriting from `"pycox"`.
+#' @param newdata `(data.frame(1))`\cr
+#' Testing data of `data.frame` like object, internally is coerced with [stats::model.matrix()].
+#' If missing then training data from fitted object is used.
+#' @param batch_size `(integer(1))`\cr
+#' Passed to `pycox.models.X.fit`, elements in each batch.
+#' @param num_workers `(integer(1))`\cr
+#' Passed to `pycox.models.X.fit`, number of workers used in the dataloader.
+#' @param interpolate `(logical(1))`\cr
+#'
+#' @param type (`numeric(1)`)\cr
+#' Type of predicted value. Choices are survival probabilities over all time-points in training
+#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the mean cumulative hazard
+#' function over all time-points, or both (`"all"`).
+#' @param distr6 `(logical(1))`\cr
+#' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns data.frame of survival
+#' probabilities, otherwise returns a [distr6::VectorDistribution()].
+#' @param ... `ANY` \cr
+#' Currently ignored.
+#'
+#' @export
+predict.pycox = function(object, newdata, batch_size = 256L, num_workers = 0L,
+                         interpolate = FALSE, sub = 10L,
+                         inter_scheme = c("const_hazard", "const_pdf"),
+                         type = c("survival", "risk", "all"), distr6 = FALSE,
+                         ...) {
+
+  # clean and convert data to float32
+  newdata = reticulate::r_to_py(clean_test_data(object, newdata))$values$astype("float32")
+
+
+  if (inherits(object, "coxtime") || inherits(object, "deepsurv")) {
+    interpolate = FALSE
+    object$model$model$compute_baseline_hazards()
+  } else if (inherits(object, "pchazard")) {
+    interpolate = FALSE
+    try({object$model$model$sub = as.integer(sub)}, silent = TRUE)
+  }
+
+  if (interpolate) {
+    surv = object$model$model$interpolate(
+      sub = as.integer(sub),
+      scheme = match.arg(inter_scheme)
+    )
+
+    surv = surv$predict_surv_df(
+      x_test,
+      batch_size = as.integer(batch_size),
+      num_workers = as.integer(num_workers)
+    )
+  } else {
+    surv = object$model$model$predict_surv_df(
+      newdata,
+      batch_size = as.integer(batch_size),
+      num_workers = as.integer(num_workers)
+    )
+  }
+
+  ret <- list()
+
+  if (type %in% c("survival", "all")) {
+    if (!distr6) {
+      ret$surv <- surv
+    } else {
+      # cast to distr6
+      x = rep(list(list(x = round(as.numeric(rownames(surv)), 5), pdf = 0)), nrow(newdata))
+      for (i in seq_len(nrow(newdata))) {
+        # fix for infinite hazards - invalidate results for NaNs
+        if (any(is.nan(surv[, i]))) {
+          x[[i]]$pdf = c(1, numeric(length(x[[i]]$x) - 1))
+        } else {
+          x[[i]]$pdf = round(1 - surv[, i], 6)
+          x[[i]]$pdf = c(x[[i]]$pdf[1], diff(x[[i]]$pdf))
+          x[[i]]$pdf[x[[i]]$pdf < 0.000001] = 0L
+          x[[i]]$pdf
+        }
+      }
+
+      ret$distr = distr6::VectorDistribution$new(
+        distribution = "WeightedDiscrete", params = x,
+        decorators = c("CoreStatistics", "ExoticStatistics"))
+    }
+  }
+
+  if (type %in% c("risk", "all")) {
+    ret$risk <- colMeans(-log(surv))
+  }
+
+  if (length(ret) == 1) {
+    return(ret[[1]])
+  } else {
+    return(ret)
+  }
+
+}
+
+.pycox_prep = function(formula, data, time_variable, status_variable, x, y, reverse,
+                      activation, frac, ...) {
+
+  requireNamespace("reticulate")
+  pycox = reticulate::import("pycox")
+  torch = reticulate::import("torch")
+  torchtuples = reticulate::import("torchtuples")
+
+  data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
+  data <- pycox_prepare_train_data(data$x, data$y, frac, ...)
+
+  data$activation <- get_pycox_activation(activation, construct = FALSE)
+
+  return(data)
 }
