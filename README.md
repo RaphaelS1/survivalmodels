@@ -1,0 +1,39 @@
+survivalmodels
+================
+
+[![CRAN Status
+Badge](https://www.r-pkg.org/badges/version-ago/survivalmodels)](https://cran.r-project.org/package=survivalmodels)
+[![CRAN
+Checks](https://cranchecks.info/badges/worst/survivalmodels)](https://cran.r-project.org/web/checks/check_results_survivalmodels.html)
+[![tic](https://github.com/RaphaelS1/survivalmodels/workflows/tic/badge.svg)](https://github.com/RaphaelS1/survivalmodels/actions)
+
+[![Repo
+Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/RaphaelS1/survivalmodels)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://github.com/RaphaelS1/survivalmodels)
+
+[![CRAN
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/survivalmodels)](https://cran.r-project.org/package=survivalmodels)
+[![codecov](https://codecov.io/gh/RaphaelS1/survivalmodels/branch/master/graph/badge.svg)](https://codecov.io/gh/RaphaelS1/survivalmodels)
+[![dependencies](https://tinyverse.netlify.com/badge/survivalmodels)](https://CRAN.R-project.org/package=survivalmodels)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## What is survivalmodels?
+
+survivalmodels implements models for survival analysis that are either
+not already implemented in R, or novel implementations for speed
+improvements.
+
+## Installation
+
+Once released on CRAN, install with
+
+``` r
+install.packages("survivalmodels")
+```
+
+Until then install the latest stable build
+
+``` r
+remotes::install_github("RaphaelS1/survivalmodels")
+```
