@@ -1,5 +1,5 @@
-clean_train_data <- function(formula, data, time_variable, status_variable,
-                      x, y, reverse) {
+clean_train_data <- function(formula = NULL, data = NULL, time_variable = NULL,
+                             status_variable = NULL, x = NULL, y = NULL, reverse = FALSE) {
 
   if (!is.null(x) | !is.null(y)) {
     if (is.null(x) | is.null(y)) {

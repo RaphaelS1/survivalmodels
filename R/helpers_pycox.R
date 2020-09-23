@@ -45,20 +45,22 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
     y_train <- y_train[-val, ]
   }
 
-  y_train <- reticulate::r_to_py(y_train)
+  y_train <- data.frame(y_train)
+  colnames(y_train) <- c("time", "status")
+  y_train <- reticulate::r_to_py(data.frame(y_train))
 
-  x_train <- reticulate::r_to_py(x_train)$values$astype("float32")
+  x_train <- reticulate::r_to_py(data.frame(x_train))$values$astype("float32")
   y_train <- reticulate::tuple(
-    y_train[, 1L]$values$astype(conv),
-    y_train[, 2L]$values$astype(conv))
+    y_train["time"]$values$astype(conv),
+    y_train["status"]$values$astype(conv))
 
 
   if (frac) {
     x_val <- reticulate::r_to_py(x_val)$values$astype("float32")
     y_val <- reticulate::r_to_py(y_val)
     y_val <- reticulate::tuple(
-      y_val[, 1L]$values$astype(conv),
-      y_val[, 2L]$values$astype(conv))
+      y_val["time"]$values$astype(conv),
+      y_val["status"]$values$astype(conv))
   }
 
   ret <- list(x_train = x_train, y_train = y_train)
@@ -613,19 +615,20 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
                          ...) {
 
   # clean and convert data to float32
-  newdata <- reticulate::r_to_py(clean_test_data(object, newdata))$values$astype("float32")
+  newdata <- reticulate::r_to_py(
+    data.frame(clean_test_data(object, newdata)))$values$astype("float32")
 
 
   if (inherits(object, "coxtime") || inherits(object, "deepsurv")) {
     interpolate <- FALSE
-    object$model$model$compute_baseline_hazards()
+    object$model$compute_baseline_hazards()
   } else if (inherits(object, "pchazard")) {
     interpolate <- FALSE
-    try({object$model$model$sub <- as.integer(sub)}, silent = TRUE)
+    try({object$model$sub <- as.integer(sub)}, silent = TRUE)
   }
 
   if (interpolate) {
-    surv <- object$model$model$interpolate(
+    surv <- object$model$interpolate(
       sub = as.integer(sub),
       scheme = match.arg(inter_scheme)
     )
@@ -636,7 +639,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       num_workers = as.integer(num_workers)
     )
   } else {
-    surv <- object$model$model$predict_surv_df(
+    surv <- object$model$predict_surv_df(
       newdata,
       batch_size = as.integer(batch_size),
       num_workers = as.integer(num_workers)
@@ -645,6 +648,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
 
   ret <- list()
 
+  type <- match.arg(type)
   if (type %in% c("survival", "all")) {
     if (!distr6) {
       ret$surv <- surv
@@ -690,9 +694,9 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   torchtuples <- reticulate::import("torchtuples")
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
-  data <- pycox_prepare_train_data(data$x, data$y, frac, ...)
-
   data$activation <- get_pycox_activation(activation, construct = FALSE)
+
+  data <- c(data, pycox_prepare_train_data(data$x, data$y, frac, ...))
 
   return(data)
 }

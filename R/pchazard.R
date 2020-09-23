@@ -36,6 +36,9 @@ pchazard <- function(formula = NULL, data = NULL, reverse = FALSE,
                       frac = frac, discretise = TRUE, model = "pchazard", cuts = cuts,
                       cutpoints = cutpoints, scheme = match.arg(scheme), cut_min = cut_min)
 
+  pycox <- reticulate::import("pycox")
+  torchtuples <- reticulate::import("torchtuples")
+
   if (!is.null(custom_net)) {
     net <- custom_net
   } else {
@@ -70,8 +73,8 @@ pchazard <- function(formula = NULL, data = NULL, reverse = FALSE,
     shuffle = shuffle
   )
 
-  structure(list(y = data$y_train, x = data$x_train,
-                 xnames = colnames(data$x_train),
+  structure(list(y = data$y, x = data$x,
+                 xnames = colnames(data$x),
                  model = model,
                  call = call),
             name = "PC-Hazard Neural Network",

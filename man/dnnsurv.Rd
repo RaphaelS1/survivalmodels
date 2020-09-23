@@ -13,7 +13,7 @@ dnnsurv(
   x = NULL,
   y = NULL,
   cutpoints = NULL,
-  cuts = 5,
+  cuts = 5L,
   custom_model = NULL,
   loss_weights = NULL,
   weighted_metrics = NULL,

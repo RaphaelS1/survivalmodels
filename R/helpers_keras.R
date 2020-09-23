@@ -1,7 +1,3 @@
-setcollapse <- function(x) {
-  paste0("{", paste0(x, collapse = ", "), "}")
-}
-
 keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop", "sgd")
 
 #' @title Get Keras Optimizer
@@ -143,7 +139,7 @@ install_keras <- function(method = "auto", conda = "auto", pip = FALSE,
 # d - Censoring indicator
 # qt - Vector of time points for dividing time interval
 # Returns subject ids, time-points, and pseudo conditional probabilities
-get_pseudo_conditional <- function(t, d, qt) {
+.get_pseudo_conditional <- function(t, d, qt) {
 
   s <- c(0, qt)
   n <- length(t)

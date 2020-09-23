@@ -28,6 +28,9 @@ deepsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
   data <- .pycox_prep(formula, data, time_variable, status_variable, x, y, reverse, activation,
                      frac)
 
+  pycox <- reticulate::import("pycox")
+  torchtuples <- reticulate::import("torchtuples")
+
   net <- torchtuples$practical$MLPVanilla(
     in_features = data$x_train$shape[1],
     num_nodes = reticulate::r_to_py(as.integer(num_nodes)),
@@ -41,7 +44,6 @@ deepsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
   # Get optimizer and set-up model
   model <- pycox$models$CoxPH(
     net = net,
-    labtrans = data$labtrans,
     optimizer = get_pycox_optim(net = net, ...),
     device = device
   )
@@ -58,8 +60,8 @@ deepsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
     shuffle = shuffle
   )
 
-  structure(list(y = data$y_train, x = data$x_train,
-                 xnames = colnames(data$x_train),
+  structure(list(y = data$y, x = data$x,
+                 xnames = colnames(data$x),
                  model = model,
                  call = call),
             name = "DeepSurv Neural Network",

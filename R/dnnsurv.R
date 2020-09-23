@@ -35,7 +35,7 @@
 #' @export
 dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
                      time_variable = NULL, status_variable = NULL,
-                     x = NULL, y = NULL, cutpoints = NULL, cuts = 5,
+                     x = NULL, y = NULL, cutpoints = NULL, cuts = 5L,
                     custom_model = NULL, loss_weights = NULL, weighted_metrics = NULL,
                     optimizer = "adam", early_stopping = FALSE, min_delta = 0, patience = 0L,
                     verbose = 0L, baseline = NULL, restore_best_weights = FALSE,
@@ -47,7 +47,8 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
 
-  time <- data$y_train[, 1L]
+  time <- data$y[, 1L]
+
   if (is.null(cutpoints)) {
     if (is.null(cuts)) {
       stop("One of 'cuts' or 'cutpoints' must be provided.")
@@ -55,12 +56,12 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
     cutpoints <- unique(round(seq.int(min(time), max(time), length.out = cuts), 2))
   }
 
-  pseudo_cond <- get_pseudo_conditional(
+  pseudo_cond <- .get_pseudo_conditional(
     time,
-    data$y_train[, 2L],
+    data$y[, 2L],
     cutpoints)
 
-  x_train <- cbind(data$x_train[pseudo_cond$id, ],
+  x_train <- cbind(data$x[pseudo_cond$id, ],
                   model.matrix(~ as.factor(pseudo_cond$s) + 0))
   y_train <- pseudo_cond$pseudost
 
@@ -117,8 +118,8 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
     validation_steps = validation_steps
   )
 
-  structure(list(y = data$y_train, x = data$x_train,
-                 xnames = colnames(data$x_train),
+  structure(list(y = data$y, x = data$x,
+                 xnames = colnames(data$x),
                  model = model,
                  call = call,
                  cutpoints = cutpoints),
@@ -162,8 +163,8 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
 
   newdata <- clean_test_data(object, newdata)
 
-  x_test_all <- do.call(rbind, replicate(length(object$model$cutpoints), newdata, simplify = FALSE))
-  smatrix_test <- model.matrix(~ as.factor(rep(object$model$cutpoints, each = nrow(newdata))) + 0)
+  x_test_all <- do.call(rbind, replicate(length(object$cutpoints), newdata, simplify = FALSE))
+  smatrix_test <- model.matrix(~ as.factor(rep(object$cutpoints, each = nrow(newdata))) + 0)
   x_test_all <- cbind(x_test_all, smatrix_test)
 
   # predict test data
@@ -183,6 +184,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
 
   ret <- list()
 
+  type <- match.arg(type)
   if (type %in% c("survival", "all")) {
     if (!distr6) {
       ret$surv <- surv

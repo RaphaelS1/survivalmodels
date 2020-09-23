@@ -37,9 +37,12 @@ coxtime <- function(formula = NULL, data = NULL, reverse = FALSE,
 
   call <- match.call()
 
-  data <- .pycox_prep(formula, data, time_variable, status_variable, x, y, reverse, activation,
-                     frac = frac, standardize_time = standardize_time, log_duration = log_duration,
-                     with_mean = with_mean, with_std = with_std)
+  data <- .pycox_prep(formula = formula, data = data, time_variable = time_variable,
+                      status_variable = status_variable, x = x, y = y, reverse = reverse,
+                      activation = activation, frac = frac, standardize_time = standardize_time,
+                      log_duration = log_duration, with_mean = with_mean, with_std = with_std)
+
+  pycox <- reticulate::import("pycox")
 
   net <- pycox$models$cox_time$MLPVanillaCoxTime(
     in_features = data$x_train$shape[1],
@@ -55,7 +58,7 @@ coxtime <- function(formula = NULL, data = NULL, reverse = FALSE,
     labtrans = data$labtrans,
     optimizer = get_pycox_optim(net = net, ...),
     device = device,
-    shrink = shrink,
+    shrink = shrink
   )
 
   model$fit(
@@ -70,8 +73,8 @@ coxtime <- function(formula = NULL, data = NULL, reverse = FALSE,
     shuffle = shuffle
   )
 
-  structure(list(y = data$y_train, x = data$x_train,
-                 xnames = colnames(data$x_train),
+  structure(list(y = data$y, x = data$x,
+                 xnames = colnames(data$x),
                  model = model,
                  call = call),
             name = "Cox-Time Neural Network",
