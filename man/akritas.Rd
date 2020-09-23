@@ -17,7 +17,7 @@ akritas(
 }
 \arguments{
 \item{formula}{\code{(formula(1))}\cr
-Objet specifying the model fit, left-hand-side of formula should describe a \code{\link[survival:Surv]{survival::Surv()}}
+Object specifying the model fit, left-hand-side of formula should describe a \code{\link[survival:Surv]{survival::Surv()}}
 object.}
 
 \item{data}{\code{(data.frame(1))}\cr

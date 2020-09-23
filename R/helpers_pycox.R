@@ -586,7 +586,16 @@ def init_weights(m):
 #' @param num_workers `(integer(1))`\cr
 #' Passed to `pycox.models.X.fit`, number of workers used in the dataloader.
 #' @param interpolate `(logical(1))`\cr
-#'
+#' For models `deephit` and `loghaz`, should predictions be linearly interpolated? Ignored
+#' for other models.
+#' @param inter_scheme `(character(1))`\cr
+#' If `interpolate` is `TRUE` then the scheme for interpolation, see
+#' `reticulate::py_help(py_help(pycox$models$DeepHitSingle$interpolate))` for further
+#' details.
+#' @param sub `(integer(1))`\cr
+#' If `interpolate` is `TRUE` or model is `loghaz`, number of sub-divisions for interpolation.
+#' See reticulate::py_help(py_help(pycox$models$DeepHitSingle$interpolate))` for further
+#' details.
 #' @param type (`numeric(1)`)\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
 #' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the mean cumulative hazard
@@ -599,9 +608,8 @@ def init_weights(m):
 #'
 #' @export
 predict.pycox = function(object, newdata, batch_size = 256L, num_workers = 0L,
-                         interpolate = FALSE, sub = 10L,
-                         inter_scheme = c("const_hazard", "const_pdf"),
-                         type = c("survival", "risk", "all"), distr6 = FALSE,
+                         interpolate = FALSE, inter_scheme = c("const_hazard", "const_pdf"),
+                         sub = 10L, type = c("survival", "risk", "all"), distr6 = FALSE,
                          ...) {
 
   # clean and convert data to float32
@@ -623,7 +631,7 @@ predict.pycox = function(object, newdata, batch_size = 256L, num_workers = 0L,
     )
 
     surv = surv$predict_surv_df(
-      x_test,
+      newdata,
       batch_size = as.integer(batch_size),
       num_workers = as.integer(num_workers)
     )

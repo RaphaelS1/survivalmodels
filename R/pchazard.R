@@ -8,6 +8,7 @@
 #'
 #' @template param_customnet
 #' @template param_discretise
+#' @template param_traindata
 #'
 #' @param reduction `(character(1))`\cr
 #' How to reduce the loss, see to `reticulate::py_help(pycox$models$loss$NLLPCHazardLoss)`.

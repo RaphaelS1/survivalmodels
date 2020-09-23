@@ -8,6 +8,7 @@
 #'
 #' @template param_customnet
 #' @template param_discretise
+#' @template param_traindata
 #'
 #' @references
 #' Gensheimer, M. F., & Narasimhan, B. (2018).

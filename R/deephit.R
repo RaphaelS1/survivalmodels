@@ -8,6 +8,7 @@
 #'
 #' @template param_customnet
 #' @template param_discretise
+#' @template param_traindata
 #'
 #' @param mod_alpha `(numeric(1))`\cr
 #' Weighting in (0,1) for combining likelihood (L1) and rank loss (L2). See reference and

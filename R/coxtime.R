@@ -17,6 +17,8 @@
 #' @param shrink `(numeric(1))`\cr
 #' Passed to `pycox.models.Coxtime`, shrinkage parameter for regularization.
 #'
+#' @template param_traindata
+#'
 #' @references
 #' Kvamme, H., Borgan, Ø., & Scheel, I. (2019).
 #' Time-to-event prediction with neural networks and Cox regression.

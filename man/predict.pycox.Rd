@@ -10,8 +10,8 @@
   batch_size = 256L,
   num_workers = 0L,
   interpolate = FALSE,
-  sub = 10L,
   inter_scheme = c("const_hazard", "const_pdf"),
+  sub = 10L,
   type = c("survival", "risk", "all"),
   distr6 = FALSE,
   ...
@@ -31,7 +31,19 @@ Passed to \code{pycox.models.X.fit}, elements in each batch.}
 \item{num_workers}{\code{(integer(1))}\cr
 Passed to \code{pycox.models.X.fit}, number of workers used in the dataloader.}
 
-\item{interpolate}{\code{(logical(1))}\cr}
+\item{interpolate}{\code{(logical(1))}\cr
+For models \code{deephit} and \code{loghaz}, should predictions be linearly interpolated? Ignored
+for other models.}
+
+\item{inter_scheme}{\code{(character(1))}\cr
+If \code{interpolate} is \code{TRUE} then the scheme for interpolation, see
+\code{reticulate::py_help(py_help(pycox$models$DeepHitSingle$interpolate))} for further
+details.}
+
+\item{sub}{\code{(integer(1))}\cr
+If \code{interpolate} is \code{TRUE} or model is \code{loghaz}, number of sub-divisions for interpolation.
+See reticulate::py_help(py_help(pycox$models$DeepHitSingle$interpolate))` for further
+details.}
 
 \item{type}{(\code{numeric(1)})\cr
 Type of predicted value. Choices are survival probabilities over all time-points in training

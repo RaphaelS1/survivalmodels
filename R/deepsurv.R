@@ -6,6 +6,8 @@
 #' @templateVar name DeepSurv
 #' @templateVar fun deepsurv
 #'
+#' @template param_traindata
+#'
 #' @references
 #' Katzman, J. L., Shaham, U., Cloninger, A., Bates, J., Jiang, T., & Kluger, Y. (2018).
 #' DeepSurv: personalized treatment recommender system using a Cox proportional hazards deep neural
