@@ -76,7 +76,8 @@ If \code{TRUE} and \code{standardize_time} is \code{TRUE} then time variable is 
 If \code{TRUE} (default) and \code{standardize_time} is \code{TRUE} then time variable is centered.}
 
 \item{with_std}{\code{(logical(1))}\cr
-If \code{TRUE} (default) and \code{standardize_time} is \code{TRUE} then time variable is scaled to unit variance.}
+If \code{TRUE} (default) and \code{standardize_time} is \code{TRUE} then time variable is scaled to unit
+variance.}
 
 \item{activation}{\cr
 See \link{get_pycox_activation}.}

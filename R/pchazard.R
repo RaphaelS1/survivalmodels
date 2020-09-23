@@ -50,7 +50,7 @@ pchazard <- function(formula = NULL, data = NULL, reverse = FALSE,
   }
 
   # Get optimizer and set-up model
-  model = pycox$models$PCHazard(
+  model <- pycox$models$PCHazard(
     net = net,
     duration_index = data$labtrans$cuts,
     loss = pycox$models$loss$NLLPCHazardLoss(match.arg(reduction)),

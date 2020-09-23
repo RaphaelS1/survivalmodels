@@ -39,7 +39,7 @@ deepsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
   )
 
   # Get optimizer and set-up model
-  model = pycox$models$CoxPH(
+  model <- pycox$models$CoxPH(
     net = net,
     labtrans = data$labtrans,
     optimizer = get_pycox_optim(net = net, ...),

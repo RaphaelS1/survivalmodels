@@ -25,47 +25,47 @@
 #' `reticulate::py_help(pycox$models$LogisticHazard$label_transform)`.
 #' @param model `(character(1))`\cr Corresponding pycox model.
 #' @export
-pycox_prepare_train_data = function(x_train, y_train, frac = 0, standardize_time = FALSE,
+pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_time = FALSE,
                               log_duration = FALSE,
   with_mean = TRUE, with_std = TRUE, discretise = FALSE, cuts = 10L,
   cutpoints = NULL, scheme = c("equidistant", "quantiles"),
   cut_min = 0L, model = c("coxtime", "deepsurv", "deephit", "loghaz", "pchazard")) {
 
-  torchtuples = reticulate::import("torchtuples")
-  pycox = reticulate::import("pycox")
-  model = match.arg(model)
+  torchtuples <- reticulate::import("torchtuples")
+  pycox <- reticulate::import("pycox")
+  model <- match.arg(model)
 
-  conv = ifelse(discretise, "int64", "float32")
+  conv <- ifelse(discretise, "int64", "float32")
 
   if (frac) {
-    val = sample(seq_len(nrow(x_train)), nrow(x_train) * frac)
-    x_val = x_train[val, ]
-    y_val = y_train[val, ]
-    x_train = x_train[-val, ]
-    y_train = y_train[-val, ]
+    val <- sample(seq_len(nrow(x_train)), nrow(x_train) * frac)
+    x_val <- x_train[val, ]
+    y_val <- y_train[val, ]
+    x_train <- x_train[-val, ]
+    y_train <- y_train[-val, ]
   }
 
-  y_train = reticulate::r_to_py(y_train)
+  y_train <- reticulate::r_to_py(y_train)
 
-  x_train = reticulate::r_to_py(x_train)$values$astype("float32")
-  y_train = reticulate::tuple(
+  x_train <- reticulate::r_to_py(x_train)$values$astype("float32")
+  y_train <- reticulate::tuple(
     y_train[, 1L]$values$astype(conv),
     y_train[, 2L]$values$astype(conv))
 
 
   if (frac) {
-    x_val = reticulate::r_to_py(x_val)$values$astype("float32")
-    y_val = reticulate::r_to_py(y_val)
-    y_val = reticulate::tuple(
+    x_val <- reticulate::r_to_py(x_val)$values$astype("float32")
+    y_val <- reticulate::r_to_py(y_val)
+    y_val <- reticulate::tuple(
       y_val[, 1L]$values$astype(conv),
       y_val[, 2L]$values$astype(conv))
   }
 
-  ret = list(x_train = x_train, y_train = y_train)
+  ret <- list(x_train = x_train, y_train = y_train)
 
   if (standardize_time || discretise) {
     if (standardize_time) {
-      labtrans = do.call(
+      labtrans <- do.call(
         pycox$models$CoxTime$label_transform,
         list(
           log_duration = log_duration,
@@ -75,10 +75,10 @@ pycox_prepare_train_data = function(x_train, y_train, frac = 0, standardize_time
       )
     } else {
       if (!is.null(cutpoints)) {
-        cuts = cutpoints
+        cuts <- cutpoints
       }
       if (model == "deephit") {
-        labtrans = do.call(
+        labtrans <- do.call(
           pycox$models$DeepHitSingle$label_transform,
           list(
             cuts = as.integer(cuts),
@@ -87,7 +87,7 @@ pycox_prepare_train_data = function(x_train, y_train, frac = 0, standardize_time
           )
         )
       } else if (model == "loghaz") {
-        labtrans = do.call(
+        labtrans <- do.call(
           pycox$models$LogisticHazard$label_transform,
           list(
             cuts = as.integer(cuts),
@@ -96,7 +96,7 @@ pycox_prepare_train_data = function(x_train, y_train, frac = 0, standardize_time
           )
         )
       } else if (model == "pchazard") {
-        labtrans = do.call(
+        labtrans <- do.call(
           pycox$models$PCHazard$label_transform,
           list(
             cuts = as.integer(cuts),
@@ -107,44 +107,44 @@ pycox_prepare_train_data = function(x_train, y_train, frac = 0, standardize_time
       }
     }
 
-    y_train = reticulate::r_to_py(labtrans$fit_transform(y_train[0], y_train[1]))
+    y_train <- reticulate::r_to_py(labtrans$fit_transform(y_train[0], y_train[1]))
 
     if (model %in% c("coxtime", "deephit")) {
-      y_train = reticulate::tuple(
+      y_train <- reticulate::tuple(
         y_train[0]$astype(conv),
         y_train[1]$astype(conv)
       )
     } else if (model == "loghaz") {
-      y_train = reticulate::tuple(
+      y_train <- reticulate::tuple(
         y_train[0]$astype("int64"),
         y_train[1]$astype("float32")
       )
     } else if (model == "pchazard") {
-      y_train = reticulate::tuple(
+      y_train <- reticulate::tuple(
         y_train[0]$astype("int64"),
         y_train[1]$astype("float32"),
         y_train[2]$astype("float32")
       )
     }
 
-    ret$y_train = y_train
-    ret$labtrans = labtrans
+    ret$y_train <- y_train
+    ret$labtrans <- labtrans
 
     if (frac) {
-      y_val = reticulate::r_to_py(labtrans$transform(y_val[0], y_val[1]))
+      y_val <- reticulate::r_to_py(labtrans$transform(y_val[0], y_val[1]))
 
       if (model %in% c("coxtime", "deephit")) {
-        y_val = reticulate::tuple(
+        y_val <- reticulate::tuple(
           y_val[0]$astype(conv),
           y_val[1]$astype(conv)
         )
       } else if (model == "loghaz") {
-        y_val = reticulate::tuple(
+        y_val <- reticulate::tuple(
           y_val[0]$astype("int64"),
           y_val[1]$astype("float32")
         )
       } else if (model == "pchazard") {
-        y_val = reticulate::tuple(
+        y_val <- reticulate::tuple(
           y_val[0]$astype("int64"),
           y_val[1]$astype("float32"),
           y_val[2]$astype("float32")
@@ -154,13 +154,13 @@ pycox_prepare_train_data = function(x_train, y_train, frac = 0, standardize_time
   }
 
   if (frac) {
-    ret$val = torchtuples$tuplefy(x_val, y_val)
+    ret$val <- torchtuples$tuplefy(x_val, y_val)
   }
 
   return(ret)
 }
 
-pycox_activations = c(
+pycox_activations <- c(
   "celu", "elu", "gelu", "glu", "hardshrink", "hardsigmoid", "hardswish",
   "hardtanh", "relu6", "leakyrelu", "logsigmoid", "logsoftmax",
   "prelu", "rrelu", "relu", "selu", "sigmoid",
@@ -216,16 +216,16 @@ pycox_activations = c(
 #' * `"tanhshrink"` \cr `reticulate::py_help(torch$nn$modules$activation$Tanhshrink)`
 #' * `"threshold"` \cr `reticulate::py_help(torch$nn$modules$activation$Threshold)`
 #' @export
-get_pycox_activation = function(activation = "relu", construct = TRUE, alpha = 1, dim = NULL,
+get_pycox_activation <- function(activation = "relu", construct = TRUE, alpha = 1, dim = NULL,
   lambd = 0.5, min_val = -1, max_val = 1, negative_slope = 0.01,
   num_parameters = 1L, init = 0.25, lower = 1 / 8, upper = 1 / 3,
   beta = 1, threshold = 20, value = 20) {
 
-  torch = reticulate::import("torch")
-  act = torch$nn$modules$activation
+  torch <- reticulate::import("torch")
+  act <- torch$nn$modules$activation
 
   if (construct) {
-    activation = switch(activation,
+    activation <- switch(activation,
       celu = act$CELU(alpha),
       elu = act$ELU(alpha),
       gelu = act$GELU(),
@@ -254,7 +254,7 @@ get_pycox_activation = function(activation = "relu", construct = TRUE, alpha = 1
       threshold = act$Threshold(threshold, value)
     )
   } else {
-    activation = switch(activation,
+    activation <- switch(activation,
       celu = act$CELU,
       elu = act$ELU,
       gelu = act$GELU,
@@ -285,7 +285,7 @@ get_pycox_activation = function(activation = "relu", construct = TRUE, alpha = 1
   }
 }
 
-pycox_optimizers = c(
+pycox_optimizers <- c(
   "adadelta", "adagrad", "adam", "adamax", "adamw", "asgd",
   "rmsprop", "rprop", "sgd", "sparse_adam")
 
@@ -323,7 +323,7 @@ pycox_optimizers = c(
 #' * `"sparse_adam"` \cr `reticulate::py_help(torch$optim$SparseAdam)`
 #'
 #' @export
-get_pycox_optim = function(optimizer = "adam", net, rho = 0.9, eps = 1e-8, lr = 1,
+get_pycox_optim <- function(optimizer = "adam", net, rho = 0.9, eps = 1e-8, lr = 1,
   weight_decay = 0, learning_rate = 1e-2, lr_decay = 0,
   betas = c(0.9, 0.999), amsgrad = FALSE,
   lambd = 1e-4, alpha = 0.75, t0 = 1e6,
@@ -331,9 +331,9 @@ get_pycox_optim = function(optimizer = "adam", net, rho = 0.9, eps = 1e-8, lr = 
   step_sizes = c(1e-6, 50), dampening = 0,
   nesterov = FALSE) {
 
-  torch = reticulate::import("torch")
-  opt = torch$optim
-  params = net$parameters()
+  torch <- reticulate::import("torch")
+  opt <- torch$optim
+  params <- net$parameters()
 
   switch(optimizer,
     adadelta = opt$Adadelta(params, rho, eps, lr, weight_decay),
@@ -351,7 +351,7 @@ get_pycox_optim = function(optimizer = "adam", net, rho = 0.9, eps = 1e-8, lr = 
   )
 }
 
-pycox_initializers = c(
+pycox_initializers <- c(
   "uniform", "normal", "constant", "xavier_uniform", "xavier_normal",
   "kaiming_uniform", "kaiming_normal", "orthogonal")
 
@@ -383,7 +383,7 @@ pycox_initializers = c(
 #' * `"orthogonal"` \cr `reticulate::py_help(torch$nn$init$orthogonal_)`
 #'
 #' @export
-get_pycox_init = function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, val, gain = 1,
+get_pycox_init <- function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, val, gain = 1,
   mode = c("fan_in", "fan_out"), non_linearity = c("leaky_relu", "relu")) {
   switch(init,
     uniform = paste0("torch.nn.init.uniform_(m.weight, ", a, ", ", b, ")"),
@@ -414,10 +414,10 @@ get_pycox_init = function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, val
 #' Passed to `torchtuples.callbacks.EarlyStopping`.
 #'
 #' @export
-get_pycox_callbacks = function(early_stopping = FALSE, best_weights = FALSE,
+get_pycox_callbacks <- function(early_stopping = FALSE, best_weights = FALSE,
                                min_delta = 0, patience = 10L) {
 
-  torchtuples = reticulate::import("torchtuples")
+  torchtuples <- reticulate::import("torchtuples")
 
   if (early_stopping) {
     return(reticulate::r_to_py(list(
@@ -436,10 +436,10 @@ get_pycox_callbacks = function(early_stopping = FALSE, best_weights = FALSE,
 #' @param method,conda,pip See [reticulate::py_install].
 #' @param install_torch If `TRUE` installs the dependency `torch` package as well.
 #' @export
-install_pycox = function(method = "auto", conda = "auto", pip = FALSE, install_torch = FALSE) {
-  pkg = "pycox"
+install_pycox <- function(method = "auto", conda = "auto", pip = FALSE, install_torch = FALSE) {
+  pkg <- "pycox"
   if (install_torch) {
-    pkg = c("torch", pkg)
+    pkg <- c("torch", pkg)
   }
   reticulate::py_install(pkg, method = method, conda = conda, pip = pip)
 }
@@ -448,7 +448,7 @@ install_pycox = function(method = "auto", conda = "auto", pip = FALSE, install_t
 #' @description Installs the python 'torch' package via reticulate.
 #' @param method,conda,pip See [reticulate::py_install]
 #' @export
-install_torch = function(method = "auto", conda = "auto", pip = FALSE) {
+install_torch <- function(method = "auto", conda = "auto", pip = FALSE) {
   reticulate::py_install("torch", method = method, conda = conda, pip = pip)
 }
 
@@ -488,21 +488,21 @@ install_torch = function(method = "auto", conda = "auto", pip = FALSE) {
 #'   act_pars = list(alpha = 0.5), dropout = c(0.2, 0.1, 0.6),
 #'   batch_norm = TRUE, init = "kaiming_normal", init_pars = list(non_linearity = "relu"))
 #' @export
-build_pytorch_net = function(n_in, n_out, nodes = c(32, 32), activation = "relu",
+build_pytorch_net <- function(n_in, n_out, nodes = c(32, 32), activation = "relu",
                              act_pars = list(), dropout = 0.1,  bias = TRUE, batch_norm = TRUE,
                              batch_pars = list(eps = 1e-5, momentum = 0.1, affine = TRUE),
                              init = "uniform", init_pars = list()) {
 
-  torch = reticulate::import("torch")
-  nodes = as.integer(nodes)
-  n_in = as.integer(n_in)
-  n_out = as.integer(n_out)
-  nn = torch$nn
-  lng = length(nodes)
+  torch <- reticulate::import("torch")
+  nodes <- as.integer(nodes)
+  n_in <- as.integer(n_in)
+  n_out <- as.integer(n_out)
+  nn <- torch$nn
+  lng <- length(nodes)
 
   if (length(activation) == 1) {
     checkmate::assert_character(activation)
-    activation = rep(list(do.call(
+    activation <- rep(list(do.call(
       get_pycox_activation,
       c(list(
         activation = activation,
@@ -510,7 +510,7 @@ build_pytorch_net = function(n_in, n_out, nodes = c(32, 32), activation = "relu"
       ), act_pars))), lng)
   } else {
     checkmate::assert_character(activation, len = lng)
-    activation = lapply(activation, function(x) {
+    activation <- lapply(activation, function(x) {
       do.call(
       get_pycox_activation,
       c(list(
@@ -522,12 +522,12 @@ build_pytorch_net = function(n_in, n_out, nodes = c(32, 32), activation = "relu"
 
 
   if (is.null(dropout) || length(dropout) == 1) {
-    dropout = rep(list(dropout), lng)
+    dropout <- rep(list(dropout), lng)
   } else {
     checkmate::assert_numeric(dropout, len = lng)
   }
 
-  add_module = function(net, id, num_in, num_out, act, dropout) {
+  add_module <- function(net, id, num_in, num_out, act, dropout) {
     # linear trafo
 
     net$add_module(paste0("L", id), nn$Linear(num_in, num_out, bias))
@@ -547,7 +547,7 @@ build_pytorch_net = function(n_in, n_out, nodes = c(32, 32), activation = "relu"
   }
 
   # input layer
-  net = nn$Sequential()
+  net <- nn$Sequential()
   add_module(net, 0, n_in, nodes[1], activation[[1]], dropout[[1]])
 
   # hidden layers
@@ -560,7 +560,7 @@ build_pytorch_net = function(n_in, n_out, nodes = c(32, 32), activation = "relu"
     }
   }
 
-  init = do.call(get_pycox_init, c(list(init = init), init_pars))
+  init <- do.call(get_pycox_init, c(list(init = init), init_pars))
   reticulate::py_run_string(
     paste0(
       "import torch
@@ -607,36 +607,36 @@ def init_weights(m):
 #' Currently ignored.
 #'
 #' @export
-predict.pycox = function(object, newdata, batch_size = 256L, num_workers = 0L,
+predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
                          interpolate = FALSE, inter_scheme = c("const_hazard", "const_pdf"),
                          sub = 10L, type = c("survival", "risk", "all"), distr6 = FALSE,
                          ...) {
 
   # clean and convert data to float32
-  newdata = reticulate::r_to_py(clean_test_data(object, newdata))$values$astype("float32")
+  newdata <- reticulate::r_to_py(clean_test_data(object, newdata))$values$astype("float32")
 
 
   if (inherits(object, "coxtime") || inherits(object, "deepsurv")) {
-    interpolate = FALSE
+    interpolate <- FALSE
     object$model$model$compute_baseline_hazards()
   } else if (inherits(object, "pchazard")) {
-    interpolate = FALSE
-    try({object$model$model$sub = as.integer(sub)}, silent = TRUE)
+    interpolate <- FALSE
+    try({object$model$model$sub <- as.integer(sub)}, silent = TRUE)
   }
 
   if (interpolate) {
-    surv = object$model$model$interpolate(
+    surv <- object$model$model$interpolate(
       sub = as.integer(sub),
       scheme = match.arg(inter_scheme)
     )
 
-    surv = surv$predict_surv_df(
+    surv <- surv$predict_surv_df(
       newdata,
       batch_size = as.integer(batch_size),
       num_workers = as.integer(num_workers)
     )
   } else {
-    surv = object$model$model$predict_surv_df(
+    surv <- object$model$model$predict_surv_df(
       newdata,
       batch_size = as.integer(batch_size),
       num_workers = as.integer(num_workers)
@@ -650,20 +650,20 @@ predict.pycox = function(object, newdata, batch_size = 256L, num_workers = 0L,
       ret$surv <- surv
     } else {
       # cast to distr6
-      x = rep(list(list(x = round(as.numeric(rownames(surv)), 5), pdf = 0)), nrow(newdata))
+      x <- rep(list(list(x = round(as.numeric(rownames(surv)), 5), pdf = 0)), nrow(newdata))
       for (i in seq_len(nrow(newdata))) {
         # fix for infinite hazards - invalidate results for NaNs
         if (any(is.nan(surv[, i]))) {
-          x[[i]]$pdf = c(1, numeric(length(x[[i]]$x) - 1))
+          x[[i]]$pdf <- c(1, numeric(length(x[[i]]$x) - 1))
         } else {
-          x[[i]]$pdf = round(1 - surv[, i], 6)
-          x[[i]]$pdf = c(x[[i]]$pdf[1], diff(x[[i]]$pdf))
-          x[[i]]$pdf[x[[i]]$pdf < 0.000001] = 0L
+          x[[i]]$pdf <- round(1 - surv[, i], 6)
+          x[[i]]$pdf <- c(x[[i]]$pdf[1], diff(x[[i]]$pdf))
+          x[[i]]$pdf[x[[i]]$pdf < 0.000001] <- 0L
           x[[i]]$pdf
         }
       }
 
-      ret$distr = distr6::VectorDistribution$new(
+      ret$distr <- distr6::VectorDistribution$new(
         distribution = "WeightedDiscrete", params = x,
         decorators = c("CoreStatistics", "ExoticStatistics"))
     }
@@ -681,13 +681,13 @@ predict.pycox = function(object, newdata, batch_size = 256L, num_workers = 0L,
 
 }
 
-.pycox_prep = function(formula, data, time_variable, status_variable, x, y, reverse,
+.pycox_prep <- function(formula, data, time_variable, status_variable, x, y, reverse,
                       activation, frac, ...) {
 
   requireNamespace("reticulate")
-  pycox = reticulate::import("pycox")
-  torch = reticulate::import("torch")
-  torchtuples = reticulate::import("torchtuples")
+  pycox <- reticulate::import("pycox")
+  torch <- reticulate::import("torch")
+  torchtuples <- reticulate::import("torchtuples")
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
   data <- pycox_prepare_train_data(data$x, data$y, frac, ...)

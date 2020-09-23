@@ -50,7 +50,7 @@ loghaz <- function(formula = NULL, data = NULL, reverse = FALSE,
   }
 
   # Get optimizer and set-up model
-  model = pycox$models$LogisticHazard(
+  model <- pycox$models$LogisticHazard(
     net = net,
     duration_index = data$labtrans$cuts,
     optimizer = get_pycox_optim(net = net, ...),

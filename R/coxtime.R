@@ -13,7 +13,8 @@
 #' @param with_mean `(logical(1))`\cr
 #' If `TRUE` (default) and `standardize_time` is `TRUE` then time variable is centered.
 #' @param with_std `(logical(1))`\cr
-#' If `TRUE` (default) and `standardize_time` is `TRUE` then time variable is scaled to unit variance.
+#' If `TRUE` (default) and `standardize_time` is `TRUE` then time variable is scaled to unit
+#' variance.
 #' @param shrink `(numeric(1))`\cr
 #' Passed to `pycox.models.Coxtime`, shrinkage parameter for regularization.
 #'
@@ -49,7 +50,7 @@ coxtime <- function(formula = NULL, data = NULL, reverse = FALSE,
   )
 
   # Get optimizer and set-up model
-  model = pycox$models$CoxTime(
+  model <- pycox$models$CoxTime(
     net = net,
     labtrans = data$labtrans,
     optimizer = get_pycox_optim(net = net, ...),

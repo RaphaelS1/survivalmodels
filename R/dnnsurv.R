@@ -47,27 +47,27 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
 
-  time = data$y_train[, 1L]
+  time <- data$y_train[, 1L]
   if (is.null(cutpoints)) {
     if (is.null(cuts)) {
       stop("One of 'cuts' or 'cutpoints' must be provided.")
     }
-    cutpoints = unique(round(seq.int(min(time), max(time), length.out = cuts), 2))
+    cutpoints <- unique(round(seq.int(min(time), max(time), length.out = cuts), 2))
   }
 
-  pseudo_cond = get_pseudo_conditional(
+  pseudo_cond <- get_pseudo_conditional(
     time,
     data$y_train[, 2L],
     cutpoints)
 
-  x_train = cbind(data$x_train[pseudo_cond$id, ],
+  x_train <- cbind(data$x_train[pseudo_cond$id, ],
                   model.matrix(~ as.factor(pseudo_cond$s) + 0))
-  y_train = pseudo_cond$pseudost
+  y_train <- pseudo_cond$pseudost
 
   if (!is.null(custom_model)) {
-    model = custom_model
+    model <- custom_model
   } else {
-    model = keras::keras_model_sequential()
+    model <- keras::keras_model_sequential()
     keras::layer_dense(model,
                        units = 8, kernel_regularizer = keras::regularizer_l2(0.0001),
                        activation = "tanh",
@@ -88,7 +88,7 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
   )
 
   if (early_stopping) {
-    callbacks = list(
+    callbacks <- list(
       keras::callback_early_stopping(
         min_delta = min_delta,
         patience = patience,
@@ -98,7 +98,7 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
       )
     )
   } else {
-    callbacks = NULL
+    callbacks <- NULL
   }
 
   keras::fit(
@@ -155,19 +155,19 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
 #' Currently ignored.
 #'
 #' @export
-predict.dnnsurv = function(object, newdata, batch_size = 32L, verbose = 0L,
+predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
                            steps = NULL, callbacks = NULL,
                            type = c("survival", "risk", "all"), distr6 = FALSE,
                          ...) {
 
-  newdata = clean_test_data(object, newdata)
+  newdata <- clean_test_data(object, newdata)
 
-  x_test_all = do.call(rbind, replicate(length(object$model$cutpoints), newdata, simplify = FALSE))
-  smatrix_test = model.matrix(~ as.factor(rep(object$model$cutpoints, each = nrow(newdata))) + 0)
-  x_test_all = cbind(x_test_all, smatrix_test)
+  x_test_all <- do.call(rbind, replicate(length(object$model$cutpoints), newdata, simplify = FALSE))
+  smatrix_test <- model.matrix(~ as.factor(rep(object$model$cutpoints, each = nrow(newdata))) + 0)
+  x_test_all <- cbind(x_test_all, smatrix_test)
 
   # predict test data
-  pred = predict(
+  pred <- predict(
     object$model,
     x = x_test_all,
     batch_size = batch_size,
@@ -188,12 +188,12 @@ predict.dnnsurv = function(object, newdata, batch_size = 32L, verbose = 0L,
       ret$surv <- surv
     } else {
       # cast to distr6
-      x = rep(list(list(x = object$cutpoints, cdf = 0)), nrow(newdata))
+      x <- rep(list(list(x = object$cutpoints, cdf = 0)), nrow(newdata))
       for (i in seq_len(nrow(newdata))) {
-        x[[i]]$cdf = 1 - surv[i, ]
+        x[[i]]$cdf <- 1 - surv[i, ]
       }
 
-      ret$distr = distr6::VectorDistribution$new(
+      ret$distr <- distr6::VectorDistribution$new(
         distribution = "WeightedDiscrete", params = x,
         decorators = c("CoreStatistics", "ExoticStatistics"))
     }

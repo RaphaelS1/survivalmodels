@@ -55,7 +55,7 @@ deephit <- function(formula = NULL, data = NULL, reverse = FALSE,
   }
 
   # Get optimizer and set-up model
-  model = pycox$models$DeepHitSingle(
+  model <- pycox$models$DeepHitSingle(
     net = net,
     duration_index = data$labtrans$cuts,
     optimizer = get_pycox_optim(net = net, ...),

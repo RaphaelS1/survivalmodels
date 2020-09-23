@@ -1,4 +1,4 @@
-clean_train_data = function(formula, data, time_variable, status_variable,
+clean_train_data <- function(formula, data, time_variable, status_variable,
                       x, y, reverse) {
 
   if (!is.null(x) | !is.null(y)) {
@@ -48,7 +48,7 @@ clean_train_data = function(formula, data, time_variable, status_variable,
   return(list(x = x, y = y))
 }
 
-clean_test_data = function(object, newdata) {
+clean_test_data <- function(object, newdata) {
   if (missing(newdata)) {
     newdata <- object$x
   } else {

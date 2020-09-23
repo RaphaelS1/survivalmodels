@@ -1,8 +1,8 @@
-setcollapse = function(x) {
+setcollapse <- function(x) {
   paste0("{", paste0(x, collapse = ", "), "}")
 }
 
-keras_optimizers = c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop", "sgd")
+keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop", "sgd")
 
 #' @title Get Keras Optimizer
 #' @description Utility function to construct optimiser from \CRANpkg{keras}, primarily for
@@ -27,7 +27,7 @@ keras_optimizers = c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop"
 #' * `"sgd"` \cr [keras::optimizer_sgd]
 #'
 #' @export
-get_keras_optimizer = function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, beta_2 = 0.999,
+get_keras_optimizer <- function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, beta_2 = 0.999,
   epsilon = NULL, decay = 0, clipnorm = NULL, clipvalue = NULL,
   schedule_decay = 0.004, momentum = 0, nesterov = FALSE) {
   switch(optimizer,
@@ -69,12 +69,12 @@ get_keras_optimizer = function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, beta
 #'
 #' build_keras_net(n_in = 10, n_out = 1, nodes = c(4, 4, 4), activation = "elu")
 #' @export
-build_keras_net = function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
+build_keras_net <- function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
                            activation = "linear", act_pars = list(),
                            dropout = 0.1, batch_norm = TRUE,
                            batch_pars = list()) {
 
-  add_module = function(net, num_in, num_out) {
+  add_module <- function(net, num_in, num_out) {
     do.call(
       keras::layer_dense,
       c(list(
@@ -106,7 +106,7 @@ build_keras_net = function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
     }
   }
 
-  net = keras::keras_model_sequential()
+  net <- keras::keras_model_sequential()
 
   # input layer
   add_module(net, n_in, nodes[1])
@@ -129,11 +129,11 @@ build_keras_net = function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
 #' @param method,conda,pip See [reticulate::py_install].
 #' @param install_tensorflow If `TRUE` installs the dependency `tensorflow` package as well.
 #' @export
-install_keras = function(method = "auto", conda = "auto", pip = FALSE,
+install_keras <- function(method = "auto", conda = "auto", pip = FALSE,
                           install_tensorflow = FALSE) {
-  pkg = "keras"
+  pkg <- "keras"
   if (install_tensorflow) {
-    pkg = c("tensorflow", pkg)
+    pkg <- c("tensorflow", pkg)
   }
   reticulate::py_install(pkg, method = method, conda = conda, pip = pip)
 }
@@ -143,34 +143,34 @@ install_keras = function(method = "auto", conda = "auto", pip = FALSE,
 # d - Censoring indicator
 # qt - Vector of time points for dividing time interval
 # Returns subject ids, time-points, and pseudo conditional probabilities
-get_pseudo_conditional = function(t, d, qt) {
+get_pseudo_conditional <- function(t, d, qt) {
 
-  s = c(0, qt)
-  n = length(t)
-  ns = length(s) - 1 # the number of intervals
-  D = do.call(cbind, lapply(seq_len(ns), function(j) (s[j] < t) * (t <= s[j + 1]) * (d == 1)))
-  R = do.call(cbind, lapply(seq_len(ns), function(j) ifelse(s[j] < t, 1, 0)))
-  Delta = do.call(cbind, lapply(seq_len(ns), function(j) pmin(t, s[j + 1]) - s[j]))
+  s <- c(0, qt)
+  n <- length(t)
+  ns <- length(s) - 1 # the number of intervals
+  D <- do.call(cbind, lapply(seq_len(ns), function(j) (s[j] < t) * (t <= s[j + 1]) * (d == 1)))
+  R <- do.call(cbind, lapply(seq_len(ns), function(j) ifelse(s[j] < t, 1, 0)))
+  Delta <- do.call(cbind, lapply(seq_len(ns), function(j) pmin(t, s[j + 1]) - s[j]))
 
   # long format
-  dd_tmp = cbind.data.frame(id = rep(seq_len(n), ns),
+  dd_tmp <- cbind.data.frame(id = rep(seq_len(n), ns),
                             s = rep(c(0, qt[-length(qt)]), each = n),
                             y = c(R * Delta),
                             d = c(D))
 
-  dd = dd_tmp[dd_tmp$y > 0, ]
-  pseudost = rep(NA, nrow(dd))
+  dd <- dd_tmp[dd_tmp$y > 0, ]
+  pseudost <- rep(NA, nrow(dd))
   for (j in seq_len(ns)) {
-    index = (dd$s == s[j])
-    dds = dd[index, ]
+    index <- (dd$s == s[j])
+    dds <- dd[index, ]
     if (all(dds$d) || !any(dds$d)) {
-      pseudost[index] = sum(index)
+      pseudost[index] <- sum(index)
     } else {
-      pseudost[index] = pseudo::pseudosurv(time = dds$y, event = dds$d,
+      pseudost[index] <- pseudo::pseudosurv(time = dds$y, event = dds$d,
                                            tmax = s[j + 1] - s[j])$pseudo
     }
   }
-  dd$pseudost = pseudost
+  dd$pseudost <- pseudost
 
   return(dd[, c(1, 2, 5)])
 }
