@@ -186,86 +186,12 @@ limited to simple MLPs and with identical layers.
 More advanced networks will require manual creation with <a href='https://CRAN.R-project.org/package=keras'><span class="pkg">keras</span></a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>build_keras_net</span>(<span class='fl'>10</span>, <span class='fl'>1</span>)
-</div><div class='output co'>#&gt; Model
-#&gt; Model: "sequential"
-#&gt; ________________________________________________________________________________
-#&gt; Layer (type)                        Output Shape                    Param #     
-#&gt; ================================================================================
-#&gt; dense (Dense)                       (None, 32)                      352         
-#&gt; ________________________________________________________________________________
-#&gt; activation (Activation)             (None, 32)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization (BatchNormaliza (None, 32)                      128         
-#&gt; ________________________________________________________________________________
-#&gt; dropout (Dropout)                   (None, 32)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_1 (Dense)                     (None, 32)                      1056        
-#&gt; ________________________________________________________________________________
-#&gt; activation_1 (Activation)           (None, 32)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_1 (BatchNormali (None, 32)                      128         
-#&gt; ________________________________________________________________________________
-#&gt; dropout_1 (Dropout)                 (None, 32)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_2 (Dense)                     (None, 1)                       33          
-#&gt; ________________________________________________________________________________
-#&gt; activation_2 (Activation)           (None, 1)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_2 (BatchNormali (None, 1)                       4           
-#&gt; ________________________________________________________________________________
-#&gt; dropout_2 (Dropout)                 (None, 1)                       0           
-#&gt; ================================================================================
-#&gt; Total params: 1,701
-#&gt; Trainable params: 1,571
-#&gt; Non-trainable params: 130
-#&gt; ________________________________________________________________________________
-#&gt; 
-#&gt; </div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>build_keras_net</span>(<span class='fl'>10</span>, <span class='fl'>1</span>)
+
 <span class='fu'>build_keras_net</span>(n_in = <span class='fl'>10</span>, n_out = <span class='fl'>1</span>, nodes = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>4</span>), activation = <span class='st'>"elu"</span>)
-</div><div class='output co'>#&gt; Model
-#&gt; Model: "sequential_1"
-#&gt; ________________________________________________________________________________
-#&gt; Layer (type)                        Output Shape                    Param #     
-#&gt; ================================================================================
-#&gt; dense_3 (Dense)                     (None, 4)                       44          
-#&gt; ________________________________________________________________________________
-#&gt; activation_3 (Activation)           (None, 4)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_3 (BatchNormali (None, 4)                       16          
-#&gt; ________________________________________________________________________________
-#&gt; dropout_3 (Dropout)                 (None, 4)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_4 (Dense)                     (None, 4)                       20          
-#&gt; ________________________________________________________________________________
-#&gt; activation_4 (Activation)           (None, 4)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_4 (BatchNormali (None, 4)                       16          
-#&gt; ________________________________________________________________________________
-#&gt; dropout_4 (Dropout)                 (None, 4)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_5 (Dense)                     (None, 4)                       20          
-#&gt; ________________________________________________________________________________
-#&gt; activation_5 (Activation)           (None, 4)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_5 (BatchNormali (None, 4)                       16          
-#&gt; ________________________________________________________________________________
-#&gt; dropout_5 (Dropout)                 (None, 4)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_6 (Dense)                     (None, 1)                       5           
-#&gt; ________________________________________________________________________________
-#&gt; activation_6 (Activation)           (None, 1)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_6 (BatchNormali (None, 1)                       4           
-#&gt; ________________________________________________________________________________
-#&gt; dropout_6 (Dropout)                 (None, 1)                       0           
-#&gt; ================================================================================
-#&gt; Total params: 141
-#&gt; Trainable params: 115
-#&gt; Non-trainable params: 26
-#&gt; ________________________________________________________________________________
-#&gt; 
-#&gt; </div></pre>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

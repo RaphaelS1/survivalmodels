@@ -201,37 +201,15 @@ limited to simple MLPs. More advanced networks will require manual creation with
 <a href='https://CRAN.R-project.org/package=reticulate'><span class="pkg">reticulate</span></a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>build_pytorch_net</span>(<span class='fl'>10</span>, <span class='fl'>1</span>)
-</div><div class='output co'>#&gt; Sequential(
-#&gt;   (L0): Linear(in_features=10, out_features=32, bias=True)
-#&gt;   (A0): ReLU()
-#&gt;   (BN0): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-#&gt;   (D0): Dropout(p=0.1, inplace=False)
-#&gt;   (L1): Linear(in_features=32, out_features=32, bias=True)
-#&gt;   (A1): ReLU()
-#&gt;   (BN1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-#&gt;   (D1): Dropout(p=0.1, inplace=False)
-#&gt;   (2): Linear(in_features=32, out_features=1, bias=True)
-#&gt; )</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>build_pytorch_net</span>(<span class='fl'>10</span>, <span class='fl'>1</span>)
+
 <span class='fu'>build_pytorch_net</span>(
   n_in = <span class='fl'>10</span>, n_out = <span class='fl'>1</span>, nodes = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>4</span>), activation = <span class='st'>"elu"</span>,
   act_pars = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(alpha = <span class='fl'>0.5</span>), dropout = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.1</span>, <span class='fl'>0.6</span>),
   batch_norm = <span class='fl'>TRUE</span>, init = <span class='st'>"kaiming_normal"</span>, init_pars = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(non_linearity = <span class='st'>"relu"</span>))
-</div><div class='output co'>#&gt; Sequential(
-#&gt;   (L0): Linear(in_features=10, out_features=4, bias=True)
-#&gt;   (A0): ELU(alpha=0.5)
-#&gt;   (BN0): BatchNorm1d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-#&gt;   (D0): Dropout(p=0.2, inplace=False)
-#&gt;   (L1): Linear(in_features=4, out_features=4, bias=True)
-#&gt;   (A1): ELU(alpha=0.5)
-#&gt;   (BN1): BatchNorm1d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-#&gt;   (D1): Dropout(p=0.2, inplace=False)
-#&gt;   (L2): Linear(in_features=4, out_features=4, bias=True)
-#&gt;   (A2): ELU(alpha=0.5)
-#&gt;   (BN2): BatchNorm1d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-#&gt;   (D2): Dropout(p=0.1, inplace=False)
-#&gt;   (3): Linear(in_features=4, out_features=1, bias=True)
-#&gt; )</div></pre>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
