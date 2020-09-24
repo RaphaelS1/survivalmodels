@@ -50,7 +50,9 @@ limited to simple MLPs and with identical layers.
 More advanced networks will require manual creation with \CRANpkg{keras}.
 }
 \examples{
+\dontrun{
 build_keras_net(10, 1)
 
 build_keras_net(n_in = 10, n_out = 1, nodes = c(4, 4, 4), activation = "elu")
+}
 }
