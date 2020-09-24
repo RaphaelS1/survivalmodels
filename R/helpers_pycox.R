@@ -669,7 +669,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
         }
       }
 
-      ret$distr <- distr6::VectorDistribution$new(
+      ret$surv <- distr6::VectorDistribution$new(
         distribution = "WeightedDiscrete", params = x,
         decorators = c("CoreStatistics", "ExoticStatistics"))
     }

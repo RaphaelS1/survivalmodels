@@ -182,7 +182,7 @@ predict.akritas <- function(object, newdata, times = NULL,
       ret$surv <- surv
     } else {
       cdf <- apply(surv, 1, function(x) list(cdf = 1 - x))
-      ret$distr <- distr6::VectorDistribution$new(
+      ret$surv <- distr6::VectorDistribution$new(
         distribution = "WeightedDiscrete",
         shared_params = list(x = unique_times),
         params = cdf,

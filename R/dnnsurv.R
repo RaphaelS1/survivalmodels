@@ -195,7 +195,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
         x[[i]]$cdf <- 1 - surv[i, ]
       }
 
-      ret$distr <- distr6::VectorDistribution$new(
+      ret$surv <- distr6::VectorDistribution$new(
         distribution = "WeightedDiscrete", params = x,
         decorators = c("CoreStatistics", "ExoticStatistics"))
     }
