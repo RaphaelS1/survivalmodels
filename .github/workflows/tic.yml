@@ -22,10 +22,9 @@ jobs:
         config:
           # use a different tic template type if you do not want to build on all listed platforms
           - { os: windows-latest, r: "release" }
-          - { os: windows-latest, r: "3.6" }
-          - { os: windows-latest, r: "devel" }
-          - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
-          - { os: ubuntu-latest, r: "release" }
+          - { os: ubuntu-latest, r: "release", pkgdown: "true", latex: "true" }
+          - { os: ubuntu-latest, r: "3.6" }
+          - { os: ubuntu-latest, r: "devel" }
           
     env:
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
@@ -90,13 +89,6 @@ jobs:
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
         run: Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
-      # macOS devel needs its own stage because we need to work with an option to suppress the usage of binaries
-      - name: "[Stage] Prepare & Install (macOS-devel)"
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
-        run: |
-          echo -e 'options(Ncpus = 4, pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-          Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
-
       - name: Install Python
         run: |
           Rscript -e "remotes::install_github('rstudio/reticulate')"
@@ -114,7 +106,7 @@ jobs:
         run: Rscript -e 'tic::script()'
 
       - name: "[Stage] After Success"
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
         run: Rscript -e "tic::after_success()"
 
       - name: "[Stage] Upload R CMD check artifacts"
@@ -123,6 +115,7 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+          
       - name: "[Stage] Before Deploy"
         run: |
           Rscript -e "tic::before_deploy()"
