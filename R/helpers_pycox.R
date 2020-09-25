@@ -390,6 +390,7 @@ pycox_initializers <- c(
 #' @export
 get_pycox_init <- function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, val, gain = 1,
   mode = c("fan_in", "fan_out"), non_linearity = c("leaky_relu", "relu")) {
+
   switch(init,
     uniform = paste0("torch.nn.init.uniform_(m.weight, ", a, ", ", b, ")"),
     normal = paste0("torch.nn.init.normal_(m.weight, ", mean, ", ", std, ")"),
@@ -442,11 +443,13 @@ get_pycox_callbacks <- function(early_stopping = FALSE, best_weights = FALSE,
 #' @param install_torch If `TRUE` installs the dependency `torch` package as well.
 #' @export
 install_pycox <- function(method = "auto", conda = "auto", pip = FALSE, install_torch = FALSE) {
+  # nocov start
   pkg <- "pycox"
   if (install_torch) {
     pkg <- c("torch", pkg)
   }
   reticulate::py_install(pkg, method = method, conda = conda, pip = pip)
+  # nocov end
 }
 
 #' @title Install Torch With Reticulate
@@ -454,7 +457,7 @@ install_pycox <- function(method = "auto", conda = "auto", pip = FALSE, install_
 #' @param method,conda,pip See [reticulate::py_install]
 #' @export
 install_torch <- function(method = "auto", conda = "auto", pip = FALSE) {
-  reticulate::py_install("torch", method = method, conda = conda, pip = pip)
+  reticulate::py_install("torch", method = method, conda = conda, pip = pip) # nocov
 }
 
 #' @title Build a Pytorch Multilayer Perceptron
@@ -660,16 +663,14 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       ret$surv <- surv
     } else {
       # cast to distr6
-      x <- rep(list(list(x = round(as.numeric(rownames(surv)), 5), pdf = 0)), nrow(newdata))
+      x <- rep(list(list(x = round(as.numeric(rownames(surv)), 5), cdf = 0)), nrow(newdata))
       for (i in seq_len(nrow(newdata))) {
         # fix for infinite hazards - invalidate results for NaNs
         if (any(is.nan(surv[, i]))) {
-          x[[i]]$pdf <- c(1, numeric(length(x[[i]]$x) - 1))
+          x[[i]]$cdf <- rep(1, numeric(length(x[[i]]$x))) # nocov - can't force this error
         } else {
-          x[[i]]$pdf <- round(1 - surv[, i], 6)
-          x[[i]]$pdf <- c(x[[i]]$pdf[1], diff(x[[i]]$pdf))
-          x[[i]]$pdf[x[[i]]$pdf < 0.000001] <- 0L
-          x[[i]]$pdf
+          # fix rounding error bug
+          x[[i]]$cdf <- sort(round(1 - surv[, i], 6))
         }
       }
 

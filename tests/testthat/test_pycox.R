@@ -14,6 +14,30 @@ test_that("get_pycox_optim", {
   expect_is(get_pycox_optim("sparse_adam", net),  "torch.optim.sparse_adam.SparseAdam")
 })
 
+test_that("get_pycox_init", {
+  a <- 0; b <- 1; mean <- 0; std <- 1; val <- 0; gain <- 1; mode <- "fan_in"
+  non_linearity <- "leaky_relu"
+
+  expect_equal(get_pycox_init("uniform"),
+               paste0("torch.nn.init.uniform_(m.weight, ", a, ", ", b, ")"))
+  expect_equal(get_pycox_init("normal"),
+               paste0("torch.nn.init.normal_(m.weight, ", mean, ", ", std, ")"))
+  expect_equal(get_pycox_init("constant", val = val),
+               paste0("torch.nn.init.constant_(m.weight, ", val, ")"))
+  expect_equal(get_pycox_init("xavier_uniform"),
+               paste0("torch.nn.init.xavier_uniform_(m.weight, ", gain, ")"))
+  expect_equal(get_pycox_init("xavier_normal"),
+               paste0("torch.nn.init.xavier_normal_(m.weight, ", gain, ")"))
+  expect_equal(get_pycox_init("kaiming_uniform"),
+               paste0("torch.nn.init.kaiming_uniform_(m.weight, ", a, ", '",
+                 mode, "', '", non_linearity, "')"))
+  expect_equal(get_pycox_init("kaiming_normal"),
+    paste0("torch.nn.init.kaiming_normal_(m.weight, ", a, ", '", mode, "', '",
+           non_linearity, "')"))
+  expect_equal(get_pycox_init("orthogonal"),
+               paste0("torch.nn.init.orthogonal_(m.weight, ", gain, ")"))
+})
+
 test_that("predict", {
   fit <- coxtime(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE)
   p <- predict(fit, type = "all", distr6 = FALSE)

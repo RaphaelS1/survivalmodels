@@ -10,3 +10,15 @@ test_that("standardize", {
   expect_silent(coxtime(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
                         standardize_time = TRUE))
 })
+
+test_that("early_stopping", {
+  expect_true("EarlyStopping" %in% names(coxtime(Surv(time, status) ~ ., data = rats[1:50, ],
+                                                 verbose = FALSE,
+                        early_stopping = TRUE)$model$callbacks$callbacks))
+  expect_true("BestWeights" %in% names(coxtime(Surv(time, status) ~ ., data = rats[1:50, ],
+                                                 verbose = FALSE,
+                                                 best_weights = TRUE)$model$callbacks$callbacks))
+  expect_true("EarlyStopping" %in% names(coxtime(Surv(time, status) ~ ., data = rats[1:50, ],
+                                               verbose = FALSE, early_stopping = TRUE,
+                                               best_weights = TRUE)$model$callbacks$callbacks))
+})

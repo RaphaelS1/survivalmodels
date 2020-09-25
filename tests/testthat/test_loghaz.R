@@ -19,3 +19,8 @@ test_that("cutpoints", {
   expect_silent(loghaz(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
                        cuts = 3))
 })
+
+test_that("interpolate", {
+  fit <- loghaz(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE)
+  expect_silent(predict(fit, interpolate = TRUE))
+})
