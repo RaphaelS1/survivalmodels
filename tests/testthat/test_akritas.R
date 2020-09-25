@@ -5,7 +5,7 @@ test_that("silent", {
   expect_error(akritas(time_variable = "time"), "'time_variable'")
   expect_error(akritas(
     x = rats[, c("rx", "litter")],
-    y = rats$time), 'is not TRUE')
+    y = rats$time), "is not TRUE")
   expect_error(akritas(
     x = rats$rx,
     y = Surv(rats$time, rats$status)
