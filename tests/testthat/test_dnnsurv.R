@@ -21,14 +21,18 @@ test_that("early stopping", {
 })
 
 test_that("predict", {
-  fit <- dnnsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE)
+  fit <- dnnsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
+                 cuts = 5)
   p <- predict(fit, type = "all", distr6 = FALSE)
   expect_is(p, "list")
   expect_is(p$surv, "matrix")
   expect_is(p$risk, "numeric")
+  expect_equal(length(p$risk), 50)
+  expect_equal(dim(p$surv), c(50, 5))
   p <- predict(fit, type = "all", distr6 = TRUE)
   expect_is(p, "list")
   expect_is(p$surv, "VectorDistribution")
+  expect_equal(p$surv$properties$support$power, 50)
   p <- predict(fit, type = "survival")
   expect_is(p, "matrix")
 })

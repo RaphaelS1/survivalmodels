@@ -216,7 +216,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- colMeans(-log(surv))
+    ret$risk <- rowMeans(-log(surv))
   }
 
   if (length(ret) == 1) {

@@ -696,7 +696,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       if (distr6) {
         warning("'distr6' not installed, returning 'surv' as matrix.") # nocov
       }
-      ret$surv <- surv
+      ret$surv <- t(surv)
     } else {
       # cast to distr6
       x <- rep(list(list(x = round(as.numeric(rownames(surv)), 5), cdf = 0)), nrow(newdata))
