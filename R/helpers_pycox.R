@@ -78,7 +78,7 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
       )
     } else {
       if (!is.null(cutpoints)) {
-        cuts <- reticulate::r_to_py(cutpoints)
+        cuts <- reticulate::r_to_py(cutpoints) # nocov - testing causes errors due to py storage
       } else {
         cuts <- as.integer(cuts)
       }

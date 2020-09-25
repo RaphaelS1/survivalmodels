@@ -1,9 +1,8 @@
 skip_on_os("windows")
 
 test_that("silent", {
-  # suppress cuts warning
-  expect_message({fit <- suppressWarnings(coxtime(Surv(time, status) ~ ., data = rats[1:50, ],
-                                                  verbose = FALSE,  frac = 0.3))})
+  expect_message({fit <- coxtime(Surv(time, status) ~ ., data = rats[1:50, ],
+                                                  verbose = FALSE,  frac = 0.3)})
   expect_silent({predict(fit, newdata = rats[51:100, ])})
 })
 
