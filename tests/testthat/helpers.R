@@ -1,5 +1,6 @@
 library(survival)
 
+skip_on_os("windows")
 set.seed(1)
 np <- reticulate::import("numpy")
 np$random$seed(1L)
