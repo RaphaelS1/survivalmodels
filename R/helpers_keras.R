@@ -129,11 +129,13 @@ build_keras_net <- function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
 #' @export
 install_keras <- function(method = "auto", conda = "auto", pip = FALSE,
                           install_tensorflow = FALSE) {
+  # nocov start
   pkg <- "keras"
   if (install_tensorflow) {
     pkg <- c("tensorflow", pkg)
   }
   reticulate::py_install(pkg, method = method, conda = conda, pip = pip)
+  # nocov end
 }
 
 # Code originally from https://github.com/lilizhaoUM/DNNSurv with minor edits.

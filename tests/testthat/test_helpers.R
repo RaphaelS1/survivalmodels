@@ -6,7 +6,7 @@ test_that("clean_train_data", {
   expect_equal(clean_train_data(Surv(time, status) ~ ., rats),
                clean_train_data(time_variable = "time", status_variable = "status", data = rats))
   expect_equal(clean_train_data(Surv(time, status) ~ ., rats),
-               clean_train_data(x = rats[,c(1:2, 5)], y = Surv(rats$time, rats$status)))
+               clean_train_data(x = rats[, c(1:2, 5)], y = Surv(rats$time, rats$status)))
   expect_error(clean_train_data(Surv(rats$time, rats$status) ~ .), "no 'data'")
 })
 

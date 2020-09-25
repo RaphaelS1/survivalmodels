@@ -14,6 +14,7 @@
 #' If `cutpoints` not provided then number of equally spaced points at which to cut survival time.
 #' @param custom_model Keras Model \cr
 #' Optional custom architecture built with [build_keras_net] or directly with \CRANpkg{keras}.
+#' Output layer should be of length `1` input is number of features plus number of cuts.
 #' @param loss_weights,weighted_metrics See [keras::compile.keras.engine.training.Model].
 #' @param optimizer `(character(1))`\cr
 #' See [get_keras_optimizer].
@@ -187,6 +188,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
   type <- match.arg(type)
   if (type %in% c("survival", "all")) {
     if (!distr6) {
+      colnames(surv) <- object$cutpoints
       ret$surv <- surv
     } else {
       # cast to distr6
