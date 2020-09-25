@@ -57,7 +57,11 @@ fitting on training data. This is achieved by fitting the empirical CDF on the t
 and applying this to the new data.
 }
 \examples{
-if (requireNamespace("distr6", quietly = TRUE)) {
+if (requireNamespace("distr6", quietly = TRUE) &&
+    requireNamespace("survival", quietly = TRUE)) {
+
+library(survival)
+
 train <- 1:10
 test <- 11:20
 fit <- akritas(Surv(time, status) ~ ., data = rats[train, ])
