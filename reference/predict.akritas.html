@@ -155,8 +155,7 @@ in the training set.</p></td>
       <th>lambda</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Bandwidth parameter for uniform smoothing kernel in nearest neighbours estimation.
-The default value of <code>0.5</code> is arbitrary and should be chosen by the user. If <code>lambda = 1</code> then
-internally <a href='https://rdrr.io/pkg/survival/man/survfit.html'>survival::survfit</a> is called to fit the Kaplan-Meier estimator.</p></td>
+The default value of <code>0.5</code> is arbitrary and should be chosen by the user.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -199,7 +198,9 @@ doi: <a href='https://doi.org/10.1214/aos/1176325630'>10.1214/aos/1176325630</a>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"distr6"</span>, quietly = <span class='fl'>TRUE</span>) <span class='op'>&amp;&amp;</span>
     <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"survival"</span>, quietly = <span class='fl'>TRUE</span>)) {
+
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/therneau/survival'>survival</a></span>)
+
 <span class='kw'>train</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>
 <span class='kw'>test</span> <span class='op'>&lt;-</span> <span class='fl'>11</span><span class='op'>:</span><span class='fl'>20</span>
 <span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='akritas.html'>akritas</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span>(<span class='kw'>time</span>, <span class='kw'>status</span>) <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>rats</span>[<span class='kw'>train</span>, ])
