@@ -557,7 +557,7 @@ build_pytorch_net <- function(n_in, n_out, nodes = c(32, 32), activation = "relu
   # hidden layers
   for (i in seq_along(nodes)) {
     if (i < length(nodes)) {
-      add_module(net, i, nodes[i], nodes[i + 1], activation[[i]], dropout[[i]])
+      add_module(net, i, nodes[i], nodes[i + 1], activation[[i + 1]], dropout[[i + 1]])
     } else {
       # output layer
       net$add_module(as.character(length(nodes)), nn$Linear(nodes[i], n_out, bias))
@@ -617,8 +617,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
                          ...) {
 
   # clean and convert data to float32
-  newdata <- reticulate::r_to_py(
-    data.frame(clean_test_data(object, newdata)))$values$astype("float32")
+  newdata <- data.frame(clean_test_data(object, newdata))
 
 
   if (inherits(object, "coxtime") || inherits(object, "deepsurv")) {
@@ -636,19 +635,21 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
     )
 
     surv <- surv$predict_surv_df(
-      newdata,
+      reticulate::r_to_py(newdata)$values$astype("float32"),
       batch_size = as.integer(batch_size),
       num_workers = as.integer(num_workers)
     )
   } else {
     surv <- object$model$predict_surv_df(
-      newdata,
+      reticulate::r_to_py(newdata)$values$astype("float32"),
       batch_size = as.integer(batch_size),
       num_workers = as.integer(num_workers)
     )
   }
 
+  surv <- as.matrix(surv)
   ret <- list()
+  checkmate::assert(nrow(newdata) == ncol(surv))
 
   type <- match.arg(type)
   if (type %in% c("survival", "all")) {

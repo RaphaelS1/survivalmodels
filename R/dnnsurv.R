@@ -182,6 +182,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
     apply(pred[, 1:i, drop = FALSE], 1, prod)
   })
   surv <- Reduce(cbind, ypred)
+  checkmate::assert(nrow(newdata) == nrow(surv))
 
   ret <- list()
 
