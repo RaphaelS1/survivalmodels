@@ -29,6 +29,7 @@
 #'   print(fit)
 #'
 #'   if (requireNamespace("survival", quietly = TRUE)) {
+#'     library(survival)
 #'     akritas(Surv(time, status) ~ ., data = rats[1:10, ])
 #'   }
 #' }

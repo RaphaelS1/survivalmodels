@@ -65,6 +65,7 @@ if (requireNamespace("distr6", quietly = TRUE)) {
   print(fit)
 
   if (requireNamespace("survival", quietly = TRUE)) {
+    library(survival)
     akritas(Surv(time, status) ~ ., data = rats[1:10, ])
   }
 }
