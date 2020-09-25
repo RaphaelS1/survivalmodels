@@ -30,6 +30,10 @@ pchazard <- function(formula = NULL, data = NULL, reverse = FALSE,
                    best_weights = FALSE,  min_delta = 0, patience = 10L, batch_size = 256L,
                    epochs = 1L, verbose = TRUE, num_workers = 0L, shuffle = TRUE, ...) {
 
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   call <- match.call()
 
   data <- .pycox_prep(formula, data, time_variable, status_variable, x, y, reverse, activation,

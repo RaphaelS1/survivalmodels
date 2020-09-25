@@ -5,7 +5,7 @@ test_that("silent", {
   expect_error(akritas(time_variable = "time"), "'time_variable'")
   expect_error(akritas(
     x = rats[, c("rx", "litter")],
-    y = rats$time), "Must inherit from")
+    y = rats$time), 'is not TRUE')
   expect_error(akritas(
     x = rats$rx,
     y = Surv(rats$time, rats$status)
@@ -16,12 +16,12 @@ test_that("kaplan", {
   fit <- akritas(Surv(time, status) ~ ., data = rats[1:100, ])
   expect_equal(
     as.numeric(predict(fit, newdata = rats[1:100, ], lambda = 1)[1, ]),
-    survfit(Surv(time, status) ~ 1, data = rats[1:100, ])$surv)
+    survival::survfit(Surv(time, status) ~ 1, data = rats[1:100, ])$surv)
 
   fit <- akritas(Surv(time, status) ~ ., data = rats[1:100, ], reverse = TRUE)
   expect_equal(
     as.numeric(predict(fit, newdata = rats[1:100, ], lambda = 1)[1, ]),
-    survfit(Surv(time, 1 - status) ~ 1, data = rats[1:100, ])$surv)
+    survival::survfit(Surv(time, 1 - status) ~ 1, data = rats[1:100, ])$surv)
 })
 
 test_that("univariate", {

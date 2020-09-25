@@ -28,8 +28,7 @@ in the training set.}
 
 \item{lambda}{(\code{numeric(1)})\cr
 Bandwidth parameter for uniform smoothing kernel in nearest neighbours estimation.
-The default value of \code{0.5} is arbitrary and should be chosen by the user. If \code{lambda = 1} then
-internally \link[survival:survfit]{survival::survfit} is called to fit the Kaplan-Meier estimator.}
+The default value of \code{0.5} is arbitrary and should be chosen by the user.}
 
 \item{type}{(\code{numeric(1)})\cr
 Type of predicted value. Choices are survival probabilities over all time-points in training
@@ -58,9 +57,7 @@ fitting on training data. This is achieved by fitting the empirical CDF on the t
 and applying this to the new data.
 }
 \examples{
-if (requireNamespace("distr6", quietly = TRUE) &&
-    requireNamespace("survival", quietly = TRUE)) {
-library(survival)
+if (requireNamespace("distr6", quietly = TRUE)) {
 train <- 1:10
 test <- 11:20
 fit <- akritas(Surv(time, status) ~ ., data = rats[train, ])

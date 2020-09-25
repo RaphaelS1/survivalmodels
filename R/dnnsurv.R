@@ -44,6 +44,14 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
                     sample_weight = NULL, initial_epoch = 0L, steps_per_epoch = NULL,
                     validation_steps = NULL, ...) {
 
+  if (!requireNamespace("keras", quietly = TRUE)) {
+    stop("Package 'keras' required but not installed.") # nocov
+  }
+
+  if (!requireNamespace("pseudo", quietly = TRUE)) {
+    stop("Package 'pseudo' required but not installed.") # nocov
+  }
+
   call <- match.call()
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
@@ -182,13 +190,16 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
     apply(pred[, 1:i, drop = FALSE], 1, prod)
   })
   surv <- Reduce(cbind, ypred)
-  checkmate::assert(nrow(newdata) == nrow(surv))
+  stopifnot(nrow(newdata) == nrow(surv))
 
   ret <- list()
 
   type <- match.arg(type)
   if (type %in% c("survival", "all")) {
-    if (!distr6) {
+    if (!distr6 || !requireNamespace("distr6", quietly = TRUE)) {
+      if (distr6) {
+        warning("'distr6' not installed, returning 'surv' as matrix.") # nocov
+      }
       colnames(surv) <- object$cutpoints
       ret$surv <- surv
     } else {

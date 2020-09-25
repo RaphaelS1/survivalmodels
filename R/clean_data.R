@@ -9,19 +9,20 @@ clean_train_data <- function(formula = NULL, data = NULL, time_variable = NULL,
         stop("'x' should be a data.frame like object.")
       }
     }
+    stopifnot(inherits(y, "Surv"))
   } else if (!is.null(time_variable) | !is.null(status_variable)) {
     if (is.null(time_variable) | is.null(status_variable) | is.null(data)) {
       stop("'time_variable', 'status_variable', and 'data' must be provided if either 'time_variable' or 'status_variable' non-NULL.") # nolint
     } else {
-      checkmate::assertNames(c(time_variable, status_variable),
-                             subset.of = colnames(data)
-      )
+      stopifnot(time_variable %in% colnames(data))
+      stopifnot(status_variable %in% colnames(data))
       x <- data[, setdiff(colnames(data), c(time_variable, status_variable)), drop = FALSE]
-      y <- survival::Surv(data[, time_variable], data[, status_variable])
+      y <- data.frame(time = data[, time_variable], status = data[, status_variable])
     }
   } else if (!is.null(formula)) {
     f <- stats::as.formula(formula, env = data)
     y <- eval(f[[2]], envir = data)
+    stopifnot(inherits(y, "Surv"))
 
     if (deparse(f[[3]]) == ".") {
       if (is.null(data)) {
@@ -35,8 +36,6 @@ clean_train_data <- function(formula = NULL, data = NULL, time_variable = NULL,
       x <- data[, strsplit(deparse(f[[3]]), " + ", TRUE)[[1]], drop = FALSE]
     }
   }
-
-  checkmate::assertClass(y, "Surv")
 
   y <- as.matrix(y)
   x <- stats::model.matrix(~., x)[, -1, drop = FALSE]
@@ -58,7 +57,7 @@ clean_test_data <- function(object, newdata) {
   ord <- match(colnames(newdata), colnames(object$x), nomatch = NULL)
   newdata <- newdata[, !is.na(ord), drop = FALSE]
   newdata <- newdata[, ord[!is.na(ord)], drop = FALSE]
-  if (!checkmate::testNames(colnames(newdata), identical.to = colnames(object$x))) {
+  if (!all(suppressWarnings(colnames(newdata) == colnames(object$x)))) {
     stop(sprintf(
       "Names in newdata should be identical to {%s}.",
       paste0(colnames(object$x), collapse = ", ")

@@ -31,6 +31,10 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
   cutpoints = NULL, scheme = c("equidistant", "quantiles"),
   cut_min = 0L, model = c("coxtime", "deepsurv", "deephit", "loghaz", "pchazard")) {
 
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   torchtuples <- reticulate::import("torchtuples")
   pycox <- reticulate::import("pycox")
   model <- match.arg(model)
@@ -226,6 +230,10 @@ get_pycox_activation <- function(activation = "relu", construct = TRUE, alpha = 
   num_parameters = 1L, init = 0.25, lower = 1 / 8, upper = 1 / 3,
   beta = 1, threshold = 20, value = 20) {
 
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   torch <- reticulate::import("torch")
   act <- torch$nn$modules$activation
 
@@ -336,6 +344,10 @@ get_pycox_optim <- function(optimizer = "adam", net, rho = 0.9, eps = 1e-8, lr =
   step_sizes = c(1e-6, 50), dampening = 0,
   nesterov = FALSE) {
 
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   torch <- reticulate::import("torch")
   opt <- torch$optim
   params <- net$parameters()
@@ -423,6 +435,10 @@ get_pycox_init <- function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, va
 get_pycox_callbacks <- function(early_stopping = FALSE, best_weights = FALSE,
                                min_delta = 0, patience = 10L) {
 
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   torchtuples <- reticulate::import("torchtuples")
 
   if (early_stopping) {
@@ -444,6 +460,10 @@ get_pycox_callbacks <- function(early_stopping = FALSE, best_weights = FALSE,
 #' @export
 install_pycox <- function(method = "auto", conda = "auto", pip = FALSE, install_torch = FALSE) {
   # nocov start
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   pkg <- "pycox"
   if (install_torch) {
     pkg <- c("torch", pkg)
@@ -457,7 +477,12 @@ install_pycox <- function(method = "auto", conda = "auto", pip = FALSE, install_
 #' @param method,conda,pip See [reticulate::py_install]
 #' @export
 install_torch <- function(method = "auto", conda = "auto", pip = FALSE) {
-  reticulate::py_install("torch", method = method, conda = conda, pip = pip) # nocov
+  # nocov start
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.")
+  }
+  reticulate::py_install("torch", method = method, conda = conda, pip = pip)
+  # nocov end
 }
 
 #' @title Build a Pytorch Multilayer Perceptron
@@ -503,6 +528,10 @@ build_pytorch_net <- function(n_in, n_out, nodes = c(32, 32), activation = "relu
                              batch_pars = list(eps = 1e-5, momentum = 0.1, affine = TRUE),
                              init = "uniform", init_pars = list()) {
 
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   torch <- reticulate::import("torch")
   nodes <- as.integer(nodes)
   n_in <- as.integer(n_in)
@@ -511,7 +540,7 @@ build_pytorch_net <- function(n_in, n_out, nodes = c(32, 32), activation = "relu
   lng <- length(nodes)
 
   if (length(activation) == 1) {
-    checkmate::assert_character(activation)
+    stopifnot(inherits(activation, "character"))
     activation <- rep(list(do.call(
       get_pycox_activation,
       c(list(
@@ -519,7 +548,7 @@ build_pytorch_net <- function(n_in, n_out, nodes = c(32, 32), activation = "relu
         construct = TRUE
       ), act_pars))), lng)
   } else {
-    checkmate::assert_character(activation, len = lng)
+    stopifnot(inherits(activation, "character") && length(activation) == lng)
     activation <- lapply(activation, function(x) {
       do.call(
       get_pycox_activation,
@@ -534,7 +563,7 @@ build_pytorch_net <- function(n_in, n_out, nodes = c(32, 32), activation = "relu
   if (is.null(dropout) || length(dropout) == 1) {
     dropout <- rep(list(dropout), lng)
   } else {
-    checkmate::assert_numeric(dropout, len = lng)
+    stopifnot(inherits(dropout, "numeric") && length(dropout) == lng)
   }
 
   add_module <- function(net, id, num_in, num_out, act, dropout) {
@@ -622,6 +651,10 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
                          sub = 10L, type = c("survival", "risk", "all"), distr6 = FALSE,
                          ...) {
 
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   # clean and convert data to float32
   newdata <- data.frame(clean_test_data(object, newdata))
 
@@ -655,11 +688,14 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
 
   surv <- as.matrix(surv)
   ret <- list()
-  checkmate::assert(nrow(newdata) == ncol(surv))
+  stopifnot(nrow(newdata) == ncol(surv))
 
   type <- match.arg(type)
   if (type %in% c("survival", "all")) {
-    if (!distr6) {
+    if (!distr6 || !requireNamespace("distr6", quietly = TRUE)) {
+      if (distr6) {
+        warning("'distr6' not installed, returning 'surv' as matrix.") # nocov
+      }
       ret$surv <- surv
     } else {
       # cast to distr6
@@ -695,7 +731,10 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
 .pycox_prep <- function(formula, data, time_variable, status_variable, x, y, reverse,
                       activation, frac, ...) {
 
-  requireNamespace("reticulate")
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   pycox <- reticulate::import("pycox")
   torch <- reticulate::import("torch")
   torchtuples <- reticulate::import("torchtuples")

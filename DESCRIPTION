@@ -2,32 +2,32 @@ Package: survivalmodels
 Title: Models for Survival Analysis
 Version: 0.1.0
 Authors@R: 
-      c(person(given = "Raphael",
-             family = "Sonabend",
-             role = c("aut","cre"),
-             email = "raphael.sonabend.15@ucl.ac.uk",
-             comment = c(ORCID = "0000-0001-9225-4654")))
-Description: Implements classical and machine learning models for survival analysis.
-Imports:
-  Rcpp (>= 1.0.5)
-Suggests:
-  checkmate,
-  distr6 (>= 1.4.3),
-  keras,
-  knitr,
-  pseudo,
-  reticulate,
-  survival,
-  testthat
-Remotes:
-  alan-turing-institute/distr6
+    person(given = "Raphael",
+           family = "Sonabend",
+           role = c("aut", "cre"),
+           email = "raphael.sonabend.15@ucl.ac.uk",
+           comment = c(ORCID = "0000-0001-9225-4654"))
+Description: Implements classical and machine learning models
+    for survival analysis.
 License: MIT + file LICENSE
 URL: https://github.com/RaphaelS1/survivalmodels/
 BugReports: https://github.com/RaphaelS1/survivalmodels/issues
+Imports:
+    Rcpp (>= 1.0.5)
+Suggests:
+    distr6 (>= 1.4.3),
+    keras,
+    knitr,
+    pseudo,
+    reticulate,
+    survival,
+    testthat
+LinkingTo:
+    Rcpp
 VignetteBuilder: 
     knitr
+Remotes:
+    alan-turing-institute/distr6
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-LinkingTo:
-   Rcpp
 RoxygenNote: 7.1.0

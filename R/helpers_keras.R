@@ -26,6 +26,11 @@ keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop
 get_keras_optimizer <- function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, beta_2 = 0.999,
   epsilon = NULL, decay = 0, clipnorm = NULL, clipvalue = NULL,
   schedule_decay = 0.004, momentum = 0, nesterov = FALSE) {
+
+  if (!requireNamespace("keras", quietly = TRUE)) {
+    stop("Package 'keras' required but not installed.") # nocov
+  }
+
   switch(optimizer,
     adadelta = keras::optimizer_adadelta(),
     adagrad = keras::optimizer_adagrad(),
@@ -71,6 +76,10 @@ build_keras_net <- function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
                            activation = "linear", act_pars = list(),
                            dropout = 0.1, batch_norm = TRUE,
                            batch_pars = list()) {
+
+  if (!requireNamespace("keras", quietly = TRUE)) {
+    stop("Package 'keras' required but not installed.") # nocov
+  }
 
   add_module <- function(net, num_in, num_out) {
     do.call(
@@ -130,6 +139,10 @@ build_keras_net <- function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
 install_keras <- function(method = "auto", conda = "auto", pip = FALSE,
                           install_tensorflow = FALSE) {
   # nocov start
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package 'reticulate' required but not installed.") # nocov
+  }
+
   pkg <- "keras"
   if (install_tensorflow) {
     pkg <- c("tensorflow", pkg)

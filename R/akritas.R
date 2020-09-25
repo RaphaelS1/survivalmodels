@@ -24,24 +24,22 @@
 #' @return An object inheriting from class `akritas`.
 #'
 #' @examples
-#' if (requireNamespace("distr6", quietly = TRUE) &&
-#'     requireNamespace("survival", quietly = TRUE)) {
-#'
-#'   library(survival)
-#'   fit <- akritas(Surv(time, status) ~ ., data = rats[1:10, ])
+#' if (requireNamespace("distr6", quietly = TRUE)) {
+#'   fit <- akritas(data = rats[1:10, ], time_variable = "time", status_variable = "status")
 #'   print(fit)
 #'
-#'   # alternative function calls
-#'   akritas(data = rats[1:10, ], time_variable = "time", status_variable = "status")
-#'   akritas(x = rats[1:10, c("litter", "rx", "sex")], y = Surv(rats$time, rats$status))
+#'   if (requireNamespace("survival", quietly = TRUE)) {
+#'     akritas(Surv(time, status) ~ ., data = rats[1:10, ])
+#'   }
 #' }
 #' @export
 akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
   time_variable = NULL, status_variable = NULL,
   x = NULL, y = NULL, ...) {
 
-  requireNamespace("distr6")
-  requireNamespace("survival")
+  if (!requireNamespace("distr6", quietly = TRUE)) {
+    stop("Package 'distr6' required but not installed.") # nocov
+  }
 
   call <- match.call()
 
@@ -83,8 +81,7 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
 #' in the training set.
 #' @param lambda (`numeric(1)`)\cr
 #' Bandwidth parameter for uniform smoothing kernel in nearest neighbours estimation.
-#' The default value of `0.5` is arbitrary and should be chosen by the user. If `lambda = 1` then
-#' internally [survival::survfit] is called to fit the Kaplan-Meier estimator.
+#' The default value of `0.5` is arbitrary and should be chosen by the user.
 #' @param type (`numeric(1)`)\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
 #' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the mean cumulative hazard
@@ -108,9 +105,7 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
 #'
 #'
 #' @examples
-#' if (requireNamespace("distr6", quietly = TRUE) &&
-#'     requireNamespace("survival", quietly = TRUE)) {
-#' library(survival)
+#' if (requireNamespace("distr6", quietly = TRUE)) {
 #' train <- 1:10
 #' test <- 11:20
 #' fit <- akritas(Surv(time, status) ~ ., data = rats[train, ])
@@ -153,27 +148,15 @@ predict.akritas <- function(object, newdata, times = NULL,
   truth <- truth[ord, ]
   fx_train <- object$FX[ord]
 
-  if (lambda == 1) {
-    surv <- survival::survfit(survival::Surv(time, status) ~ 1, data.frame(object$y))$surv
-    surv <- matrix(surv, nrow(newdata), length(surv),
-      byrow = TRUE,
-      dimnames = list(NULL, round(unique_times)))
-
-    find <- findInterval(times, as.numeric(colnames(surv)))
-    find[find == 0] <- 1
-    surv <- surv[, find, drop = FALSE]
-    colnames(surv) <- times
-  } else {
-    surv <- C_Akritas(
-      truth = truth,
-      times = times,
-      unique_times = unique_times,
-      FX_train = fx_train,
-      FX_predict = object$Fhat$cdf(data = newdata),
-      lambda = lambda
-    )
-    colnames(surv) <- round(times, 2)
-  }
+  surv <- C_Akritas(
+    truth = truth,
+    times = times,
+    unique_times = unique_times,
+    FX_train = fx_train,
+    FX_predict = object$Fhat$cdf(data = newdata),
+    lambda = lambda
+  )
+  colnames(surv) <- round(times, 2)
 
   ret <- list()
 
