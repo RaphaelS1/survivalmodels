@@ -37,6 +37,10 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
 
   conv <- ifelse(discretise, "int64", "float32")
 
+  x_train <- data.frame(x_train)
+  y_train <- data.frame(y_train)
+  colnames(y_train) <- c("time", "status")
+
   if (frac) {
     val <- sample(seq_len(nrow(x_train)), nrow(x_train) * frac)
     x_val <- x_train[val, ]
@@ -45,11 +49,8 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
     y_train <- y_train[-val, ]
   }
 
-  y_train <- data.frame(y_train)
-  colnames(y_train) <- c("time", "status")
-  y_train <- reticulate::r_to_py(data.frame(y_train))
-
-  x_train <- reticulate::r_to_py(data.frame(x_train))$values$astype("float32")
+  y_train <- reticulate::r_to_py(y_train)
+  x_train <- reticulate::r_to_py(x_train)$values$astype("float32")
   y_train <- reticulate::tuple(
     y_train["time"]$values$astype(conv),
     y_train["status"]$values$astype(conv))
@@ -77,13 +78,15 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
       )
     } else {
       if (!is.null(cutpoints)) {
-        cuts <- cutpoints
+        cuts <- reticulate::r_to_py(cutpoints)
+      } else {
+        cuts <- as.integer(cuts)
       }
       if (model == "deephit") {
         labtrans <- do.call(
           pycox$models$DeepHitSingle$label_transform,
           list(
-            cuts = as.integer(cuts),
+            cuts = cuts,
             scheme = match.arg(scheme),
             min_ = as.integer(cut_min)
           )
@@ -92,7 +95,7 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
         labtrans <- do.call(
           pycox$models$LogisticHazard$label_transform,
           list(
-            cuts = as.integer(cuts),
+            cuts = cuts,
             scheme = match.arg(scheme),
             min_ = as.integer(cut_min)
           )
@@ -101,7 +104,7 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
         labtrans <- do.call(
           pycox$models$PCHazard$label_transform,
           list(
-            cuts = as.integer(cuts),
+            cuts = cuts,
             scheme = match.arg(scheme),
             min_ = as.integer(cut_min)
           )

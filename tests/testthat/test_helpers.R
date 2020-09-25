@@ -28,5 +28,3 @@ test_that("get_keras_optimizer", {
   expect_is(get_keras_optimizer("rmsprop"), "keras.optimizer_v2.rmsprop.RMSprop")
   expect_is(get_keras_optimizer("sgd"), "keras.optimizer_v2.gradient_descent.SGD")
 })
-
-

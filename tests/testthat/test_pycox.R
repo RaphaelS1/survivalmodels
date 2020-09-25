@@ -1,5 +1,7 @@
+skip_on_os("windows")
+
 test_that("get_pycox_optim", {
-  net = build_pytorch_net(1L, 1L, 1L)
+  net <- build_pytorch_net(1L, 1L, 1L)
   expect_is(get_pycox_optim("adadelta", net),  "torch.optim.adadelta.Adadelta")
   expect_is(get_pycox_optim("adagrad", net),  "torch.optim.adagrad.Adagrad")
   expect_is(get_pycox_optim("adamax", net),  "torch.optim.adamax.Adamax")
@@ -26,6 +28,6 @@ test_that("predict", {
 })
 
 test_that("build_pytorch_net", {
-  expect_silent(build_pytorch_net(2L, 2L, c(2,4,8), activation = c("relu", "elu", "glu"),
+  expect_silent(build_pytorch_net(2L, 2L, c(2, 4, 8), activation = c("relu", "elu", "glu"),
                                   dropout = c(0.1, 1, 0.62)))
 })
