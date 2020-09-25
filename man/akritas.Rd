@@ -59,17 +59,6 @@ This implementation uses a fit/predict interface to allow estimation on unseen d
 fitting on training data. This is achieved by fitting the empirical CDF on the training data
 and applying this to the new data.
 }
-\examples{
-if (requireNamespace("distr6", quietly = TRUE)) {
-  fit <- akritas(data = rats[1:10, ], time_variable = "time", status_variable = "status")
-  print(fit)
-
-  if (requireNamespace("survival", quietly = TRUE)) {
-    library(survival)
-    akritas(Surv(time, status) ~ ., data = rats[1:10, ])
-  }
-}
-}
 \references{
 Akritas, M. G. (1994).
 Nearest Neighbor Estimation of a Bivariate Distribution Under Random Censoring.
