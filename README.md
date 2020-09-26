@@ -9,7 +9,7 @@ Checks](https://cranchecks.info/badges/worst/survivalmodels)](https://cran.r-pro
 
 [![Repo
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/RaphaelS1/survivalmodels)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://github.com/RaphaelS1/survivalmodels)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://github.com/RaphaelS1/survivalmodels)
 
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/survivalmodels)](https://cran.r-project.org/package=survivalmodels)
@@ -22,18 +22,21 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 survivalmodels implements models for survival analysis that are either
 not already implemented in R, or novel implementations for speed
-improvements.
+improvements. Currently implemented are five neural networks from the
+Python packages [pycox](https://github.com/havakv/pycox), DNNSurv, and
+the Akritas non-parametric conditional estimator. Further updates will
+include implementations of noel survival models.
 
 ## Installation
 
-Once released on CRAN, install with
+Install the last release from CRAN:
 
 ``` r
 install.packages("survivalmodels")
 ```
 
-Until then install the latest stable build
+Install the development version from GitHub:
 
 ``` r
-remotes::install_github("RaphaelS1/survivalmodels")
+remotes::install_github("RaphaelS1/mlr3proba")
 ```

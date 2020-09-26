@@ -1,3 +1,3 @@
-# survivalmodels 0.1.0.9000
+# survivalmodels 0.1.0
 
-- In development
+- Initial release
