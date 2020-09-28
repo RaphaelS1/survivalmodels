@@ -2,15 +2,17 @@
 #' @details Implemented from the `pycox` Python package via \CRANpkg{reticulate}.
 #' Calls `<%=paste0("pycox.models.", call) %>`.
 #'
-#' @param frac \cr
-#' See [pycox_prepare_train_data].
-#' @param activation \cr
+#' @param frac `(numeric(1))` \cr
+#' Fraction of data to use for validation dataset, default is `0` and therefore no separate
+#' validation dataset.
+#' @param activation `(character(1))` \cr
 #' See [get_pycox_activation].
-#' @param num_nodes,batch_norm,dropout \cr
+#' @param num_nodes,batch_norm,dropout `(integer()/logical(1)/numeric(1))` \cr
 #' See [build_pytorch_net].
-#' @param early_stopping,best_weights,min_delta,patience \cr
+#' @param early_stopping,best_weights,min_delta,patience
+#' `(logical(1)/logical(1)/numeric(1)/integer(1)` \cr
 #' See [get_pycox_callbacks].
-#' @param device `(integer(1)/character(1))`\cr
+#' @param device `(integer(1)|character(1))`\cr
 #' Passed to `<%=paste0("pycox.models.", call) %>`, specifies device to compute models on.
 #' @param batch_size `(integer(1))`\cr
 #' Passed to `<%=paste0("pycox.models.", call, ".fit") %>`, elements in each batch.

@@ -15,7 +15,7 @@ BugReports: https://github.com/RaphaelS1/survivalmodels/issues
 Imports:
     Rcpp (>= 1.0.5)
 Suggests:
-    distr6 (>= 1.4.3),
+    distr6 (>= 1.4.4),
     keras,
     knitr,
     pseudo,
@@ -26,8 +26,6 @@ LinkingTo:
     Rcpp
 VignetteBuilder: 
     knitr
-Remotes:
-    alan-turing-institute/distr6
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0

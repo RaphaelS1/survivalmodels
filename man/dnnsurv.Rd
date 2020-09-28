@@ -69,7 +69,7 @@ Points at which to cut survival time into discrete points.}
 \item{cuts}{\code{(integer(1))}\cr
 If \code{cutpoints} not provided then number of equally spaced points at which to cut survival time.}
 
-\item{custom_model}{Keras Model \cr
+\item{custom_model}{\code{(keras.engine.training.Model(1))} \cr
 Optional custom architecture built with \link{build_keras_net} or directly with \CRANpkg{keras}.
 Output layer should be of length \code{1} input is number of features plus number of cuts.}
 

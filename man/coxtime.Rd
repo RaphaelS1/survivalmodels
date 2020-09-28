@@ -63,8 +63,9 @@ coerced with \code{model.matrix}.}
 Alternative method to call the function. Required if \verb{formula, time_variable} and
 \code{status_variable} not given. Survival outcome of right-censored observations.}
 
-\item{frac}{\cr
-See \link{pycox_prepare_train_data}.}
+\item{frac}{\code{(numeric(1))} \cr
+Fraction of data to use for validation dataset, default is \code{0} and therefore no separate
+validation dataset.}
 
 \item{standardize_time}{\code{(logical(1))}\cr
 If \code{TRUE}, the time outcome is standardized.}
@@ -79,19 +80,19 @@ If \code{TRUE} (default) and \code{standardize_time} is \code{TRUE} then time va
 If \code{TRUE} (default) and \code{standardize_time} is \code{TRUE} then time variable is scaled to unit
 variance.}
 
-\item{activation}{\cr
+\item{activation}{\code{(character(1))} \cr
 See \link{get_pycox_activation}.}
 
-\item{num_nodes, batch_norm, dropout}{\cr
+\item{num_nodes, batch_norm, dropout}{\code{(integer()/logical(1)/numeric(1))} \cr
 See \link{build_pytorch_net}.}
 
-\item{device}{\code{(integer(1)/character(1))}\cr
+\item{device}{\code{(integer(1)|character(1))}\cr
 Passed to \code{pycox.models.Coxtime}, specifies device to compute models on.}
 
 \item{shrink}{\code{(numeric(1))}\cr
 Passed to \code{pycox.models.Coxtime}, shrinkage parameter for regularization.}
 
-\item{early_stopping, best_weights, min_delta, patience}{\cr
+\item{early_stopping, best_weights, min_delta, patience}{\verb{(logical(1)/logical(1)/numeric(1)/integer(1)} \cr
 See \link{get_pycox_callbacks}.}
 
 \item{batch_size}{\code{(integer(1))}\cr

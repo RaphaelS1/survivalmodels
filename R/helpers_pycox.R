@@ -635,7 +635,7 @@ def init_weights(m):
 #' If `interpolate` is `TRUE` or model is `loghaz`, number of sub-divisions for interpolation.
 #' See reticulate::py_help(py_help(pycox$models$DeepHitSingle$interpolate))` for further
 #' details.
-#' @param type (`numeric(1)`)\cr
+#' @param type `(numeric(1))`\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
 #' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the mean cumulative hazard
 #' function over all time-points, or both (`"all"`).

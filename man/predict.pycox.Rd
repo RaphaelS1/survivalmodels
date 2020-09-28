@@ -45,7 +45,7 @@ If \code{interpolate} is \code{TRUE} or model is \code{loghaz}, number of sub-di
 See reticulate::py_help(py_help(pycox$models$DeepHitSingle$interpolate))` for further
 details.}
 
-\item{type}{(\code{numeric(1)})\cr
+\item{type}{\code{(numeric(1))}\cr
 Type of predicted value. Choices are survival probabilities over all time-points in training
 data (\code{"survival"}) or a relative risk ranking (\code{"risk"}), which is the mean cumulative hazard
 function over all time-points, or both (\code{"all"}).}

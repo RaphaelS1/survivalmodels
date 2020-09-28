@@ -12,7 +12,7 @@
 #' Points at which to cut survival time into discrete points.
 #' @param cuts `(integer(1))`\cr
 #' If `cutpoints` not provided then number of equally spaced points at which to cut survival time.
-#' @param custom_model Keras Model \cr
+#' @param custom_model `(keras.engine.training.Model(1))` \cr
 #' Optional custom architecture built with [build_keras_net] or directly with \CRANpkg{keras}.
 #' Output layer should be of length `1` input is number of features plus number of cuts.
 #' @param loss_weights,weighted_metrics See [keras::compile.keras.engine.training.Model].

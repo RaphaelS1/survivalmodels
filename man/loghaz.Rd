@@ -63,8 +63,9 @@ coerced with \code{model.matrix}.}
 Alternative method to call the function. Required if \verb{formula, time_variable} and
 \code{status_variable} not given. Survival outcome of right-censored observations.}
 
-\item{frac}{\cr
-See \link{pycox_prepare_train_data}.}
+\item{frac}{\code{(numeric(1))} \cr
+Fraction of data to use for validation dataset, default is \code{0} and therefore no separate
+validation dataset.}
 
 \item{cuts}{\code{(integer(1))}\cr
 If \code{discretise} is \code{TRUE} then determines number of cut-points for discretisation.}
@@ -81,21 +82,21 @@ See \code{reticulate::py_help(pycox$models$LogisticHazard$label_transform)} for 
 Starting duration for discretisation, see
 \code{reticulate::py_help(pycox$models$LogisticHazard$label_transform)} for more detail.}
 
-\item{activation}{\cr
+\item{activation}{\code{(character(1))} \cr
 See \link{get_pycox_activation}.}
 
-\item{custom_net}{\cr
+\item{custom_net}{\code{(torch.nn.modules.module.Module(1))}\cr
 Optional custom network built with \link{build_pytorch_net}, otherwise default architecture used.
 Note that if building a custom network the number of output channels depends on \code{cuts} or
 \code{cutpoints}.}
 
-\item{num_nodes, batch_norm, dropout}{\cr
+\item{num_nodes, batch_norm, dropout}{\code{(integer()/logical(1)/numeric(1))} \cr
 See \link{build_pytorch_net}.}
 
-\item{device}{\code{(integer(1)/character(1))}\cr
+\item{device}{\code{(integer(1)|character(1))}\cr
 Passed to \code{pycox.models.LogisticHazard}, specifies device to compute models on.}
 
-\item{early_stopping, best_weights, min_delta, patience}{\cr
+\item{early_stopping, best_weights, min_delta, patience}{\verb{(logical(1)/logical(1)/numeric(1)/integer(1)} \cr
 See \link{get_pycox_callbacks}.}
 
 \item{batch_size}{\code{(integer(1))}\cr

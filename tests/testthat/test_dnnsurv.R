@@ -1,3 +1,5 @@
+skip_on_os("windows")
+
 test_that("silent", {
   expect_silent({fit <- dnnsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
                                 validation_split = 0.3)})
