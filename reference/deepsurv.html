@@ -194,27 +194,28 @@ Alternative method to call the function. Required if <code>formula, time_variabl
     </tr>
     <tr>
       <th>frac</th>
-      <td><p><br />
-See <a href='pycox_prepare_train_data.html'>pycox_prepare_train_data</a>.</p></td>
+      <td><p><code>(numeric(1))</code> <br />
+Fraction of data to use for validation dataset, default is <code>0</code> and therefore no separate
+validation dataset.</p></td>
     </tr>
     <tr>
       <th>activation</th>
-      <td><p><br />
+      <td><p><code>(character(1))</code> <br />
 See <a href='get_pycox_activation.html'>get_pycox_activation</a>.</p></td>
     </tr>
     <tr>
       <th>num_nodes, batch_norm, dropout</th>
-      <td><p><br />
+      <td><p><code>(integer()/logical(1)/numeric(1))</code> <br />
 See <a href='build_pytorch_net.html'>build_pytorch_net</a>.</p></td>
     </tr>
     <tr>
       <th>device</th>
-      <td><p><code>(integer(1)/character(1))</code><br />
+      <td><p><code>(integer(1)|character(1))</code><br />
 Passed to <code>pycox.models.CoxPH</code>, specifies device to compute models on.</p></td>
     </tr>
     <tr>
       <th>early_stopping, best_weights, min_delta, patience</th>
-      <td><p><br />
+      <td><p><code>(logical(1)/logical(1)/numeric(1)/integer(1)</code> <br />
 See <a href='get_pycox_callbacks.html'>get_pycox_callbacks</a>.</p></td>
     </tr>
     <tr>
