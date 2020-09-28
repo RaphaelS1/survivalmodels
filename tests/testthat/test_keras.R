@@ -1,3 +1,4 @@
+skip_on_os("windows")
 skip_if_no_keras()
 
 test_that("get_keras_optimizer", {
