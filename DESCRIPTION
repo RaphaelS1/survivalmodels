@@ -17,15 +17,12 @@ Imports:
 Suggests:
     distr6 (>= 1.4.4),
     keras,
-    knitr,
     pseudo,
     reticulate,
     survival,
     testthat
 LinkingTo:
     Rcpp
-VignetteBuilder: 
-    knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
