@@ -1,4 +1,4 @@
-skip_on_os("windows")
+skip_if_no_pycox()
 
 set.seed(1)
 np <- reticulate::import("numpy")

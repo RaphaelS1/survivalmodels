@@ -1,4 +1,4 @@
-skip_on_os("windows")
+skip_if_no_pycox()
 
 test_that("get_pycox_optim", {
   net <- build_pytorch_net(1L, 1L, 1L)

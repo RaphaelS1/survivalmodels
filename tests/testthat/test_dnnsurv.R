@@ -1,4 +1,4 @@
-skip_on_os("windows")
+skip_if_no_keras()
 
 test_that("silent", {
   expect_silent({fit <- dnnsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
