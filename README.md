@@ -38,5 +38,5 @@ install.packages("survivalmodels")
 Install the development version from GitHub:
 
 ``` r
-remotes::install_github("RaphaelS1/mlr3proba")
+remotes::install_github("RaphaelS1/survivalmodels")
 ```
