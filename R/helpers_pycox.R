@@ -513,15 +513,6 @@ install_torch <- function(method = "auto", conda = "auto", pip = FALSE) {
 #' [get_pycox_init] for options.
 #' @param init_pars `(list())`\cr Passed to [get_pycox_init].
 #'
-#' @examples
-#' \dontrun{
-#' build_pytorch_net(10, 1)
-#'
-#' build_pytorch_net(
-#'   n_in = 10, n_out = 1, nodes = c(4, 4, 4), activation = "elu",
-#'   act_pars = list(alpha = 0.5), dropout = c(0.2, 0.1, 0.6),
-#'   batch_norm = TRUE, init = "kaiming_normal", init_pars = list(non_linearity = "relu"))
-#' }
 #' @export
 build_pytorch_net <- function(n_in, n_out, nodes = c(32, 32), activation = "relu",
                              act_pars = list(), dropout = 0.1,  bias = TRUE, batch_norm = TRUE,

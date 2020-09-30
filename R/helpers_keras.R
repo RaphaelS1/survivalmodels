@@ -65,12 +65,6 @@ get_keras_optimizer <- function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, bet
 #' @param batch_pars `(list())`\cr Parameters for batch normalisation, see
 #' [keras::layer_batch_normalization].
 #'
-#' @examples
-#' \dontrun{
-#' build_keras_net(10, 1)
-#'
-#' build_keras_net(n_in = 10, n_out = 1, nodes = c(4, 4, 4), activation = "elu")
-#' }
 #' @export
 build_keras_net <- function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
                            activation = "linear", act_pars = list(),
