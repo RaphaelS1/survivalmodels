@@ -81,9 +81,11 @@ jobs:
           Rscript -e "if (!requireNamespace('remotes')) install.packages('remotes', type = 'source')"
           Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl', type = 'source')"
 
-      - name: "[Custom block] [Stage] [Linux] Install pkgdown system lib req"
+      - name: "[Custom block] [Stage] [Linux] Install pkgdown system lib req and valgrind"
         if: runner.os == 'Linux'
-        run: sudo apt install libharfbuzz-dev libfribidi-dev
+        run: |
+          sudo apt install libharfbuzz-dev libfribidi-dev
+          sudo apt install -y valgrind
 
       - name: "[Stage] [Linux] Install curl"
         if: runner.os == 'Linux'
