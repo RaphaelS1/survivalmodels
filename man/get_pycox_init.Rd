@@ -54,3 +54,13 @@ Implemented methods (with help pages) are
 \item \code{"orthogonal"} \cr \code{reticulate::py_help(torch$nn$init$orthogonal_)}
 }
 }
+\examples{
+\donttest{
+if (requireNamespaces("reticulate")) {
+  get_pycox_init(init = "uniform")
+
+  get_pycox_init(init = "kaiming_uniform", a = 0, mode = "fan_out")
+}
+}
+
+}

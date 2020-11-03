@@ -22,6 +22,15 @@ keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop
 #' * `"rmsprop"` \cr [keras::optimizer_rmsprop]
 #' * `"sgd"` \cr [keras::optimizer_sgd]
 #'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("keras")) {
+#'   get_keras_optimizer()
+#'
+#'   get_keras_optimizer(optimizer = "adamax", decay = 0.1, lr = 0.01)
+#' }
+#' }
+#'
 #' @export
 get_keras_optimizer <- function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, beta_2 = 0.999,
   epsilon = NULL, decay = 0, clipnorm = NULL, clipvalue = NULL,
@@ -65,8 +74,18 @@ get_keras_optimizer <- function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, bet
 #' @param batch_pars `(list())`\cr Parameters for batch normalisation, see
 #' [keras::layer_batch_normalization].
 #'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("keras")) {
+#'   build_keras_net(4L, 2L)
+#'
+#'   build_keras_net(n_in = 4L, n_out = 2L, nodes = c(32L, 64L, 32L),
+#'     activation = "elu", dropout = 0.4)
+#' }
+#' }
+#'
 #' @export
-build_keras_net <- function(n_in, n_out, nodes = c(32, 32), layer_pars = list(),
+build_keras_net <- function(n_in, n_out, nodes = c(32L, 32L), layer_pars = list(),
                            activation = "linear", act_pars = list(),
                            dropout = 0.1, batch_norm = TRUE,
                            batch_pars = list()) {

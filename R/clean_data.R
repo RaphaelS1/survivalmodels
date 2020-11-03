@@ -10,15 +10,6 @@ clean_train_data <- function(formula = NULL, data = NULL, time_variable = NULL,
       }
     }
     stopifnot(inherits(y, "Surv"))
-  } else if (!is.null(time_variable) | !is.null(status_variable)) {
-    if (is.null(time_variable) | is.null(status_variable) | is.null(data)) {
-      stop("'time_variable', 'status_variable', and 'data' must be provided if either 'time_variable' or 'status_variable' non-NULL.") # nolint
-    } else {
-      stopifnot(time_variable %in% colnames(data))
-      stopifnot(status_variable %in% colnames(data))
-      x <- data[, setdiff(colnames(data), c(time_variable, status_variable)), drop = FALSE]
-      y <- data.frame(time = data[, time_variable], status = data[, status_variable])
-    }
   } else if (!is.null(formula)) {
     f <- stats::as.formula(formula, env = data)
     y <- eval(f[[2]], envir = data)
@@ -34,6 +25,15 @@ clean_train_data <- function(formula = NULL, data = NULL, time_variable = NULL,
       }
     } else {
       x <- data[, strsplit(deparse(f[[3]]), " + ", TRUE)[[1]], drop = FALSE]
+    }
+  } else if (!is.null(time_variable) | !is.null(status_variable)) {
+    if (is.null(time_variable) | is.null(status_variable) | is.null(data)) {
+      stop("'time_variable', 'status_variable', and 'data' must be provided if either 'time_variable' or 'status_variable' non-NULL.") # nolint
+    } else {
+      stopifnot(time_variable %in% colnames(data))
+      stopifnot(status_variable %in% colnames(data))
+      x <- data[, setdiff(colnames(data), c(time_variable, status_variable)), drop = FALSE]
+      y <- data.frame(time = data[, time_variable], status = data[, status_variable])
     }
   }
 

@@ -38,14 +38,21 @@ test_that("get_pycox_init", {
                paste0("torch.nn.init.orthogonal_(m.weight, ", gain, ")"))
 })
 
+fit <- coxtime(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE)
+
 test_that("predict", {
-  fit <- coxtime(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE)
   p <- predict(fit, type = "all", distr6 = FALSE)
   expect_is(p, "list")
   expect_is(p$surv, "matrix")
   expect_is(p$risk, "numeric")
   expect_equal(length(p$risk), 50)
   expect_equal(dim(p$surv), c(50, 20))
+})
+
+test_that("predict distr6", {
+  if (!requireNamespace("distr6", quietly = TRUE)) {
+    skip("distr6 not installed.")
+  }
   p <- predict(fit, type = "all", distr6 = TRUE)
   expect_is(p, "list")
   expect_is(p$surv, "VectorDistribution")

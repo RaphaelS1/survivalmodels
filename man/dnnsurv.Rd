@@ -8,8 +8,8 @@ dnnsurv(
   formula = NULL,
   data = NULL,
   reverse = FALSE,
-  time_variable = NULL,
-  status_variable = NULL,
+  time_variable = "time",
+  status_variable = "status",
   x = NULL,
   y = NULL,
   cutpoints = NULL,
@@ -91,6 +91,9 @@ Level of verbosity for printing, \code{0} or \code{1}.}
 \item{...}{\code{ANY} \cr
 Passed to \link{get_keras_optimizer}.}
 }
+\value{
+An object of class \code{survivalmodel}.
+}
 \description{
 DNNSurv neural fits a neural network based on pseudo-conditional survival
 probabilities.
@@ -98,6 +101,18 @@ probabilities.
 \details{
 Code for generating the conditional probabilities and pre-processing data is taken from
 \url{https://github.com/lilizhaoUM/DNNSurv}.
+}
+\examples{
+\donttest{
+if (requireNamespaces(c("keras", "pseudo")))
+  # all defaults
+  dnnsurv(data = simsurvdata(10))
+
+  # setting common parameters
+  dnnsurv(time_variable = "time", status_variable = "status", data = simsurvdata(10),
+          early_stopping = TRUE, epochs = 100L, validation_split = 0.3)
+}
+
 }
 \references{
 Zhao, L., & Feng, D. (2020).

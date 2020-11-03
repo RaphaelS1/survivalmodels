@@ -8,8 +8,8 @@ deephit(
   formula = NULL,
   data = NULL,
   reverse = FALSE,
-  time_variable = NULL,
-  status_variable = NULL,
+  time_variable = "time",
+  status_variable = "status",
   x = NULL,
   y = NULL,
   frac = 0,
@@ -31,7 +31,7 @@ deephit(
   patience = 10L,
   batch_size = 256L,
   epochs = 1L,
-  verbose = TRUE,
+  verbose = FALSE,
   num_workers = 0L,
   shuffle = TRUE,
   ...
@@ -131,6 +131,8 @@ Passed to \link{get_pycox_optim}.}
 }
 \value{
 An object inheriting from class \code{deephit}.
+
+An object of class \code{survivalmodel}.
 }
 \description{
 DeepHit fits a neural network based on the PMF of a discrete Cox model. This is
@@ -139,6 +141,20 @@ the single (non-competing) event implementation.
 \details{
 Implemented from the \code{pycox} Python package via \CRANpkg{reticulate}.
 Calls \code{pycox.models.DeepHitSingle}.
+}
+\examples{
+\donttest{
+if (requireNamespaces("reticulate")) {
+  # all defaults
+  deephit(data = simsurvdata(50))
+
+  # common parameters
+  deephit(data = simsurvdata(50), frac = 0.3, activation = "relu",
+    num_nodes = c(4L, 8L, 4L, 2L), dropout = 0.1, early_stopping = TRUE, epochs = 100L,
+    batch_size = 32L)
+}
+}
+
 }
 \references{
 Changhee Lee, William R Zame, Jinsung Yoon, and Mihaela van der Schaar.

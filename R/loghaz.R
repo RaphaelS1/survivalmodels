@@ -9,6 +9,7 @@
 #' @template param_customnet
 #' @template param_discretise
 #' @template param_traindata
+#' @template return_train
 #'
 #' @references
 #' Gensheimer, M. F., & Narasimhan, B. (2018).
@@ -19,16 +20,30 @@
 #' Continuous and discrete-time survival prediction with neural networks.
 #' https://doi.org/arXiv:1910.06724.
 #'
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("reticulate")) {
+#'   # all defaults
+#'   loghaz(data = simsurvdata(50))
+#'
+#'   # common parameters
+#'   loghaz(data = simsurvdata(50), frac = 0.3, activation = "relu",
+#'     num_nodes = c(4L, 8L, 4L, 2L), dropout = 0.1, early_stopping = TRUE, epochs = 100L,
+#'     batch_size = 32L)
+#' }
+#' }
+#'
 #' @export
 loghaz <- function(formula = NULL, data = NULL, reverse = FALSE,
-                    time_variable = NULL, status_variable = NULL,
+                    time_variable = "time", status_variable = "status",
                     x = NULL, y = NULL, frac = 0, cuts = 10, cutpoints = NULL,
                     scheme = c("equidistant", "quantiles"), cut_min = 0,
                     activation = "relu", custom_net = NULL,
                     num_nodes = c(32L, 32L), batch_norm = TRUE,
                     dropout = NULL, device = NULL, early_stopping = FALSE,
                     best_weights = FALSE,  min_delta = 0, patience = 10L, batch_size = 256L,
-                    epochs = 1L, verbose = TRUE, num_workers = 0L, shuffle = TRUE, ...) {
+                    epochs = 1L, verbose = FALSE, num_workers = 0L, shuffle = TRUE, ...) {
 
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     stop("Package 'reticulate' required but not installed.") # nocov

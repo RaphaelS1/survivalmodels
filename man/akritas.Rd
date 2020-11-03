@@ -8,8 +8,8 @@ akritas(
   formula = NULL,
   data = NULL,
   reverse = FALSE,
-  time_variable = NULL,
-  status_variable = NULL,
+  time_variable = "time",
+  status_variable = "status",
   x = NULL,
   y = NULL,
   ...
@@ -60,11 +60,9 @@ fitting on training data. This is achieved by fitting the empirical CDF on the t
 and applying this to the new data.
 }
 \examples{
-if (requireNamespace("distr6", quietly = TRUE) &&
-  requireNamespace("survival", quietly = TRUE)) {
+if (requireNamespaces(c("distr6",  "survival"))) {
   library(survival)
-  fit <- akritas(Surv(time, status) ~ ., data = rats[1:10, ])
-  print(fit)
+  akritas(Surv(time, status) ~ ., data = rats[1:10, ])
 }
 }
 \references{

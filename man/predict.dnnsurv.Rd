@@ -42,12 +42,33 @@ data (\code{"survival"}) or a relative risk ranking (\code{"risk"}), which is th
 function over all time-points, or both (\code{"all"}).}
 
 \item{distr6}{\code{(logical(1))}\cr
-If \code{FALSE} (default) and \code{type} is \code{"survival"} or \code{"all"} returns data.frame of survival
+If \code{FALSE} (default) and \code{type} is \code{"survival"} or \code{"all"} returns matrix of survival
 probabilities, otherwise returns a \code{\link[distr6:VectorDistribution]{distr6::VectorDistribution()}}.}
 
 \item{...}{\code{ANY} \cr
 Currently ignored.}
 }
+\value{
+A \code{numeric} if \code{type = "risk"}, a \code{\link[distr6:VectorDistribution]{distr6::VectorDistribution()}} (if \code{distr6 = TRUE})
+and \code{type = "survival"}; a \code{matrix} if (\code{distr6 = FALSE}) and \code{type = "survival"} where
+entries are survival probabilities with rows of observations and columns are time-points;
+or a list combining above if \code{type = "all"}.
+}
 \description{
 Predicted values from a fitted object of class dnnsurv.
+}
+\examples{
+\donttest{
+if (requireNamespaces(c("keras", "pseudo")))
+  fit <- dnnsurv(data = simsurvdata(10))
+
+  # predict survival matrix and relative risks
+  predict(fit, simsurvdata(10), type = "all")
+
+  # return as distribution
+  if (requireNamespaces("distr6")) {
+    predict(fit, simsurvdata(10), distr6 = TRUE)
+  }
+}
+
 }

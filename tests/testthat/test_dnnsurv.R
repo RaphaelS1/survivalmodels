@@ -23,15 +23,22 @@ test_that("early stopping", {
                         early_stopping = TRUE, validation_split = 0.3))
 })
 
+fit <- dnnsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
+               cuts = 5)
+
 test_that("predict", {
-  fit <- dnnsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
-                 cuts = 5)
   p <- predict(fit, type = "all", distr6 = FALSE)
   expect_is(p, "list")
   expect_is(p$surv, "matrix")
   expect_is(p$risk, "numeric")
   expect_equal(length(p$risk), 50)
   expect_equal(dim(p$surv), c(50, 5))
+})
+
+test_that("predict distr6", {
+  if (!requireNamespace("distr6", quietly = TRUE)) {
+    skip("distr6 not installed.")
+  }
   p <- predict(fit, type = "all", distr6 = TRUE)
   expect_is(p, "list")
   expect_is(p$surv, "VectorDistribution")

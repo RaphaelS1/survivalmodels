@@ -1,6 +1,7 @@
 #' @title Prepare Data for Pycox Model Training
 #' @description Utility function to prepare data for training in a Pycox model.
 #' Generally used internally only.
+#'
 #' @param x_train `(matrix(1))` \cr Training covariates.
 #' @param y_train `(matrix(1))` \cr Training outcomes.
 #' @param frac `(numeric(1))`\cr Fraction of data to use for validation dataset, default is `0`
@@ -24,6 +25,7 @@
 #' @param cut_min `(integer(1))`\cr Starting duration for discretisation, see
 #' `reticulate::py_help(pycox$models$LogisticHazard$label_transform)`.
 #' @param model `(character(1))`\cr Corresponding pycox model.
+#'
 #' @export
 pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_time = FALSE,
                               log_duration = FALSE,
@@ -224,6 +226,18 @@ pycox_activations <- c(
 #' * `"tanh"` \cr `reticulate::py_help(torch$nn$modules$activation$Tanh)`
 #' * `"tanhshrink"` \cr `reticulate::py_help(torch$nn$modules$activation$Tanhshrink)`
 #' * `"threshold"` \cr `reticulate::py_help(torch$nn$modules$activation$Threshold)`
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("reticulate")) {
+#'   #' # returns constructed objects
+#'   get_pycox_activation(activation = "relu", construct = TRUE)
+#'
+#'   # returns class
+#'   get_pycox_activation(activation = "selu", construct = FALSE)
+#' }
+#' }
+#'
 #' @export
 get_pycox_activation <- function(activation = "relu", construct = TRUE, alpha = 1, dim = NULL,
   lambd = 0.5, min_val = -1, max_val = 1, negative_slope = 0.01,
@@ -399,6 +413,15 @@ pycox_initializers <- c(
 #' * `"kaiming_normal"` \cr `reticulate::py_help(torch$nn$init$kaiming_normal_)`
 #' * `"orthogonal"` \cr `reticulate::py_help(torch$nn$init$orthogonal_)`
 #'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("reticulate")) {
+#'   get_pycox_init(init = "uniform")
+#'
+#'   get_pycox_init(init = "kaiming_uniform", a = 0, mode = "fan_out")
+#' }
+#' }
+#'
 #' @export
 get_pycox_init <- function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, val, gain = 1,
   mode = c("fan_in", "fan_out"), non_linearity = c("leaky_relu", "relu")) {
@@ -430,6 +453,15 @@ get_pycox_init <- function(init = "uniform", a = 0, b = 1, mean = 0, std = 1, va
 #' Passed to `torchtuples.callbacks.EarlyStopping`.
 #' @param patience `(integer(1))`\cr
 #' Passed to `torchtuples.callbacks.EarlyStopping`.
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("reticulate")) {
+#'   get_pycox_callbacks(early_stopping = TRUE)
+#'
+#'   get_pycox_callbacks(best_weights = TRUE)
+#' }
+#' }
 #'
 #' @export
 get_pycox_callbacks <- function(early_stopping = FALSE, best_weights = FALSE,
@@ -512,6 +544,17 @@ install_torch <- function(method = "auto", conda = "auto", pip = FALSE) {
 #' @param init `(character(1))`\cr Weight initialization method. See
 #' [get_pycox_init] for options.
 #' @param init_pars `(list())`\cr Passed to [get_pycox_init].
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("reticulate")) {
+#'   build_pytorch_net(4L, 2L, nodes = c(32, 64, 32), activation = "selu")
+#'
+#'   # pass parameters to activation and initializer functions
+#'   build_pytorch_net(4L, 2L, activation = "elu", act_pars = list(alpha = 0.1),
+#'   init  = "kaiming_uniform", init_pars = list(mode = "fan_out"))
+#' }
+#' }
 #'
 #' @export
 build_pytorch_net <- function(n_in, n_out, nodes = c(32, 32), activation = "relu",
@@ -606,6 +649,8 @@ def init_weights(m):
 #'
 #' @description Predicted values from a fitted pycox ANN.
 #'
+#' @template return_predict
+#'
 #' @param object `(pycox(1))`\cr
 #' Object of class inheriting from `"pycox"`.
 #' @param newdata `(data.frame(1))`\cr
@@ -631,10 +676,25 @@ def init_weights(m):
 #' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the mean cumulative hazard
 #' function over all time-points, or both (`"all"`).
 #' @param distr6 `(logical(1))`\cr
-#' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns data.frame of survival
+#' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
 #' probabilities, otherwise returns a [distr6::VectorDistribution()].
 #' @param ... `ANY` \cr
 #' Currently ignored.
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("reticulate")) {
+#'   fit <- coxtime(data = simsurvdata(50))
+#'
+#'   # predict survival matrix and relative risks
+#'   predict(fit, simsurvdata(10), type = "all")
+#'
+#'   # return as distribution
+#'   if (requireNamespaces("distr6")) {
+#'     predict(fit, simsurvdata(10), distr6 = TRUE)
+#'   }
+#' }
+#' }
 #'
 #' @export
 predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,

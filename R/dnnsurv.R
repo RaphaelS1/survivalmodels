@@ -7,6 +7,7 @@
 #' \url{https://github.com/lilizhaoUM/DNNSurv}.
 #'
 #' @template param_traindata
+#' @template return_train
 #'
 #' @param cutpoints `(numeric())`\cr
 #' Points at which to cut survival time into discrete points.
@@ -27,15 +28,25 @@
 #' @param ... `ANY` \cr
 #' Passed to [get_keras_optimizer].
 #'
-#'
 #' @references
 #' Zhao, L., & Feng, D. (2020).
 #' DNNSurv: Deep Neural Networks for Survival Analysis Using Pseudo Values.
 #' https://arxiv.org/abs/1908.02337
 #'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces(c("keras", "pseudo")))
+#'   # all defaults
+#'   dnnsurv(data = simsurvdata(10))
+#'
+#'   # setting common parameters
+#'   dnnsurv(time_variable = "time", status_variable = "status", data = simsurvdata(10),
+#'           early_stopping = TRUE, epochs = 100L, validation_split = 0.3)
+#' }
+#'
 #' @export
 dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
-                     time_variable = NULL, status_variable = NULL,
+                     time_variable = "time", status_variable = "status",
                      x = NULL, y = NULL, cutpoints = NULL, cuts = 5L,
                     custom_model = NULL, loss_weights = NULL, weighted_metrics = NULL,
                     optimizer = "adam", early_stopping = FALSE, min_delta = 0, patience = 0L,
@@ -141,6 +152,8 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
 #'
 #' @description Predicted values from a fitted object of class dnnsurv.
 #'
+#' @template return_predict
+#'
 #' @param object `(dnnsurv(1))`\cr
 #' Object of class inheriting from `"dnnsurv"`.
 #' @param newdata `(data.frame(1))`\cr
@@ -159,10 +172,24 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
 #' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the mean cumulative hazard
 #' function over all time-points, or both (`"all"`).
 #' @param distr6 `(logical(1))`\cr
-#' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns data.frame of survival
+#' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
 #' probabilities, otherwise returns a [distr6::VectorDistribution()].
 #' @param ... `ANY` \cr
 #' Currently ignored.
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces(c("keras", "pseudo")))
+#'   fit <- dnnsurv(data = simsurvdata(10))
+#'
+#'   # predict survival matrix and relative risks
+#'   predict(fit, simsurvdata(10), type = "all")
+#'
+#'   # return as distribution
+#'   if (requireNamespaces("distr6")) {
+#'     predict(fit, simsurvdata(10), distr6 = TRUE)
+#'   }
+#' }
 #'
 #' @export
 predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,

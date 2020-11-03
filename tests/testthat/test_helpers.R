@@ -14,6 +14,9 @@ test_that("clean_train_data", {
 })
 
 test_that("clean_test_data", {
+  if (!requireNamespace("distr6", quietly = TRUE)) {
+    skip("distr6 not installed.")
+  }
   fit <- akritas(Surv(time, status) ~ ., rats[1:10, ])
   expect_equal(clean_test_data(fit), fit$x)
   expect_error(clean_test_data(fit, rats[, 1:2]), "Names in")

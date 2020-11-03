@@ -19,21 +19,36 @@
 #' Passed to `pycox.models.Coxtime`, shrinkage parameter for regularization.
 #'
 #' @template param_traindata
+#' @template return_train
 #'
 #' @references
 #' Kvamme, H., Borgan, Ø., & Scheel, I. (2019).
 #' Time-to-event prediction with neural networks and Cox regression.
 #' Journal of Machine Learning Research, 20(129), 1–30.
 #'
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("reticulate")) {
+#'   # all defaults
+#'   coxtime(data = simsurvdata(50))
+#'
+#'   # common parameters
+#'   coxtime(data = simsurvdata(50), frac = 0.3, activation = "relu",
+#'     num_nodes = c(4L, 8L, 4L, 2L), dropout = 0.1, early_stopping = TRUE, epochs = 100L,
+#'     batch_size = 32L)
+#' }
+#' }
+#'
 #' @export
 coxtime <- function(formula = NULL, data = NULL, reverse = FALSE,
-                    time_variable = NULL, status_variable = NULL,
+                    time_variable = "time", status_variable = "status",
                     x = NULL, y = NULL, frac = 0, standardize_time = FALSE,
                     log_duration = FALSE, with_mean = TRUE, with_std = TRUE,
                     activation = "relu", num_nodes = c(32L, 32L), batch_norm = TRUE,
                     dropout = NULL, device = NULL, shrink = 0, early_stopping = FALSE,
                     best_weights  = FALSE,  min_delta = 0, patience = 10L, batch_size = 256L,
-                    epochs = 1L, verbose = TRUE, num_workers = 0L, shuffle = TRUE, ...) {
+                    epochs = 1L, verbose = FALSE, num_workers = 0L, shuffle = TRUE, ...) {
 
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     stop("Package 'reticulate' required but not installed.") # nocov

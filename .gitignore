@@ -3,3 +3,11 @@
 .Rproj.user
 
 .Rhistory
+
+src/mlr3extralearners.so
+
+src/survivalmodels.so
+
+*.o
+
+*.so

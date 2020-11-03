@@ -7,7 +7,7 @@
 build_keras_net(
   n_in,
   n_out,
-  nodes = c(32, 32),
+  nodes = c(32L, 32L),
   layer_pars = list(),
   activation = "linear",
   act_pars = list(),
@@ -48,4 +48,15 @@ Utility function to build a Keras MLP.
 This function is a helper for R users with less Python experience. Currently it is
 limited to simple MLPs and with identical layers.
 More advanced networks will require manual creation with \CRANpkg{keras}.
+}
+\examples{
+\donttest{
+if (requireNamespaces("keras")) {
+  build_keras_net(4L, 2L)
+
+  build_keras_net(n_in = 4L, n_out = 2L, nodes = c(32L, 64L, 32L),
+    activation = "elu", dropout = 0.4)
+}
+}
+
 }

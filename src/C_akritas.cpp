@@ -11,7 +11,6 @@ NumericVector C_Akritas(NumericMatrix truth, NumericVector times, NumericVector 
   double num;
   double den;
   double FXn;
-  int j;
 
   NumericMatrix surv(FX_predict.size(), times.size());
 
@@ -19,13 +18,11 @@ NumericVector C_Akritas(NumericMatrix truth, NumericVector times, NumericVector 
     FXn = FX_predict[n];
     for (int i = 0; i < times.size(); i++) {
       prod = 1;
-      j = 0;
-      while (unique_times[j] <= times[i]) {
-        if (j == unique_times.size()) {
+      for (int j = 0; j < unique_times.size(); j++) {
+        if (unique_times[j] > times[i]) {
           break;
-        }
-
-        t = unique_times[j];
+        } else {
+          t = unique_times[j];
           num = 0;
           den = 0;
           for (int l = 0; l < FX_train.size(); l++) {
@@ -39,7 +36,7 @@ NumericVector C_Akritas(NumericMatrix truth, NumericVector times, NumericVector 
           if (den != 0) {
             prod *= (1 - num/den);
           }
-          j++;
+        }
       }
       surv(n, i) = prod;
     }

@@ -52,3 +52,13 @@ Implemented optimizers are
 \item \code{"sgd"} \cr \link[keras:optimizer_sgd]{keras::optimizer_sgd}
 }
 }
+\examples{
+\donttest{
+if (requireNamespaces("keras")) {
+  get_keras_optimizer()
+
+  get_keras_optimizer(optimizer = "adamax", decay = 0.1, lr = 0.01)
+}
+}
+
+}

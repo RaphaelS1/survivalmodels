@@ -7,6 +7,7 @@
 #' @templateVar fun deepsurv
 #'
 #' @template param_traindata
+#' @template return_train
 #'
 #' @references
 #' Katzman, J. L., Shaham, U., Cloninger, A., Bates, J., Jiang, T., & Kluger, Y. (2018).
@@ -14,14 +15,28 @@
 #' network.
 #' BMC Medical Research Methodology, 18(1), 24. https://doi.org/10.1186/s12874-018-0482-1
 #'
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespaces("reticulate")) {
+#'   # all defaults
+#'   deepsurv(data = simsurvdata(50))
+#'
+#'   # common parameters
+#'   deepsurv(data = simsurvdata(50), frac = 0.3, activation = "relu",
+#'     num_nodes = c(4L, 8L, 4L, 2L), dropout = 0.1, early_stopping = TRUE, epochs = 100L,
+#'     batch_size = 32L)
+#' }
+#' }
+#'
 #' @export
 deepsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
-                    time_variable = NULL, status_variable = NULL,
+                    time_variable = "time", status_variable = "status",
                     x = NULL, y = NULL, frac = 0,
                     activation = "relu", num_nodes = c(32L, 32L), batch_norm = TRUE,
                     dropout = NULL, device = NULL, early_stopping = FALSE,
                     best_weights = FALSE,  min_delta = 0, patience = 10L, batch_size = 256L,
-                    epochs = 1L, verbose = TRUE, num_workers = 0L, shuffle = TRUE, ...) {
+                    epochs = 1L, verbose = FALSE, num_workers = 0L, shuffle = TRUE, ...) {
 
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     stop("Package 'reticulate' required but not installed.") # nocov

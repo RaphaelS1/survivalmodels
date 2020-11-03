@@ -28,3 +28,13 @@ Passed to \code{torchtuples.callbacks.EarlyStopping}.}
 \description{
 Helper function to return torchtuples callbacks from \code{torchtuples.callbacks}.
 }
+\examples{
+\donttest{
+if (requireNamespaces("reticulate")) {
+  get_pycox_callbacks(early_stopping = TRUE)
+
+  get_pycox_callbacks(best_weights = TRUE)
+}
+}
+
+}

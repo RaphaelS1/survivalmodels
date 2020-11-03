@@ -1,3 +1,7 @@
+if (!requireNamespace("distr6", quietly = TRUE)) {
+  skip("distr6 not installed.")
+}
+
 test_that("silent", {
   expect_error(akritas(Surv(time, status) ~ .))
   expect_silent(akritas(Surv(time, status) ~ ., data = rats[1:10, ]))

@@ -36,7 +36,7 @@ data (\code{"survival"}) or a relative risk ranking (\code{"risk"}), which is th
 function over all time-points, or both (\code{"all"}).}
 
 \item{distr6}{\code{(logical(1))}\cr
-If \code{FALSE} (default) and \code{type} is \code{"survival"} or \code{"all"} returns data.frame of survival
+If \code{FALSE} (default) and \code{type} is \code{"survival"} or \code{"all"} returns matrix of survival
 probabilities, otherwise returns a \code{\link[distr6:VectorDistribution]{distr6::VectorDistribution()}}.}
 
 \item{...}{\code{ANY} \cr
@@ -44,7 +44,7 @@ Currently ignored.}
 }
 \value{
 A \code{numeric} if \code{type = "risk"}, a \code{\link[distr6:VectorDistribution]{distr6::VectorDistribution()}} (if \code{distr6 = TRUE})
-and \code{type = "survival"}; a \code{data.frame} if (\code{distr6 = FALSE}) and \code{type = "survival"} where
+and \code{type = "survival"}; a \code{matrix} if (\code{distr6 = FALSE}) and \code{type = "survival"} where
 entries are survival probabilities with rows of observations and columns are time-points;
 or a list combining above if \code{type = "all"}.
 }
@@ -57,8 +57,7 @@ fitting on training data. This is achieved by fitting the empirical CDF on the t
 and applying this to the new data.
 }
 \examples{
-if (requireNamespace("distr6", quietly = TRUE) &&
-    requireNamespace("survival", quietly = TRUE)) {
+if (requireNamespaces(c("distr6", "survival"))) {
 
 library(survival)
 

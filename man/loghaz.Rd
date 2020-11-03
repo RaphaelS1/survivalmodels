@@ -8,8 +8,8 @@ loghaz(
   formula = NULL,
   data = NULL,
   reverse = FALSE,
-  time_variable = NULL,
-  status_variable = NULL,
+  time_variable = "time",
+  status_variable = "status",
   x = NULL,
   y = NULL,
   frac = 0,
@@ -29,7 +29,7 @@ loghaz(
   patience = 10L,
   batch_size = 256L,
   epochs = 1L,
-  verbose = TRUE,
+  verbose = FALSE,
   num_workers = 0L,
   shuffle = TRUE,
   ...
@@ -121,6 +121,8 @@ Passed to \link{get_pycox_optim}.}
 }
 \value{
 An object inheriting from class \code{loghaz}.
+
+An object of class \code{survivalmodel}.
 }
 \description{
 Logistic-Hazard fits a discrete neural network based on a cross-entropy loss
@@ -129,6 +131,20 @@ and predictions of a discrete hazard function, also known as Nnet-Survival.
 \details{
 Implemented from the \code{pycox} Python package via \CRANpkg{reticulate}.
 Calls \code{pycox.models.LogisticHazard}.
+}
+\examples{
+\donttest{
+if (requireNamespaces("reticulate")) {
+  # all defaults
+  loghaz(data = simsurvdata(50))
+
+  # common parameters
+  loghaz(data = simsurvdata(50), frac = 0.3, activation = "relu",
+    num_nodes = c(4L, 8L, 4L, 2L), dropout = 0.1, early_stopping = TRUE, epochs = 100L,
+    batch_size = 32L)
+}
+}
+
 }
 \references{
 Gensheimer, M. F., & Narasimhan, B. (2018).
