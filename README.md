@@ -20,16 +20,16 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 ## What is survivalmodels?
 
-survivalmodels implements models for survival analysis that are either
+`survivalmodels` implements models for survival analysis that are either
 not already implemented in R, or novel implementations for speed
 improvements. Currently implemented are five neural networks from the
 Python packages [pycox](https://github.com/havakv/pycox), DNNSurv, and
 the Akritas non-parametric conditional estimator. Further updates will
-include implementations of noel survival models.
+include implementations of novel survival models.
 
 ## Installation
 
-Install the last release from CRAN:
+Install the latest release from CRAN:
 
 ``` r
 install.packages("survivalmodels")
