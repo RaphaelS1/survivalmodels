@@ -1,5 +1,11 @@
 skip_if_no_pycox()
 
+set.seed(1)
+np <- reticulate::import("numpy")
+np$random$seed(1L)
+torch <- reticulate::import("torch")
+torch$manual_seed(1L)
+
 test_that("get_pycox_optim", {
   net <- build_pytorch_net(1L, 1L, 1L)
   expect_is(get_pycox_optim("adadelta", net),  "torch.optim.adadelta.Adadelta")

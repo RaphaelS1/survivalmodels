@@ -14,7 +14,7 @@
 #' simsurvdata()
 #'
 #' @export
-simsurvdata = function(n = 100, trt = 2, age = 2, sex = 1.5, cutoff = 20) {
+simsurvdata <- function(n = 100, trt = 2, age = 2, sex = 1.5, cutoff = 20) {
   covs <- data.frame(
     sexF = stats::rbinom(n, 1, 0.5),
     age = round(stats::runif(n, 20, 50)),
@@ -25,7 +25,7 @@ simsurvdata = function(n = 100, trt = 2, age = 2, sex = 1.5, cutoff = 20) {
   shape <- age * covs$age
 
   time <- stats::rweibull(nrow(covs), shape = shape, scale = scale)
-  time <- ((time - min(time))/(max(time)-min(time)) * 29) + 1
+  time <- ((time - min(time))/(max(time) - min(time)) * 29) + 1
 
   status <- as.integer(time <= cutoff)
   time[time > cutoff] <- cutoff
