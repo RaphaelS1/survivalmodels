@@ -74,7 +74,7 @@ function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -190,6 +190,16 @@ methods.</p></td>
 </ul>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='requireNamespaces.html'>requireNamespaces</a></span><span class='op'>(</span><span class='st'>"reticulate"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>get_pycox_init</span><span class='op'>(</span>init <span class='op'>=</span> <span class='st'>"uniform"</span><span class='op'>)</span>
+
+  <span class='fu'>get_pycox_init</span><span class='op'>(</span>init <span class='op'>=</span> <span class='st'>"kaiming_uniform"</span>, a <span class='op'>=</span> <span class='fl'>0</span>, mode <span class='op'>=</span> <span class='st'>"fan_out"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; [1] "torch.nn.init.kaiming_uniform_(m.weight, 0, 'fan_out', 'leaky_relu')"</div><div class='input'><span class='co'># }</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

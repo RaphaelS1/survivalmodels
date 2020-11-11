@@ -73,7 +73,7 @@ probabilities." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -126,8 +126,8 @@ probabilities.</p>
   formula <span class='op'>=</span> <span class='cn'>NULL</span>,
   data <span class='op'>=</span> <span class='cn'>NULL</span>,
   reverse <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  time_variable <span class='op'>=</span> <span class='cn'>NULL</span>,
-  status_variable <span class='op'>=</span> <span class='cn'>NULL</span>,
+  time_variable <span class='op'>=</span> <span class='st'>"time"</span>,
+  status_variable <span class='op'>=</span> <span class='st'>"status"</span>,
   x <span class='op'>=</span> <span class='cn'>NULL</span>,
   y <span class='op'>=</span> <span class='cn'>NULL</span>,
   cutpoints <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -247,6 +247,9 @@ Passed to <a href='get_keras_optimizer.html'>get_keras_optimizer</a>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An object of class <code>survivalmodel</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Code for generating the conditional probabilities and pre-processing data is taken from
@@ -257,6 +260,36 @@ Passed to <a href='get_keras_optimizer.html'>get_keras_optimizer</a>.</p></td>
 DNNSurv: Deep Neural Networks for Survival Analysis Using Pseudo Values.
 https://arxiv.org/abs/1908.02337</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='requireNamespaces.html'>requireNamespaces</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"keras"</span>, <span class='st'>"pseudo"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='co'># all defaults</span>
+  <span class='fu'>dnnsurv</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt;  DNNSurv Neural Network 
+#&gt; 
+#&gt; Call:
+#&gt;   dnnsurv(data = simsurvdata(10))
+#&gt; 
+#&gt; Response:
+#&gt;   Surv(time, status)
+#&gt; Features:
+#&gt;   {sexF, age, trt} </div><div class='input'>
+  <span class='co'># setting common parameters</span>
+  <span class='fu'>dnnsurv</span><span class='op'>(</span>time_variable <span class='op'>=</span> <span class='st'>"time"</span>, status_variable <span class='op'>=</span> <span class='st'>"status"</span>, data <span class='op'>=</span> <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>,
+          early_stopping <span class='op'>=</span> <span class='cn'>TRUE</span>, epochs <span class='op'>=</span> <span class='fl'>100L</span>, validation_split <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt;  DNNSurv Neural Network 
+#&gt; 
+#&gt; Call:
+#&gt;   dnnsurv(data = simsurvdata(10), time_variable = "time", status_variable = "status",      early_stopping = TRUE, epochs = 100L, validation_split = 0.3)
+#&gt; 
+#&gt; Response:
+#&gt;   Surv(time, status)
+#&gt; Features:
+#&gt;   {sexF, age, trt} </div><div class='input'><span class='co'># }</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

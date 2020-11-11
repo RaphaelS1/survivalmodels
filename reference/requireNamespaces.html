@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Install Keras and Tensorflow — install_keras • survivalmodels</title>
+<title>Vectorised Logical requireNamespace — requireNamespaces • survivalmodels</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Install Keras and Tensorflow — install_keras" />
-<meta property="og:description" content="Stripped back version of keras::install_keras." />
+<meta property="og:title" content="Vectorised Logical requireNamespace — requireNamespaces" />
+<meta property="og:description" content="Helper function for internal use. Vectorises the requireNamespace function and
+returns TRUE if all packages, x, are available and FALSE otherwise." />
 
 
 
@@ -111,32 +112,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Install Keras and Tensorflow</h1>
-    <small class="dont-index">Source: <a href='https://github.com/RaphaelS1/survivalmodels/blob/master/R/helpers_keras.R'><code>R/helpers_keras.R</code></a></small>
-    <div class="hidden name"><code>install_keras.Rd</code></div>
+    <h1>Vectorised Logical requireNamespace</h1>
+    <small class="dont-index">Source: <a href='https://github.com/RaphaelS1/survivalmodels/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
+    <div class="hidden name"><code>requireNamespaces.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Stripped back version of <a href='https://rdrr.io/pkg/keras/man/install_keras.html'>keras::install_keras</a>.</p>
+    <p>Helper function for internal use. Vectorises the <a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a> function and
+returns <code>TRUE</code> if all packages, <code>x</code>, are available and <code>FALSE</code> otherwise.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>install_keras</span><span class='op'>(</span>
-  method <span class='op'>=</span> <span class='st'>"auto"</span>,
-  conda <span class='op'>=</span> <span class='st'>"auto"</span>,
-  pip <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  install_tensorflow <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>requireNamespaces</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>method, conda, pip</th>
-      <td><p>See <a href='https://rdrr.io/pkg/reticulate/man/py_install.html'>reticulate::py_install</a>.</p></td>
-    </tr>
-    <tr>
-      <th>install_tensorflow</th>
-      <td><p>If <code>TRUE</code> installs the dependency <code>tensorflow</code> package as well.</p></td>
+      <th>x</th>
+      <td><p><code>(character())</code> <br /> string naming the packages/name spaces to load.</p></td>
     </tr>
     </table>
 
