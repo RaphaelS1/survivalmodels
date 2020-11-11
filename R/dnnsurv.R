@@ -217,6 +217,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
     apply(pred[, 1:i, drop = FALSE], 1, prod)
   })
   surv <- Reduce(cbind, ypred)
+  colnames(surv) <- object$cutpoints
   stopifnot(nrow(newdata) == nrow(surv))
 
   ret <- list()
@@ -227,7 +228,6 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
       if (distr6) {
         warning("'distr6' not installed, returning 'surv' as matrix.") # nocov
       }
-      colnames(surv) <- object$cutpoints
       ret$surv <- surv
     } else {
       # cast to distr6

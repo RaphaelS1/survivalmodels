@@ -14,7 +14,7 @@ BugReports: https://github.com/RaphaelS1/survivalmodels/issues
 Imports:
     Rcpp (>= 1.0.5)
 Suggests:
-    distr6 (>= 1.4.4),
+    distr6 (>= 1.4.7),
     keras,
     pseudo,
     reticulate,
