@@ -17,7 +17,7 @@ test_that("get_pycox_optim", {
   expect_is(get_pycox_optim("rmsprop", net),  "torch.optim.rmsprop.RMSprop")
   expect_is(get_pycox_optim("rprop", net),  "torch.optim.rprop.Rprop")
   expect_is(get_pycox_optim("sgd", net),  "torch.optim.sgd.SGD")
-  expect_is(get_pycox_optim("sparse_adam", net),  "torch.optim.sparse_adam.SparseAdam")
+  # expect_is(get_pycox_optim("sparse_adam", net),  "torch.optim.sparse_adam.SparseAdam")
 })
 
 test_that("get_pycox_init", {
