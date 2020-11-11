@@ -80,11 +80,11 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
 #' @param lambda (`numeric(1)`)\cr
 #' Bandwidth parameter for uniform smoothing kernel in nearest neighbours estimation.
 #' The default value of `0.5` is arbitrary and should be chosen by the user.
-#' @param type (`numeric(1)`)\cr
+#' @param type (`character(1)`)\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
-#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the mean cumulative hazard
-#' function over all time-points, or both (`"all"`).
-#' @param distr6 `(logical(1))`\cr
+#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the negative mean survival
+#' time so higher rank implies higher risk of event, or both (`"all"`).
+#' @param distr6 (`logical(1)`)\cr
 #' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
 #' probabilities, otherwise returns a [distr6::VectorDistribution()].
 #' @param ... `ANY` \cr
@@ -174,7 +174,8 @@ predict.akritas <- function(object, newdata, times = NULL,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- rowMeans(-log(surv))
+    ret$risk <- -as.numeric(apply(1 - surv, 1,
+                                function(.x) sum(as.numeric(colnames(surv)) * c(.x[1], diff(.x)))))
   }
 
   if (length(ret) == 1) {

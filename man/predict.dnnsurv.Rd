@@ -36,10 +36,10 @@ Number of batches before evaluation finished, see \link[keras:predict.keras.engi
 \item{callbacks}{\code{(list())}\cr
 Optional callbacks to apply during prediction.}
 
-\item{type}{(\code{numeric(1)})\cr
+\item{type}{(\code{character(1)})\cr
 Type of predicted value. Choices are survival probabilities over all time-points in training
-data (\code{"survival"}) or a relative risk ranking (\code{"risk"}), which is the mean cumulative hazard
-function over all time-points, or both (\code{"all"}).}
+data (\code{"survival"}) or a relative risk ranking (\code{"risk"}), which is the negative mean survival
+time so higher rank implies higher risk of event, or both (\code{"all"}).}
 
 \item{distr6}{\code{(logical(1))}\cr
 If \code{FALSE} (default) and \code{type} is \code{"survival"} or \code{"all"} returns matrix of survival

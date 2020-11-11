@@ -1,4 +1,6 @@
-# survivalmodels 0.1.2.9000
+# survivalmodels 0.1.3
+
+* Previous `risk` predictions returned values where lower ranks implied higher risk, now higher rank implies higher risk. Calculated as the negative mean survival time.
 
 # survivalmodels 0.1.2
 

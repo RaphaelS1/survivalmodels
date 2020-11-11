@@ -671,10 +671,10 @@ def init_weights(m):
 #' If `interpolate` is `TRUE` or model is `loghaz`, number of sub-divisions for interpolation.
 #' See reticulate::py_help(py_help(pycox$models$DeepHitSingle$interpolate))` for further
 #' details.
-#' @param type `(numeric(1))`\cr
+#' @param type (`character(1)`)\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
-#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the mean cumulative hazard
-#' function over all time-points, or both (`"all"`).
+#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the negative mean survival
+#' time so higher rank implies higher risk of event, or both (`"all"`).
 #' @param distr6 `(logical(1))`\cr
 #' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
 #' probabilities, otherwise returns a [distr6::VectorDistribution()].
@@ -768,7 +768,9 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- colMeans(-log(surv))
+    surv <- t(surv)
+    ret$risk <- -as.numeric(apply(1 - surv, 1,
+                                function(.x) sum(as.numeric(colnames(surv)) * c(.x[1], diff(.x)))))
   }
 
   if (length(ret) == 1) {

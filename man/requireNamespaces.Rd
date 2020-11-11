@@ -10,14 +10,6 @@ requireNamespaces(x)
 \item{x}{\code{(character())} \cr string naming the packages/name spaces to load.}
 }
 \description{
-Vectorises the \link{requireNamespace} function and returns \code{TRUE} if all packages, \code{x},
-are available and \code{FALSE} otherwise.
-}
-\examples{
-requireNamespaces("survivalmodels")
-requireNamespaces(c("survivalmodels", "distr6"))
-
-# test for some fake package
-requireNamespaces(c("survivalmodels", "distr6", "111"))
-
+Helper function for internal use. Vectorises the \link{requireNamespace} function and
+returns \code{TRUE} if all packages, \code{x}, are available and \code{FALSE} otherwise.
 }
