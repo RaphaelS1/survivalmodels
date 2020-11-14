@@ -11,6 +11,10 @@ sanity_check <- function(model, pars) {
   skip_if_not_installed("distr6")
 
   set.seed(42)
+  np <- reticulate::import("numpy")
+  np$random$seed(1L)
+  torch <- reticulate::import("torch")
+  torch$manual_seed(1L)
 
   train <- simsurvdata(200, cens = 0.2)
   test <- simsurvdata(50, cens = 0.2)
