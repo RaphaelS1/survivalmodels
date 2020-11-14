@@ -13,7 +13,8 @@ simsurvdata(n = 100, trt = 2, age = 2, sex = 1.5, cutoff = NULL, cens = 0.3)
 
 \item{cutoff}{\code{(numeric(1))} \cr Deprecated, in future use \code{cens}.}
 
-\item{cens}{\code{(numeric(1))} \cr Proportion of censoring to be generated.}
+\item{cens}{\code{(numeric(1))} \cr Proportion of censoring to be generated, cut-off time is then
+selected as the quantile that results in \code{cens}.}
 }
 \value{
 \code{\link[=data.frame]{data.frame()}}

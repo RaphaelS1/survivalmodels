@@ -6,7 +6,8 @@
 #' @param n `(integer(1))` \cr Number of samples
 #' @param trt,age,sex `(numeric(1))` \cr Coefficients for covariates.
 #' @param cutoff `(numeric(1))` \cr Deprecated, in future use `cens`.
-#' @param cens `(numeric(1))` \cr Proportion of censoring to be generated.
+#' @param cens `(numeric(1))` \cr Proportion of censoring to be generated, cut-off time is then
+#' selected as the quantile that results in `cens`.
 #'
 #' @return
 #' [data.frame()]
@@ -33,7 +34,7 @@ simsurvdata <- function(n = 100, trt = 2, age = 2, sex = 1.5, cutoff = NULL, cen
   time <- stats::rweibull(nrow(covs), shape = shape, scale = scale)
 
   if (is.null(cutoff)) {
-    cutoff <- as.numeric(quantile(time, 1 - cens))
+    cutoff <- as.numeric(stats::quantile(time, 1 - cens))
   }
 
   status <- as.integer(time <= cutoff)
