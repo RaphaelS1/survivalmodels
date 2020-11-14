@@ -49,10 +49,10 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
 
   if (frac) {
     val <- sample(seq_len(nrow(x_train)), nrow(x_train) * frac)
-    x_val <- x_train[val, ]
-    y_val <- y_train[val, ]
-    x_train <- x_train[-val, ]
-    y_train <- y_train[-val, ]
+    x_val <- x_train[val, , drop=FALSE]
+    y_val <- y_train[val, , drop=FALSE]
+    x_train <- x_train[-val, , drop=FALSE]
+    y_train <- y_train[-val, , drop=FALSE]
   }
 
   y_train <- reticulate::r_to_py(y_train)
