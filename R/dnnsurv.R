@@ -73,7 +73,7 @@ dnnsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
     if (is.null(cuts)) {
       stop("One of 'cuts' or 'cutpoints' must be provided.")
     }
-    cutpoints <- unique(round(seq.int(min(time), max(time), length.out = cuts), 2))
+    cutpoints <- seq.int(min(time), max(time), length.out = cuts)
   }
 
   pseudo_cond <- .get_pseudo_conditional(
@@ -230,21 +230,22 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
       }
       ret$surv <- surv
     } else {
-      # cast to distr6
-      x <- rep(list(list(x = object$cutpoints, cdf = 0)), nrow(newdata))
-      for (i in seq_len(nrow(newdata))) {
-        x[[i]]$cdf <- 1 - surv[i, ]
-      }
+      # ensure distribution not degenerate
+      times <- as.numeric(colnames(surv))
+      surv <- cbind(1, surv, 0)
+      colnames(surv) <- c(0, times, max(times) + 1e-3)
+      cdf = lapply(seq_len(nrow(newdata)), function(.x) list(cdf = 1 - surv[.x,]))
 
       ret$surv <- distr6::VectorDistribution$new(
-        distribution = "WeightedDiscrete", params = x,
+        distribution = "WeightedDiscrete",
+        shared_params = list(x = as.numeric(colnames(surv))),
+        params = cdf,
         decorators = c("CoreStatistics", "ExoticStatistics"))
     }
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- -as.numeric(apply(1 - surv, 1,
-                                function(.x) sum(as.numeric(colnames(surv)) * c(.x[1], diff(.x)))))
+    ret$risk <- -apply(1 - surv, 1, function(.x) sum(c(.x[1], diff(.x)) * as.numeric(colnames(surv))))
   }
 
   if (length(ret) == 1) {

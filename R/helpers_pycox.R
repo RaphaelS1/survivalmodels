@@ -750,7 +750,11 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       ret$surv <- t(surv)
     } else {
       # cast to distr6
-      x <- rep(list(list(x = round(as.numeric(rownames(surv)), 5), cdf = 0)), nrow(newdata))
+      times <- as.numeric(rownames(surv))
+      surv <- rbind(1, surv, 0)
+      rownames(surv) <- round(c(0, times, max(times) + 1e-3), 5)
+
+      x <- rep(list(list(cdf = 0)), nrow(newdata))
       for (i in seq_len(nrow(newdata))) {
         # fix for infinite hazards - invalidate results for NaNs
         if (any(is.nan(surv[, i]))) {
@@ -762,15 +766,15 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       }
 
       ret$surv <- distr6::VectorDistribution$new(
-        distribution = "WeightedDiscrete", params = x,
+        distribution = "WeightedDiscrete",
+        params = x,
+        shared_params = list(x = round(as.numeric(rownames(surv)), 5)),
         decorators = c("CoreStatistics", "ExoticStatistics"))
     }
   }
 
   if (type %in% c("risk", "all")) {
-    surv <- t(surv)
-    ret$risk <- -as.numeric(apply(1 - surv, 1,
-                                function(.x) sum(as.numeric(colnames(surv)) * c(.x[1], diff(.x)))))
+    ret$risk <- -apply(1 - surv, 2, function(.x) sum(c(.x[1], diff(.x)) * as.numeric(rownames(surv))))
   }
 
   if (length(ret) == 1) {

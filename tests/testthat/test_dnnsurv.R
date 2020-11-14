@@ -1,5 +1,5 @@
 skip_on_os("windows")
-skip_if_no_keras()
+skip_if_not_installed("keras")
 
 test_that("silent", {
   expect_silent({fit <- dnnsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
@@ -45,4 +45,9 @@ test_that("predict distr6", {
   expect_equal(p$surv$properties$support$power, 50)
   p <- predict(fit, type = "survival")
   expect_is(p, "matrix")
+})
+
+test_that("auto sanity", {
+  sanity_check(model = "dnnsurv",
+               pars = list(early_stopping = TRUE, epochs = 100L, validation_split = 0.3))
 })

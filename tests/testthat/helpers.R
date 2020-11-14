@@ -7,7 +7,22 @@ skip_if_no_pycox <- function() {
     skip("One of torch, numpy, pycox not available for testing.")
 }
 
-skip_if_no_keras <- function() {
-  if (!requireNamespace("keras", quietly = TRUE))
-    skip("keras not available for testing.")
+sanity_check <- function(model, pars) {
+  skip_if_not_installed("distr6")
+
+  set.seed(42)
+
+  train <- simsurvdata(200, cens = 0.2)
+  test <- simsurvdata(50, cens = 0.2)
+
+  y <- survival::Surv(test$time, test$status)
+
+  fit <- do.call(get(model), c(list(formula = Surv(time, status) ~ ., data = train), pars))
+  p <- predict(fit, newdata = test, type = "all", distr6 = TRUE)
+
+  expect_true(survival::concordance(y ~ p$risk, reverse = TRUE)$concordance >= 0.5)
+  expect_equal(length(p$risk), nrow(p$surv$modelTable))
+
+  p <- predict(fit, newdata = test, type = "all", distr6 = FALSE)
+  expect_equal(length(p$risk), nrow(p$surv))
 }

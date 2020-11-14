@@ -1,5 +1,5 @@
 skip_on_os("windows")
-skip_if_no_keras()
+skip_if_not_installed("keras")
 
 test_that("get_keras_optimizer", {
   expect_is(get_keras_optimizer("adadelta"), "keras.optimizer_v2.adadelta.Adadelta")

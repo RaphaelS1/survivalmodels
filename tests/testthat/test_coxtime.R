@@ -28,3 +28,9 @@ test_that("early_stopping", {
                                                verbose = FALSE, early_stopping = TRUE,
                                                best_weights = TRUE)$model$callbacks$callbacks))
 })
+
+test_that("auto sanity", {
+  sanity_check(model = "coxtime",
+               pars = list(frac = 0.3, activation = "relu", num_nodes = c(2L, 2L),
+                           dropout = 0.1, early_stopping = TRUE, epochs = 100L, batch_size = 32L))
+})

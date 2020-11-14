@@ -11,3 +11,9 @@ test_that("silent", {
                                  frac = 0.3)})
   expect_silent({predict(fit, newdata = rats[51:100, ])})
 })
+
+test_that("auto sanity", {
+  sanity_check(model = "deepsurv",
+               pars = list(frac = 0.3, activation = "relu", num_nodes = c(2L, 2L),
+                           dropout = 0.1, early_stopping = TRUE, epochs = 100L, batch_size = 32L))
+})

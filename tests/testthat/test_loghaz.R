@@ -32,3 +32,9 @@ test_that("interpolate", {
   fit <- loghaz(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE)
   expect_silent(predict(fit, interpolate = TRUE))
 })
+
+test_that("auto sanity", {
+  sanity_check(model = "loghaz",
+               pars = list(frac = 0.3, activation = "relu", num_nodes = c(2L, 2L),
+                           dropout = 0.1, early_stopping = TRUE, epochs = 100L, batch_size = 32L))
+})

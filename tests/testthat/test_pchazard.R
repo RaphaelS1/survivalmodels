@@ -17,3 +17,9 @@ test_that("custom", {
                          custom_net = build_pytorch_net(3L, 10L),
                          verbose = FALSE))
 })
+
+test_that("auto sanity", {
+  sanity_check(model = "pchazard",
+               pars = list(frac = 0.3, activation = "relu", num_nodes = c(2L, 2L, 2L),
+                           dropout = 0.1, early_stopping = TRUE, epochs = 100L, batch_size = 32L))
+})

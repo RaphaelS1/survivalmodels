@@ -43,3 +43,8 @@ test_that("cpp", {
   expect_is(p$surv, "VectorDistribution")
   expect_silent(predict(fit, rats, times = 100))
 })
+
+test_that("auto sanity", {
+  sanity_check(model = "akritas",
+               pars = list())
+})

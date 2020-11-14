@@ -152,7 +152,10 @@ predict.akritas <- function(object, newdata, times = NULL,
     FX_predict = object$Fhat$cdf(data = newdata),
     lambda = lambda
   )
-  colnames(surv) <- round(times, 2)
+
+  colnames(surv) <- round(times, 6)
+  # fix rounding errors
+  # surv <- round(surv, 4)
 
   ret <- list()
 
@@ -160,10 +163,14 @@ predict.akritas <- function(object, newdata, times = NULL,
     if (!distr6) {
       ret$surv <- surv
     } else {
+      # ensure distribution not degenerate
+      surv <- cbind(1, surv, 0)
+      colnames(surv) <- round(c(0, times, max(times) + 1e-2), 6)
+
       cdf <- apply(surv, 1, function(x) list(cdf = 1 - x))
       ret$surv <- distr6::VectorDistribution$new(
         distribution = "WeightedDiscrete",
-        shared_params = list(x = unique_times),
+        shared_params = list(x = as.numeric(colnames(surv))),
         params = cdf,
         decorators = c(
           "CoreStatistics",
@@ -174,8 +181,7 @@ predict.akritas <- function(object, newdata, times = NULL,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- -as.numeric(apply(1 - surv, 1,
-                                function(.x) sum(as.numeric(colnames(surv)) * c(.x[1], diff(.x)))))
+    ret$risk <- -apply(1 - surv, 1, function(.x) sum(c(.x[1], diff(.x)) * as.numeric(colnames(surv))))
   }
 
   if (length(ret) == 1) {
