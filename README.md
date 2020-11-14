@@ -6,6 +6,7 @@ Badge](https://www.r-pkg.org/badges/version-ago/survivalmodels)](https://cran.r-
 [![CRAN
 Checks](https://cranchecks.info/badges/worst/survivalmodels)](https://cran.r-project.org/web/checks/check_results_survivalmodels.html)
 [![tic](https://github.com/RaphaelS1/survivalmodels/workflows/tic/badge.svg)](https://github.com/RaphaelS1/survivalmodels/actions)
+[![CodeFactor](https://www.codefactor.io/repository/github/raphaels1/survivalmodels/badge)](https://www.codefactor.io/repository/github/raphaels1/survivalmodels)
 
 [![Repo
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/RaphaelS1/survivalmodels)
