@@ -1,4 +1,4 @@
-# survivalmodels 0.1.3.900
+# survivalmodels 0.1.4
 
 * Improved `risk` return type for discrimination
 
