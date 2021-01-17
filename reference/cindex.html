@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepare Data for Pycox Model Training — pycox_prepare_train_data • survivalmodels</title>
+<title>Compute Concordance of survivalmodel Risk — cindex • survivalmodels</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Prepare Data for Pycox Model Training — pycox_prepare_train_data" />
-<meta property="og:description" content="Utility function to prepare data for training in a Pycox model.
-Generally used internally only." />
+<meta property="og:title" content="Compute Concordance of survivalmodel Risk — cindex" />
+<meta property="og:description" content="A thin wrapper around survival::concordance which essentially
+just sets reverse = TRUE." />
 
 
 
@@ -112,100 +112,49 @@ Generally used internally only." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepare Data for Pycox Model Training</h1>
-    <small class="dont-index">Source: <a href='https://github.com/RaphaelS1/survivalmodels/blob/master/R/helpers_pycox.R'><code>R/helpers_pycox.R</code></a></small>
-    <div class="hidden name"><code>pycox_prepare_train_data.Rd</code></div>
+    <h1>Compute Concordance of survivalmodel Risk</h1>
+    <small class="dont-index">Source: <a href='https://github.com/RaphaelS1/survivalmodels/blob/master/R/concordance.R'><code>R/concordance.R</code></a></small>
+    <div class="hidden name"><code>cindex.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Utility function to prepare data for training in a Pycox model.
-Generally used internally only.</p>
+    <p>A thin wrapper around <a href='https://rdrr.io/pkg/survival/man/concordance.html'>survival::concordance</a> which essentially
+just sets <code>reverse = TRUE</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pycox_prepare_train_data</span><span class='op'>(</span>
-  <span class='va'>x_train</span>,
-  <span class='va'>y_train</span>,
-  frac <span class='op'>=</span> <span class='fl'>0</span>,
-  standardize_time <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  log_duration <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  with_mean <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  with_std <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  discretise <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  cuts <span class='op'>=</span> <span class='fl'>10L</span>,
-  cutpoints <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scheme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"equidistant"</span>, <span class='st'>"quantiles"</span><span class='op'>)</span>,
-  cut_min <span class='op'>=</span> <span class='fl'>0L</span>,
-  model <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"coxtime"</span>, <span class='st'>"deepsurv"</span>, <span class='st'>"deephit"</span>, <span class='st'>"loghaz"</span>, <span class='st'>"pchazard"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cindex</span><span class='op'>(</span><span class='va'>risk</span>, <span class='va'>truth</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x_train</th>
-      <td><p><code>(matrix(1))</code> <br /> Training covariates.</p></td>
+      <th>risk</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code>) <br />
+Vector of risk predictions from a <code>survivalmodel</code> model
+(so high risk implies low survival time prediction).</p></td>
     </tr>
     <tr>
-      <th>y_train</th>
-      <td><p><code>(matrix(1))</code> <br /> Training outcomes.</p></td>
+      <th>truth</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code>) <br />
+Vector of true survival times, must be same length as <code>risk</code>.</p></td>
     </tr>
     <tr>
-      <th>frac</th>
-      <td><p><code>(numeric(1))</code><br /> Fraction of data to use for validation dataset, default is <code>0</code>
-and therefore no separate validation dataset.</p></td>
-    </tr>
-    <tr>
-      <th>standardize_time</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code>, the time outcome to be standardized. For use
-with <a href='coxtime.html'>coxtime</a>.</p></td>
-    </tr>
-    <tr>
-      <th>log_duration</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> and <code>standardize_time</code> is <code>TRUE</code> then time
-variable is log transformed.</p></td>
-    </tr>
-    <tr>
-      <th>with_mean</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> (default) and <code>standardize_time</code> is <code>TRUE</code> then time
-variable is centered.</p></td>
-    </tr>
-    <tr>
-      <th>with_std</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> (default) and <code>standardize_time</code> is <code>TRUE</code> then time
-variable is scaled to unit variance.</p></td>
-    </tr>
-    <tr>
-      <th>discretise</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> then time is discretised. For use with the models
-<a href='deephit.html'>deephit</a>, <a href='pchazard.html'>pchazard</a>, and <a href='loghaz.html'>loghaz</a>.</p></td>
-    </tr>
-    <tr>
-      <th>cuts</th>
-      <td><p><code>(integer(1))</code><br /> If <code>discretise</code> is <code>TRUE</code> then determines number of cut-points
-for discretisation.</p></td>
-    </tr>
-    <tr>
-      <th>cutpoints</th>
-      <td><p><code>(numeric())</code> <br /> Alternative to <code>cuts</code> if <code>discretise</code> is true, provide
-exact cutpoints for discretisation. <code>cuts</code> is ignored if <code>cutpoints</code> is non-NULL.</p></td>
-    </tr>
-    <tr>
-      <th>scheme</th>
-      <td><p><code>(character(1))</code><br /> Method of discretisation, either <code>"equidistant"</code> (default)
-or <code>"quantiles"</code>. See <code><a href='https://rdrr.io/pkg/reticulate/man/py_help.html'>reticulate::py_help(pycox$models$LogisticHazard$label_transform)</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>cut_min</th>
-      <td><p><code>(integer(1))</code><br /> Starting duration for discretisation, see
-<code><a href='https://rdrr.io/pkg/reticulate/man/py_help.html'>reticulate::py_help(pycox$models$LogisticHazard$label_transform)</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>model</th>
-      <td><p><code>(character(1))</code><br /> Corresponding pycox model.</p></td>
+      <th>...</th>
+      <td><p>(<code>ANY</code>) <br />
+Further parameters passed to <a href='https://rdrr.io/pkg/survival/man/concordance.html'>survival::concordance</a>.</p></td>
     </tr>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"survival"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
+  <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>20</span><span class='op'>)</span>
+  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='deepsurv.html'>deepsurv</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span><span class='op'>)</span>
+  <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span>, type <span class='op'>=</span> <span class='st'>"risk"</span>, newdata <span class='op'>=</span> <span class='va'>data</span><span class='op'>[</span><span class='fl'>11</span><span class='op'>:</span><span class='fl'>20</span>, <span class='op'>]</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/survival/man/concordance.html'>concordance</a></span><span class='op'>(</span>risk <span class='op'>=</span> <span class='va'>p</span>, truth <span class='op'>=</span> <span class='va'>data</span><span class='op'>[</span><span class='fl'>11</span><span class='op'>:</span><span class='fl'>20</span>, <span class='st'>"time"</span><span class='op'>]</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
