@@ -26,7 +26,7 @@ sanity_check <- function(model, pars) {
   fit <- do.call(get(model), c(list(formula = Surv(time, status) ~ ., data = train), pars))
   p <- predict(fit, newdata = test, type = "all", distr6 = TRUE)
 
-  expect_true(survival::concordance(y ~ p$risk, reverse = TRUE)$concordance >= 0.5)
+  expect_true(cindex(p$risk, y) >= 0.5)
   expect_equal(length(p$risk), nrow(p$surv$modelTable))
 
   p <- predict(fit, newdata = test, type = "all", distr6 = FALSE)

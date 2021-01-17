@@ -49,10 +49,10 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0, standardize_tim
 
   if (frac) {
     val <- sample(seq_len(nrow(x_train)), nrow(x_train) * frac)
-    x_val <- x_train[val, , drop=FALSE]
-    y_val <- y_train[val, , drop=FALSE]
-    x_train <- x_train[-val, , drop=FALSE]
-    y_train <- y_train[-val, , drop=FALSE]
+    x_val <- x_train[val, , drop = FALSE]
+    y_val <- y_train[val, , drop = FALSE]
+    x_train <- x_train[-val, , drop = FALSE]
+    y_train <- y_train[-val, , drop = FALSE]
   }
 
   y_train <- reticulate::r_to_py(y_train)
@@ -741,6 +741,17 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   ret <- list()
   stopifnot(nrow(newdata) == ncol(surv))
 
+  times <- as.numeric(rownames(surv))
+  if (!(0 %in% times)) {
+    surv <- rbind(1, surv)
+    times <- round(c(0, times), 5)
+  }
+  if (!all(surv[nrow(surv), ] %in% 0)) {
+    surv <- rbind(surv, 0)
+    times <- round(c(times, max(times) + 1e-3), 5)
+  }
+  rownames(surv) <- times
+
   type <- match.arg(type)
   if (type %in% c("survival", "all")) {
     if (!distr6 || !requireNamespace("distr6", quietly = TRUE)) {
@@ -750,10 +761,6 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       ret$surv <- t(surv)
     } else {
       # cast to distr6
-      times <- as.numeric(rownames(surv))
-      surv <- rbind(1, surv, 0)
-      rownames(surv) <- round(c(0, times, max(times) + 1e-3), 5)
-
       x <- rep(list(list(cdf = 0)), nrow(newdata))
       for (i in seq_len(nrow(newdata))) {
         # fix for infinite hazards - invalidate results for NaNs
@@ -774,7 +781,8 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- -apply(1 - surv, 2, function(.x) sum(c(.x[1], diff(.x)) * as.numeric(rownames(surv))))
+    ret$risk <- -apply(1 - surv, 2, function(.x) sum(c(.x[1],
+                                                       diff(.x)) * as.numeric(rownames(surv))))
   }
 
   if (length(ret) == 1) {

@@ -181,7 +181,8 @@ predict.akritas <- function(object, newdata, times = NULL,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- -apply(1 - surv, 1, function(.x) sum(c(.x[1], diff(.x)) * as.numeric(colnames(surv))))
+    ret$risk <- -apply(1 - surv, 1, function(.x) sum(c(.x[1],
+                                                       diff(.x)) * as.numeric(colnames(surv))))
   }
 
   if (length(ret) == 1) {

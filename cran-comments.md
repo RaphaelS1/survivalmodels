@@ -1,14 +1,10 @@
-## Reason for early submission
-
-Critical bug fix.
-
 ## Downstream dependencies
 
 None.
 
 ## Test Results
 
-No ERRORs or WARNINGs. NOTE first submission.
+No ERRORs,  WARNINGs or NOTEs.
 
 ## Test environments
 

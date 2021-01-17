@@ -1,4 +1,9 @@
-# survivalmodels 0.1.3.900
+# survivalmodels 0.1.5
+
+* Fixed bug in `risk` return type when `distr6 = FALSE`
+* Added `cindex` for evaluating concordance of risk
+
+# survivalmodels 0.1.4
 
 * Improved `risk` return type for discrimination
 

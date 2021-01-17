@@ -220,6 +220,18 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
   colnames(surv) <- object$cutpoints
   stopifnot(nrow(newdata) == nrow(surv))
 
+  # ensure distribution not degenerate
+  times <- as.numeric(colnames(surv))
+  if (!(0 %in% times)) {
+    surv <- cbind(1, surv)
+    times <- round(c(0, times), 5)
+  }
+  if (!all(surv[nrow(surv), ] %in% 0)) {
+    surv <- cbind(surv, 0)
+    times <- round(c(times, max(times) + 1e-3), 5)
+  }
+  colnames(surv) <- times
+
   ret <- list()
 
   type <- match.arg(type)
@@ -230,12 +242,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
       }
       ret$surv <- surv
     } else {
-      # ensure distribution not degenerate
-      times <- as.numeric(colnames(surv))
-      surv <- cbind(1, surv, 0)
-      colnames(surv) <- c(0, times, max(times) + 1e-3)
-      cdf = lapply(seq_len(nrow(newdata)), function(.x) list(cdf = 1 - surv[.x,]))
-
+      cdf <- lapply(seq_len(nrow(newdata)), function(.x) list(cdf = 1 - surv[.x, ]))
       ret$surv <- distr6::VectorDistribution$new(
         distribution = "WeightedDiscrete",
         shared_params = list(x = as.numeric(colnames(surv))),
@@ -245,7 +252,8 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- -apply(1 - surv, 1, function(.x) sum(c(.x[1], diff(.x)) * as.numeric(colnames(surv))))
+    ret$risk <- -apply(1 - surv, 1, function(.x) sum(c(.x[1],
+                                                       diff(.x)) * as.numeric(colnames(surv))))
   }
 
   if (length(ret) == 1) {
