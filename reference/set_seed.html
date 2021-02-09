@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Torchtuples Callbacks — get_pycox_callbacks • survivalmodels</title>
+<title>Set seed in R numpy and torch — set_seed • survivalmodels</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Get Torchtuples Callbacks — get_pycox_callbacks" />
-<meta property="og:description" content="Helper function to return torchtuples callbacks from torchtuples.callbacks." />
+<meta property="og:title" content="Set seed in R numpy and torch — set_seed" />
+<meta property="og:description" content="To ensure consistent results, a seed has to be set in R
+using set.seed as usual but also in numpy and torch via reticulate.
+Therefore this function simplifies the process into one funciton." />
 
 
 
@@ -111,59 +113,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Torchtuples Callbacks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/RaphaelS1/survivalmodels/blob/master/R/helpers_pycox.R'><code>R/helpers_pycox.R</code></a></small>
-    <div class="hidden name"><code>get_pycox_callbacks.Rd</code></div>
+    <h1>Set seed in R numpy and torch</h1>
+    <small class="dont-index">Source: <a href='https://github.com/RaphaelS1/survivalmodels/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
+    <div class="hidden name"><code>set_seed.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Helper function to return torchtuples callbacks from <code>torchtuples.callbacks</code>.</p>
+    <p>To ensure consistent results, a seed has to be set in R
+using <a href='https://rdrr.io/r/base/Random.html'>set.seed</a> as usual but also in numpy and torch via reticulate.
+Therefore this function simplifies the process into one funciton.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_pycox_callbacks</span><span class='op'>(</span>
-  early_stopping <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  best_weights <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  min_delta <span class='op'>=</span> <span class='fl'>0</span>,
-  patience <span class='op'>=</span> <span class='fl'>10L</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>set_seed</span><span class='op'>(</span><span class='va'>seed_R</span>, seed_np <span class='op'>=</span> <span class='va'>seed_R</span>, seed_torch <span class='op'>=</span> <span class='va'>seed_R</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>early_stopping</th>
-      <td><p><code>(logical(1))</code> <br />
-If <code>TRUE</code> then constructs <code>torchtuples.callbacks,EarlyStopping</code>.</p></td>
+      <th>seed_R</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>) <code>seed</code> passed to <a href='https://rdrr.io/r/base/Random.html'>set.seed</a>.</p></td>
     </tr>
     <tr>
-      <th>best_weights</th>
-      <td><p><code>(logical(1))</code><br />
-If <code>TRUE</code> then returns <code>torchtuples.callbacks.BestWeights</code>. Ignored if <code>early_stopping</code>
-is <code>TRUE</code>.</p></td>
+      <th>seed_np</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>) <code>seed</code> passed to <code>numpy$random$seed</code>. Default is same as <code>seed_R</code>.</p></td>
     </tr>
     <tr>
-      <th>min_delta</th>
-      <td><p><code>(numeric(1))</code><br />
-Passed to <code>torchtuples.callbacks.EarlyStopping</code>.</p></td>
-    </tr>
-    <tr>
-      <th>patience</th>
-      <td><p><code>(integer(1))</code><br />
-Passed to <code>torchtuples.callbacks.EarlyStopping</code>.</p></td>
+      <th>seed_torch</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>) <code>seed</code> passed to <code>numpy$random$seed</code>.
+Default is same as <code>seed_R</code>.</p></td>
     </tr>
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='requireNamespaces.html'>requireNamespaces</a></span><span class='op'>(</span><span class='st'>"reticulate"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>get_pycox_callbacks</span><span class='op'>(</span>early_stopping <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-  <span class='fu'>get_pycox_callbacks</span><span class='op'>(</span>best_weights <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; [&lt;torchtuples.callbacks.BestWeights&gt;]</div><div class='input'><span class='co'># }</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
