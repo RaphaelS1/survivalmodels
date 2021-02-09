@@ -11,3 +11,4 @@ src/survivalmodels.so
 *.o
 
 *.so
+CRAN-RELEASE

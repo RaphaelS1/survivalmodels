@@ -21,3 +21,14 @@ test_that("clean_test_data", {
   expect_equal(clean_test_data(fit), fit$x)
   expect_error(clean_test_data(fit, rats[, 1:2]), "Names in")
 })
+
+test_that("set_seed", {
+  skip_if_no_pycox()
+  set_seed(1)
+  first <- deepsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
+                          frac = 0.3)
+  set_seed(1)
+  second <- deepsurv(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
+                    frac = 0.3)
+  expect_equal(first, second)
+})
