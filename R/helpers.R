@@ -19,6 +19,7 @@ requireNamespaces <- function(x) {
 #' @param seed_np (`integer(1)`) `seed` passed to `numpy$random$seed`. Default is same as `seed_R`.
 #' @param seed_torch (`integer(1)`) `seed` passed to `numpy$random$seed`.
 #' Default is same as `seed_R`.
+#' @export
 set_seed <- function(seed_R, seed_np = seed_R, seed_torch = seed_R) {
   set.seed(seed_R)
   if (reticulate::py_module_available("numpy")) {

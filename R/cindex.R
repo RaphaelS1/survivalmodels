@@ -16,6 +16,7 @@
 #'   p <- predict(fit, type = "risk", newdata = data[11:20, ])
 #'   concordance(risk = p, truth = data[11:20, "time"])
 #' }
+#' @export
 cindex <- function(risk, truth, ...) {
   if (!requireNamespace("survival", quietly = TRUE)) {
     stop("concordance requires {survival} package")

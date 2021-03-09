@@ -1,3 +1,7 @@
+# survivalmodels 0.1.7
+
+* Fix export of `set_seed` and `cindex` 
+
 # survivalmodels 0.1.6
 
 * Add `set_seed` for easier setting of seeds within R and Python environments
