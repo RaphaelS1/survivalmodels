@@ -42,6 +42,22 @@
 #'   # setting common parameters
 #'   dnnsurv(time_variable = "time", status_variable = "status", data = simsurvdata(10),
 #'           early_stopping = TRUE, epochs = 100L, validation_split = 0.3)
+#'
+#'   # custom model
+#'   library(keras)
+#'   cuts <-10
+#'   df <- simsurvdata(50)
+#'   input <- layer_input(shape = c(3L + cuts), name = 'input')
+#'   output <- input %>%
+#'      layer_dense(units=200L,use_bias = T) %>%
+#'      layer_dense(units=1L,use_bias = T) %>%
+#'      layer_activation(activation="sigmoid")
+#'
+#'   model <- keras_model(input, output)
+#'
+#'   dnnsurv(custom_model=model, time_variable = "time",
+#'           status_variable = "status", data = df, cuts=cuts)
+#'
 #' }
 #'
 #' @export

@@ -1,3 +1,7 @@
+# survivalmodels 0.1.7.9000
+
+* Add example of custom model to `DNNSurv`
+
 # survivalmodels 0.1.7
 
 * Fix export of `set_seed` and `cindex` 
