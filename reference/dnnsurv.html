@@ -73,7 +73,7 @@ probabilities." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.9000</span>
       </span>
     </div>
 
@@ -287,7 +287,43 @@ https://arxiv.org/abs/1908.02337</p>
 #&gt; Response:
 #&gt;   Surv(time, status)
 #&gt; Features:
-#&gt;   {sexF, age, trt} </div><div class='input'><span class='co'># }</span>
+#&gt;   {sexF, age, trt} </div><div class='input'>
+  <span class='co'># custom model</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://keras.rstudio.com'>keras</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘keras’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:survivalmodels’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    install_keras</span></div><div class='input'>  <span class='va'>cuts</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
+  <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span>
+  <span class='co'># shape = features + cuts</span>
+  <span class='va'>input</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/keras/man/layer_input.html'>layer_input</a></span><span class='op'>(</span>shape <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3L</span> <span class='op'>+</span> <span class='va'>cuts</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>'input'</span><span class='op'>)</span>
+  <span class='va'>output</span> <span class='op'>&lt;-</span> <span class='va'>input</span> <span class='op'>%&gt;%</span>
+     <span class='fu'><a href='https://rdrr.io/pkg/keras/man/layer_dense.html'>layer_dense</a></span><span class='op'>(</span>units <span class='op'>=</span> <span class='fl'>4L</span>, use_bias <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+     <span class='fu'><a href='https://rdrr.io/pkg/keras/man/layer_dense.html'>layer_dense</a></span><span class='op'>(</span>units <span class='op'>=</span> <span class='fl'>1L</span>, use_bias <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
+     <span class='fu'><a href='https://rdrr.io/pkg/keras/man/layer_activation.html'>layer_activation</a></span><span class='op'>(</span>activation<span class='op'>=</span><span class='st'>"sigmoid"</span><span class='op'>)</span>
+
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/keras/man/keras_model.html'>keras_model</a></span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>output</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "keras.engine.training.Model"                               
+#&gt; [2] "keras.engine.network.Network"                              
+#&gt; [3] "keras.engine.base_layer.Layer"                             
+#&gt; [4] "tensorflow.python.module.module.Module"                    
+#&gt; [5] "tensorflow.python.training.tracking.tracking.AutoTrackable"
+#&gt; [6] "tensorflow.python.training.tracking.base.Trackable"        
+#&gt; [7] "python.builtin.object"                                     </div><div class='input'>
+  <span class='fu'>dnnsurv</span><span class='op'>(</span>custom_model <span class='op'>=</span> <span class='va'>model</span>, time_variable <span class='op'>=</span> <span class='st'>"time"</span>,
+          status_variable <span class='op'>=</span> <span class='st'>"status"</span>, data <span class='op'>=</span> <span class='va'>df</span>, cuts <span class='op'>=</span> <span class='va'>cuts</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt;  DNNSurv Neural Network 
+#&gt; 
+#&gt; Call:
+#&gt;   dnnsurv(data = df, time_variable = "time", status_variable = "status",      cuts = cuts, custom_model = model)
+#&gt; 
+#&gt; Response:
+#&gt;   Surv(time, status)
+#&gt; Features:
+#&gt;   {sexF, age, trt} </div><div class='input'>
+<span class='co'># }</span>
 
 </div></pre>
   </div>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.9000</span>
       </span>
     </div>
 
@@ -202,21 +202,21 @@ or a list combining above if <code>type = "all"</code>.</p>
   <span class='co'># predict survival matrix and relative risks</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $surv
-#&gt;       0     3.545   4.39125    5.2375   6.08375      6.93 6.931
-#&gt;  [1,] 1 0.9558942 0.9137582 0.8734381 0.8349064 0.7980879     0
-#&gt;  [2,] 1 0.9558616 0.9137030 0.8733337 0.8347796 0.7979385     0
-#&gt;  [3,] 1 0.9558457 0.9136788 0.8733268 0.8347509 0.7979028     0
-#&gt;  [4,] 1 0.9558290 0.9136481 0.8732338 0.8346552 0.7977918     0
-#&gt;  [5,] 1 0.9559001 0.9137703 0.8734743 0.8349417 0.7981290     0
-#&gt;  [6,] 1 0.9558781 0.9137330 0.8733996 0.8348534 0.7980253     0
-#&gt;  [7,] 1 0.9558719 0.9137234 0.8734075 0.8348501 0.7980204     0
-#&gt;  [8,] 1 0.9558652 0.9137117 0.8733914 0.8348281 0.7979941     0
-#&gt;  [9,] 1 0.9558859 0.9137464 0.8734293 0.8348871 0.7980648     0
-#&gt; [10,] 1 0.9558982 0.9137672 0.8734706 0.8349360 0.7981223     0
+#&gt;       0      3.37   3.98525    4.6005   5.21575     5.831 5.832
+#&gt;  [1,] 1 0.9762874 0.9531357 0.9305336 0.9084681 0.8869274     0
+#&gt;  [2,] 1 0.9762657 0.9530858 0.9304588 0.9083735 0.8868237     0
+#&gt;  [3,] 1 0.9762845 0.9531290 0.9305234 0.9084551 0.8869133     0
+#&gt;  [4,] 1 0.9762894 0.9531405 0.9305406 0.9084768 0.8869368     0
+#&gt;  [5,] 1 0.9762887 0.9531387 0.9305379 0.9084734 0.8869332     0
+#&gt;  [6,] 1 0.9762614 0.9530762 0.9304445 0.9083554 0.8868036     0
+#&gt;  [7,] 1 0.9762862 0.9531329 0.9305293 0.9084626 0.8869214     0
+#&gt;  [8,] 1 0.9762899 0.9531416 0.9305423 0.9084789 0.8869391     0
+#&gt;  [9,] 1 0.9762883 0.9531380 0.9305367 0.9084719 0.8869315     0
+#&gt; [10,] 1 0.9762889 0.9531392 0.9305386 0.9084744 0.8869342     0
 #&gt; 
 #&gt; $risk
-#&gt;  [1] -6.573678 -6.573408 -6.573344 -6.573144 -6.573754 -6.573566 -6.573556
-#&gt;  [8] -6.573508 -6.573637 -6.573742
+#&gt;  [1] -5.689410 -5.689262 -5.689390 -5.689424 -5.689419 -5.689233 -5.689402
+#&gt;  [8] -5.689427 -5.689416 -5.689420
 #&gt; </div><div class='input'>
   <span class='co'># return as distribution</span>
   <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='requireNamespaces.html'>requireNamespaces</a></span><span class='op'>(</span><span class='st'>"distr6"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
