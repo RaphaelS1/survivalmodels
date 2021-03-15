@@ -45,18 +45,20 @@
 #'
 #'   # custom model
 #'   library(keras)
-#'   cuts <-10
+#'   cuts <- 10
 #'   df <- simsurvdata(50)
+#'   # shape = features + cuts
 #'   input <- layer_input(shape = c(3L + cuts), name = 'input')
 #'   output <- input %>%
-#'      layer_dense(units=200L,use_bias = T) %>%
-#'      layer_dense(units=1L,use_bias = T) %>%
+#'      layer_dense(units = 4L, use_bias = TRUE) %>%
+#'      layer_dense(units = 1L, use_bias = TRUE ) %>%
 #'      layer_activation(activation="sigmoid")
 #'
 #'   model <- keras_model(input, output)
+#'   class(model)
 #'
-#'   dnnsurv(custom_model=model, time_variable = "time",
-#'           status_variable = "status", data = df, cuts=cuts)
+#'   dnnsurv(custom_model = model, time_variable = "time",
+#'           status_variable = "status", data = df, cuts = cuts)
 #'
 #' }
 #'
