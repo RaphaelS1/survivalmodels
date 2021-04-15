@@ -4,11 +4,11 @@
 \alias{install_torch}
 \title{Install Torch With Reticulate}
 \usage{
-install_torch(method = "auto", conda = "auto", pip = FALSE)
+install_torch(method = "auto", conda = "auto", pip = TRUE)
 }
 \arguments{
 \item{method, conda, pip}{See \link[reticulate:py_install]{reticulate::py_install}}
 }
 \description{
-Installs the python 'torch' package via reticulate.
+Installs the python 'torch' package via reticulate. Note the default for \code{pip} is changed to \code{TRUE}.
 }

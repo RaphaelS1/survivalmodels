@@ -7,7 +7,7 @@
 install_keras(
   method = "auto",
   conda = "auto",
-  pip = FALSE,
+  pip = TRUE,
   install_tensorflow = FALSE
 )
 }
@@ -17,5 +17,5 @@ install_keras(
 \item{install_tensorflow}{If \code{TRUE} installs the dependency \code{tensorflow} package as well.}
 }
 \description{
-Stripped back version of \link[keras:install_keras]{keras::install_keras}.
+Stripped back version of \link[keras:install_keras]{keras::install_keras}. Note the default for \code{pip} is changed to \code{TRUE}.
 }
