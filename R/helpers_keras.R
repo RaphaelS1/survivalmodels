@@ -145,11 +145,11 @@ build_keras_net <- function(n_in, n_out, nodes = c(32L, 32L), layer_pars = list(
 }
 
 #' @title Install Keras and Tensorflow
-#' @description Stripped back version of [keras::install_keras].
+#' @description Stripped back version of [keras::install_keras]. Note the default for `pip` is changed to `TRUE`.
 #' @param method,conda,pip See [reticulate::py_install].
 #' @param install_tensorflow If `TRUE` installs the dependency `tensorflow` package as well.
 #' @export
-install_keras <- function(method = "auto", conda = "auto", pip = FALSE,
+install_keras <- function(method = "auto", conda = "auto", pip = TRUE,
                           install_tensorflow = FALSE) {
   # nocov start
   if (!requireNamespace("reticulate", quietly = TRUE)) {

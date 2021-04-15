@@ -41,7 +41,7 @@ models in this package, if you have not already installed `pycox` please
 run
 
 ``` r
-install_pycox(method = "auto", conda = "auto", pip = FALSE, install_torch = FALSE)
+install_pycox(pip = TRUE, install_torch = FALSE)
 ```
 
 With the arguments changed as you require, see
@@ -52,7 +52,7 @@ For `DNNSurv` the model depends on `keras` and `tensorflow`, which
 require installation via:
 
 ``` r
-install_keras(method = "auto", conda = "auto", pip = FALSE, install_tensorflow = FALSE)
+install_keras(pip = TRUE, install_tensorflow = FALSE)
 ```
 
 ## Installation

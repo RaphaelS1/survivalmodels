@@ -32,7 +32,7 @@ and the Akritas non-parametric conditional estimator. Further updates will inclu
 `survivalmodels` implements models from Python using [reticulate](https://cran.r-project.org/package=reticulate). In order to use these models, the required Python packages must be installed following with [reticulate::py_install](https://rstudio.github.io/reticulate/reference/py_install.html). `survivalmodels` includes a helper function to install the required `pycox` function (with pytorch if also required). Before running any models in this package, if you have not already installed `pycox` please run
 
 ```{r eval=FALSE}
-install_pycox(method = "auto", conda = "auto", pip = FALSE, install_torch = FALSE)
+install_pycox(pip = TRUE, install_torch = FALSE)
 ```
 
 With the arguments changed as you require, see [?install_pycox](https://raphaels1.github.io/survivalmodels/reference/install_pycox.html) for more.
@@ -40,7 +40,7 @@ With the arguments changed as you require, see [?install_pycox](https://raphaels
 For `DNNSurv` the model depends on `keras` and `tensorflow`, which require installation via:
 
 ```{r eval=FALSE}
-install_keras(method = "auto", conda = "auto", pip = FALSE, install_tensorflow = FALSE)
+install_keras(pip = TRUE, install_tensorflow = FALSE)
 
 ```
 
