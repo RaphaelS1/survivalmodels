@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
       </span>
     </div>
 
@@ -85,11 +85,11 @@
 <a href="#python-models" class="anchor"></a>Python Models</h2>
 <p><code>survivalmodels</code> implements models from Python using <a href="https://cran.r-project.org/package=reticulate">reticulate</a>. In order to use these models, the required Python packages must be installed following with <a href="https://rstudio.github.io/reticulate/reference/py_install.html">reticulate::py_install</a>. <code>survivalmodels</code> includes a helper function to install the required <code>pycox</code> function (with pytorch if also required). Before running any models in this package, if you have not already installed <code>pycox</code> please run</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/install_pycox.html">install_pycox</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"auto"</span>, conda <span class="op">=</span> <span class="st">"auto"</span>, pip <span class="op">=</span> <span class="cn">FALSE</span>, install_torch <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="reference/install_pycox.html">install_pycox</a></span><span class="op">(</span>pip <span class="op">=</span> <span class="cn">TRUE</span>, install_torch <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>With the arguments changed as you require, see <a href="https://raphaels1.github.io/survivalmodels/reference/install_pycox.html">?install_pycox</a> for more.</p>
 <p>For <code>DNNSurv</code> the model depends on <code>keras</code> and <code>tensorflow</code>, which require installation via:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/install_keras.html">install_keras</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"auto"</span>, conda <span class="op">=</span> <span class="st">"auto"</span>, pip <span class="op">=</span> <span class="cn">FALSE</span>, install_tensorflow <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="reference/install_keras.html">install_keras</a></span><span class="op">(</span>pip <span class="op">=</span> <span class="cn">TRUE</span>, install_tensorflow <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
