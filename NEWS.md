@@ -1,6 +1,7 @@
-# survivalmodels 0.1.7.9000
+# survivalmodels 0.1.8
 
 * Add example of custom model to `DNNSurv`
+* Change default of `pip` to `TRUE` in `install_` functions
 
 # survivalmodels 0.1.7
 
