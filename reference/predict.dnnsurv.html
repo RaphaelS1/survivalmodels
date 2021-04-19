@@ -72,29 +72,35 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Tutorials
      
+    <span class="caret"></span>
   </a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://towardsdatascience.com/neural-networks-for-survival-analysis-in-r-1e0421584ab?source=friends_link&amp;sk=e978a1b30a4da3370bea930e169326f3">Demonstration with mlr3proba</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/RaphaelS1/survivalmodels/">
-    <span class="fab fa-github fa-lg"></span>
+  <a href="../reference/">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
+<li>
+  <a href="https://github.com/RaphaelS1/survivalmodels">
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -203,20 +209,20 @@ or a list combining above if <code>type = "all"</code>.</p>
   <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $surv
 #&gt;       0      3.37   3.98525    4.6005   5.21575     5.831 5.832
-#&gt;  [1,] 1 0.9132628 0.8340491 0.7617061 0.6956380 0.6353004     0
-#&gt;  [2,] 1 0.9132606 0.8340456 0.7617008 0.6956318 0.6352937     0
-#&gt;  [3,] 1 0.9132628 0.8340491 0.7617062 0.6956380 0.6353005     0
-#&gt;  [4,] 1 0.9132630 0.8340492 0.7617063 0.6956381 0.6353005     0
-#&gt;  [5,] 1 0.9132630 0.8340492 0.7617063 0.6956381 0.6353005     0
-#&gt;  [6,] 1 0.9132596 0.8340441 0.7616986 0.6956294 0.6352911     0
-#&gt;  [7,] 1 0.9132630 0.8340492 0.7617063 0.6956381 0.6353005     0
-#&gt;  [8,] 1 0.9132630 0.8340492 0.7617063 0.6956381 0.6353005     0
-#&gt;  [9,] 1 0.9132630 0.8340492 0.7617063 0.6956381 0.6353005     0
-#&gt; [10,] 1 0.9132630 0.8340492 0.7617063 0.6956381 0.6353005     0
+#&gt;  [1,] 1 0.8795954 0.7738721 0.6811265 0.5991596 0.5272130     0
+#&gt;  [2,] 1 0.8798940 0.7744108 0.6818483 0.6000027 0.5281481     0
+#&gt;  [3,] 1 0.8800030 0.7746073 0.6821087 0.6003069 0.5284827     0
+#&gt;  [4,] 1 0.8797724 0.7741944 0.6815623 0.5996666 0.5277750     0
+#&gt;  [5,] 1 0.8798400 0.7743163 0.6817249 0.5998565 0.5279852     0
+#&gt;  [6,] 1 0.8799210 0.7744583 0.6819102 0.6000761 0.5282297     0
+#&gt;  [7,] 1 0.8799557 0.7745233 0.6819985 0.6001773 0.5283396     0
+#&gt;  [8,] 1 0.8794168 0.7735426 0.6806717 0.5986339 0.5266286     0
+#&gt;  [9,] 1 0.8798628 0.7743572 0.6817793 0.5999202 0.5280556     0
+#&gt; [10,] 1 0.8798205 0.7742810 0.6816781 0.5998019 0.5279247     0
 #&gt; 
 #&gt; $risk
-#&gt;  [1] -5.342300 -5.342289 -5.342300 -5.342300 -5.342300 -5.342285 -5.342300
-#&gt;  [8] -5.342300 -5.342300 -5.342300
+#&gt;  [1] -5.175519 -5.176998 -5.177534 -5.176407 -5.176741 -5.177127 -5.177305
+#&gt;  [8] -5.174603 -5.176853 -5.176644
 #&gt; </div><div class='input'>
   <span class='co'># return as distribution</span>
   <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='requireNamespaces.html'>requireNamespaces</a></span><span class='op'>(</span><span class='st'>"distr6"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>

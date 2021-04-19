@@ -31,29 +31,35 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Tutorials
      
+    <span class="caret"></span>
   </a>
-</li>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="news/index.html">Changelog</a>
+      <a href="https://towardsdatascience.com/neural-networks-for-survival-analysis-in-r-1e0421584ab?source=friends_link&amp;sk=e978a1b30a4da3370bea930e169326f3">Demonstration with mlr3proba</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/RaphaelS1/survivalmodels/">
-    <span class="fab fa-github fa-lg"></span>
+  <a href="reference/">Reference</a>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
+<li>
+  <a href="https://github.com/RaphaelS1/survivalmodels">
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -79,6 +85,7 @@
 <h2 class="hasAnchor">
 <a href="#what-is-survivalmodels" class="anchor"></a>What is survivalmodels?</h2>
 <p><code>survivalmodels</code> implements models for survival analysis that are either not already implemented in R, or novel implementations for speed improvements. Currently implemented are five neural networks from the Python packages <a href="https://github.com/havakv/pycox">pycox</a>, DNNSurv, and the Akritas non-parametric conditional estimator. Further updates will include implementations of novel survival models.</p>
+<p>For a hands-on demonstration of model training, tuning, and comparison see <a href="https://towardsdatascience.com/neural-networks-for-survival-analysis-in-r-1e0421584ab?source=friends_link&amp;sk=e978a1b30a4da3370bea930e169326f3">this article</a> I wrote, which uses the <a href="https://github.com/mlr-org/mlr3proba">mlr3proba</a> interface with models from <code>survivalmodels</code>.</p>
 </div>
 <div id="python-models" class="section level2">
 <h2 class="hasAnchor">
