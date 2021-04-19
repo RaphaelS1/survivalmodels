@@ -1,1 +1,16 @@
 url: https://RaphaelS1.github.io/survivalmodels
+
+navbar:
+  left:
+  - text: Tutorials
+    menu:
+      - text: Demonstration with mlr3proba
+        href: https://towardsdatascience.com/neural-networks-for-survival-analysis-in-r-1e0421584ab?source=friends_link&sk=e978a1b30a4da3370bea930e169326f3
+
+  right:
+  - text: Reference
+    href: reference/
+  - text: Changelog
+    href: news/index.html
+  - icon: fa-github fa-lg
+    href: https://github.com/RaphaelS1/survivalmodels

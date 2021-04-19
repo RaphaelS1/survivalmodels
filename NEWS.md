@@ -1,3 +1,7 @@
+# survivalmodels 0.1.8.9000
+
+* Added tutorial with survivalmodels and mlr3proba
+
 # survivalmodels 0.1.8
 
 * Add example of custom model to `DNNSurv`

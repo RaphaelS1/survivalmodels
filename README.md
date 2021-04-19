@@ -28,6 +28,13 @@ Python packages [pycox](https://github.com/havakv/pycox), DNNSurv, and
 the Akritas non-parametric conditional estimator. Further updates will
 include implementations of novel survival models.
 
+For a hands-on demonstration of model training, tuning, and comparison
+see [this
+article](https://towardsdatascience.com/neural-networks-for-survival-analysis-in-r-1e0421584ab?source=friends_link&sk=e978a1b30a4da3370bea930e169326f3)
+I wrote, which uses the
+[mlr3proba](https://github.com/mlr-org/mlr3proba) interface with models
+from `survivalmodels`.
+
 ## Python Models
 
 `survivalmodels` implements models from Python using
