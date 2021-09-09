@@ -1,7 +1,7 @@
 Package: survivalmodels
 Title: Models for Survival Analysis
-Version: 0.1.8.9000
-Authors@R: 
+Version: 0.1.9
+Authors@R:
     person(given = "Raphael",
            family = "Sonabend",
            role = c("aut", "cre"),
@@ -14,7 +14,7 @@ BugReports: https://github.com/RaphaelS1/survivalmodels/issues
 Imports:
     Rcpp (>= 1.0.5)
 Suggests:
-    distr6 (>= 1.4.7),
+    distr6 (>= 1.6.0),
     keras,
     pseudo,
     reticulate,

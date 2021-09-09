@@ -772,12 +772,18 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
         }
       }
 
-      ret$surv <- distr6::VectorDistribution$new(
-        distribution = "WeightedDiscrete",
-        params = x,
-        shared_params = list(x = round(as.numeric(rownames(surv)), 5)),
-        decorators = c("CoreStatistics", "ExoticStatistics"))
-    }
+      surv <- t(surv)
+      cdf <- apply(surv, 1, function(x) {
+        if (any(is.nan(x))) {
+          rep(1, ncol(x))
+        } else {
+          sort(round(1 - x, 6))
+        }
+      })
+
+      ret$surv <- distr6::as.Distribution(cdf, fun = "cdf",
+        decorators = c("CoreStatistics", "ExoticStatistics")
+      )
   }
 
   if (type %in% c("risk", "all")) {

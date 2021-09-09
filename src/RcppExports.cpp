@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // C_Akritas
 NumericVector C_Akritas(NumericMatrix truth, NumericVector times, NumericVector unique_times, NumericVector FX_train, NumericVector FX_predict, double lambda);
 RcppExport SEXP _survivalmodels_C_Akritas(SEXP truthSEXP, SEXP timesSEXP, SEXP unique_timesSEXP, SEXP FX_trainSEXP, SEXP FX_predictSEXP, SEXP lambdaSEXP) {

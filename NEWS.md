@@ -1,6 +1,7 @@
-# survivalmodels 0.1.8.9000
+# survivalmodels 0.1.9
 
 * Added tutorial with survivalmodels and mlr3proba
+* Bugfix for distr6 1.6.0
 
 # survivalmodels 0.1.8
 
@@ -9,7 +10,7 @@
 
 # survivalmodels 0.1.7
 
-* Fix export of `set_seed` and `cindex` 
+* Fix export of `set_seed` and `cindex`
 
 # survivalmodels 0.1.6
 
