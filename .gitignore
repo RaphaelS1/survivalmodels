@@ -14,3 +14,4 @@ src/survivalmodels.so
 CRAN-RELEASE
 check/
 .vscode
+*.dll

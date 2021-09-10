@@ -777,13 +777,13 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       ret$surv <- t(surv)
     } else {
       # cast to distr6
-      cdf <- apply(t(surv), 1, function(x) {
+      cdf <- t(apply(surv, 2, function(x) {
         if (any(is.nan(x))) {
           rep(1, nrow(surv))
         } else {
           sort(round(1 - x, 6))
         }
-      })
+      }))
 
       ret$surv <- distr6::as.Distribution(cdf,
         fun = "cdf",

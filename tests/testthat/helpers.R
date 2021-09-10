@@ -2,7 +2,8 @@ library(survival)
 
 # copied from https://rstudio.github.io/reticulate/articles/package.html
 skip_if_no_pycox <- function() {
-  if (!reticulate::py_module_available("torch") || !reticulate::py_module_available("pycox") ||
+  if (!reticulate::py_module_available("torch") ||
+      !reticulate::py_module_available("pycox") ||
       !reticulate::py_module_available("numpy"))
     skip("One of torch, numpy, pycox not available for testing.")
 }
@@ -12,10 +13,7 @@ sanity_check <- function(model, pars) {
 
   set.seed(42)
   if (model != "akritas") {
-    np <- reticulate::import("numpy")
-    np$random$seed(1L)
-    torch <- reticulate::import("torch")
-    torch$manual_seed(1L)
+    set_seed(1)
   }
 
   train <- simsurvdata(200, cens = 0.2)
@@ -23,7 +21,11 @@ sanity_check <- function(model, pars) {
 
   y <- survival::Surv(test$time, test$status)
 
-  fit <- do.call(get(model), c(list(formula = Surv(time, status) ~ ., data = train), pars))
+  fit <- do.call(
+    get(model),
+    c(list(formula = Surv(time, status) ~ ., data = train), pars)
+  )
+
   p <- predict(fit, newdata = test, type = "all", distr6 = TRUE)
 
   expect_true(cindex(p$risk, y) >= 0.5)
