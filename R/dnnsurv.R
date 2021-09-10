@@ -260,7 +260,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
       }
       ret$surv <- surv
     } else {
-      cdf <- lapply(seq_len(nrow(newdata)), function(.x) list(cdf = 1 - surv[.x, ]))
+      cdf <- apply(newdata, 1, function(.x) list(cdf = 1 - surv[.x, ]))
       ret$surv <- distr6::as.Distribution(cdf, fun = "cdf",
         decorators = c("CoreStatistics", "ExoticStatistics")
       )

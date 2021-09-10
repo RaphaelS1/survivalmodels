@@ -786,8 +786,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
         }
       }
 
-      surv <- t(surv)
-      cdf <- apply(surv, 1, function(x) {
+      cdf <- apply(t(surv), 1, function(x) {
         if (any(is.nan(x))) {
           rep(1, ncol(x))
         } else {

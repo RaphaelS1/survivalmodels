@@ -153,9 +153,9 @@ predict.akritas <- function(object, newdata, times = NULL,
     lambda = lambda
   )
 
-  colnames(surv) <- round(times, 6)
-  # fix rounding errors
-  # surv <- round(surv, 4)
+  # ensure distribution not degenerate
+  surv <- cbind(1, surv, 0)
+  colnames(surv) <- round(c(0, times, max(times) + 1e-2), 6)
 
   ret <- list()
 
@@ -163,19 +163,10 @@ predict.akritas <- function(object, newdata, times = NULL,
     if (!distr6) {
       ret$surv <- surv
     } else {
-      # ensure distribution not degenerate
-      surv <- cbind(1, surv, 0)
-      colnames(surv) <- round(c(0, times, max(times) + 1e-2), 6)
-
-      cdf <- apply(surv, 1, function(x) list(cdf = 1 - x))
-      ret$surv <- distr6::VectorDistribution$new(
-        distribution = "WeightedDiscrete",
-        shared_params = list(x = as.numeric(colnames(surv))),
-        params = cdf,
-        decorators = c(
-          "CoreStatistics",
-          "ExoticStatistics"
-        )
+      ret$surv <- distr6::as.Distribution(
+        apply(surv, 1, function(x) list(cdf = 1 - x)),
+        fun = "cdf",
+        decorators = c("CoreStatistics", "ExoticStatistics")
       )
     }
   }
