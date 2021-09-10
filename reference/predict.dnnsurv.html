@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@ If missing then training data from fitted object is used.</p></td>
     <tr>
       <th>batch_size</th>
       <td><p><code>(integer(1))</code><br />
-Passed to <a href='https://rdrr.io/pkg/keras/man/predict.keras.engine.training.Model.html'>keras::predict.keras.engine.training.Model</a>, elements in each batch.</p></td>
+Passed to <a href='https://keras.rstudio.com/reference/predict.keras.engine.training.Model.html'>keras::predict.keras.engine.training.Model</a>, elements in each batch.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -166,7 +166,7 @@ Level of verbosity for printing, <code>0</code> or <code>1</code>.</p></td>
     <tr>
       <th>steps</th>
       <td><p><code>(integer(1))</code><br />
-Number of batches before evaluation finished, see <a href='https://rdrr.io/pkg/keras/man/predict.keras.engine.training.Model.html'>keras::predict.keras.engine.training.Model</a>.</p></td>
+Number of batches before evaluation finished, see <a href='https://keras.rstudio.com/reference/predict.keras.engine.training.Model.html'>keras::predict.keras.engine.training.Model</a>.</p></td>
     </tr>
     <tr>
       <th>callbacks</th>
@@ -204,31 +204,15 @@ or a list combining above if <code>type = "all"</code>.</p>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='requireNamespaces.html'>requireNamespaces</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"keras"</span>, <span class='st'>"pseudo"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
   <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='dnnsurv.html'>dnnsurv</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error: Error 1 occurred creating conda environment r-reticulate</span></div><div class='input'>
   <span class='co'># predict survival matrix and relative risks</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $surv
-#&gt;       0      3.37   3.98525    4.6005   5.21575     5.831 5.832
-#&gt;  [1,] 1 0.9640120 0.9293193 0.8958750 0.8636340 0.8325539     0
-#&gt;  [2,] 1 0.9640125 0.9293224 0.8958804 0.8636401 0.8325641     0
-#&gt;  [3,] 1 0.9640120 0.9293195 0.8958754 0.8636345 0.8325545     0
-#&gt;  [4,] 1 0.9640115 0.9293183 0.8958735 0.8636323 0.8325515     0
-#&gt;  [5,] 1 0.9640116 0.9293185 0.8958738 0.8636327 0.8325521     0
-#&gt;  [6,] 1 0.9640116 0.9293213 0.8958795 0.8636391 0.8325634     0
-#&gt;  [7,] 1 0.9640119 0.9293192 0.8958748 0.8636339 0.8325537     0
-#&gt;  [8,] 1 0.9640115 0.9293182 0.8958734 0.8636322 0.8325514     0
-#&gt;  [9,] 1 0.9640117 0.9293186 0.8958740 0.8636330 0.8325524     0
-#&gt; [10,] 1 0.9640120 0.9293193 0.8958749 0.8636339 0.8325538     0
-#&gt; 
-#&gt; $risk
-#&gt;  [1] -5.618243 -5.618252 -5.618243 -5.618240 -5.618240 -5.618249 -5.618242
-#&gt;  [8] -5.618240 -5.618241 -5.618242
-#&gt; </div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("predict"): no applicable method for 'predict' applied to an object of class "function"</span></div><div class='input'>
   <span class='co'># return as distribution</span>
   <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='requireNamespaces.html'>requireNamespaces</a></span><span class='op'>(</span><span class='st'>"distr6"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
     <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='fu'><a href='simsurvdata.html'>simsurvdata</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, distr6 <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
   <span class='op'>}</span>
-</div><div class='output co'>#&gt; WeightDisc1 WeightDisc2 ... WeightDisc9 WeightDisc10 </div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("predict"): no applicable method for 'predict' applied to an object of class "function"</span></div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>

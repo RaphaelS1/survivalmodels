@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
       </span>
     </div>
 
@@ -156,17 +156,17 @@ of hidden nodes in respective layer.</p></td>
     </tr>
     <tr>
       <th>layer_pars</th>
-      <td><p><code>(list())</code><br /> Arguments passed to <a href='https://rdrr.io/pkg/keras/man/layer_dense.html'>keras::layer_dense</a>.</p></td>
+      <td><p><code>(list())</code><br /> Arguments passed to <a href='https://keras.rstudio.com/reference/layer_dense.html'>keras::layer_dense</a>.</p></td>
     </tr>
     <tr>
       <th>activation</th>
-      <td><p><code>(character(1))</code><br /> Activation function passed to <a href='https://rdrr.io/pkg/keras/man/layer_activation.html'>keras::layer_activation</a>.
+      <td><p><code>(character(1))</code><br /> Activation function passed to <a href='https://keras.rstudio.com/reference/layer_activation.html'>keras::layer_activation</a>.
 Default is linear.</p></td>
     </tr>
     <tr>
       <th>act_pars</th>
       <td><p><code>(list())</code><br /> Parameters for activation function, see
-<a href='https://rdrr.io/pkg/keras/man/layer_activation.html'>keras::layer_activation</a>.</p></td>
+<a href='https://keras.rstudio.com/reference/layer_activation.html'>keras::layer_activation</a>.</p></td>
     </tr>
     <tr>
       <th>dropout</th>
@@ -181,7 +181,7 @@ to all layers.</p></td>
     <tr>
       <th>batch_pars</th>
       <td><p><code>(list())</code><br /> Parameters for batch normalisation, see
-<a href='https://rdrr.io/pkg/keras/man/layer_batch_normalization.html'>keras::layer_batch_normalization</a>.</p></td>
+<a href='https://keras.rstudio.com/reference/layer_batch_normalization.html'>keras::layer_batch_normalization</a>.</p></td>
     </tr>
     </table>
 
@@ -199,49 +199,7 @@ More advanced networks will require manual creation with <a href='https://CRAN.R
   <span class='fu'>build_keras_net</span><span class='op'>(</span>n_in <span class='op'>=</span> <span class='fl'>4L</span>, n_out <span class='op'>=</span> <span class='fl'>2L</span>, nodes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>32L</span>, <span class='fl'>64L</span>, <span class='fl'>32L</span><span class='op'>)</span>,
     activation <span class='op'>=</span> <span class='st'>"elu"</span>, dropout <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; Model
-#&gt; Model: "sequential_1"
-#&gt; ________________________________________________________________________________
-#&gt; Layer (type)                        Output Shape                    Param #     
-#&gt; ================================================================================
-#&gt; dense_3 (Dense)                     (None, 32)                      160         
-#&gt; ________________________________________________________________________________
-#&gt; activation_3 (Activation)           (None, 32)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_3 (BatchNormali (None, 32)                      128         
-#&gt; ________________________________________________________________________________
-#&gt; dropout_3 (Dropout)                 (None, 32)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_4 (Dense)                     (None, 64)                      2112        
-#&gt; ________________________________________________________________________________
-#&gt; activation_4 (Activation)           (None, 64)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_4 (BatchNormali (None, 64)                      256         
-#&gt; ________________________________________________________________________________
-#&gt; dropout_4 (Dropout)                 (None, 64)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_5 (Dense)                     (None, 32)                      2080        
-#&gt; ________________________________________________________________________________
-#&gt; activation_5 (Activation)           (None, 32)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_5 (BatchNormali (None, 32)                      128         
-#&gt; ________________________________________________________________________________
-#&gt; dropout_5 (Dropout)                 (None, 32)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_6 (Dense)                     (None, 2)                       66          
-#&gt; ________________________________________________________________________________
-#&gt; activation_6 (Activation)           (None, 2)                       0           
-#&gt; ________________________________________________________________________________
-#&gt; batch_normalization_6 (BatchNormali (None, 2)                       8           
-#&gt; ________________________________________________________________________________
-#&gt; dropout_6 (Dropout)                 (None, 2)                       0           
-#&gt; ================================================================================
-#&gt; Total params: 4,938
-#&gt; Trainable params: 4,678
-#&gt; Non-trainable params: 260
-#&gt; ________________________________________________________________________________
-#&gt; 
-#&gt; </div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='error'>Error: Error 1 occurred creating conda environment r-reticulate</span></div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>
