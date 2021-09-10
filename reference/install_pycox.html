@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Install Pycox With Reticulate — install_pycox" />
-<meta property="og:description" content="Installs the python 'pycox' package via reticulate. Note the default for pip is changed to TRUE." />
+<meta property="og:description" content="Installs the python 'pycox' package via reticulate.
+Note the default for pip is changed to TRUE." />
 
 
 
@@ -123,14 +124,16 @@
     </div>
 
     <div class="ref-description">
-    <p>Installs the python 'pycox' package via reticulate. Note the default for <code>pip</code> is changed to <code>TRUE</code>.</p>
+    <p>Installs the python 'pycox' package via reticulate.
+Note the default for <code>pip</code> is changed to <code>TRUE</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>install_pycox</span><span class='op'>(</span>
   method <span class='op'>=</span> <span class='st'>"auto"</span>,
   conda <span class='op'>=</span> <span class='st'>"auto"</span>,
   pip <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  install_torch <span class='op'>=</span> <span class='cn'>FALSE</span>
+  install_torch <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -142,7 +145,12 @@
     </tr>
     <tr>
       <th>install_torch</th>
-      <td><p>If <code>TRUE</code> installs the dependency <code>torch</code> package as well.</p></td>
+      <td><p>If <code>TRUE</code> installs the dependency <code>torch</code> package as
+well.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Passed to <a href='https://rdrr.io/pkg/reticulate/man/py_install.html'>reticulate::py_install</a>.</p></td>
     </tr>
     </table>
 

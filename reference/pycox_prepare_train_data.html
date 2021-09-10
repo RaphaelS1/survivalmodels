@@ -157,48 +157,53 @@ Generally used internally only.</p>
     </tr>
     <tr>
       <th>frac</th>
-      <td><p><code>(numeric(1))</code><br /> Fraction of data to use for validation dataset, default is <code>0</code>
-and therefore no separate validation dataset.</p></td>
+      <td><p><code>(numeric(1))</code><br /> Fraction of data to use for validation
+dataset, default is <code>0</code> and therefore no separate validation dataset.</p></td>
     </tr>
     <tr>
       <th>standardize_time</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code>, the time outcome to be standardized. For use
-with <a href='coxtime.html'>coxtime</a>.</p></td>
+      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code>, the time outcome to be
+standardized. For use with <a href='coxtime.html'>coxtime</a>.</p></td>
     </tr>
     <tr>
       <th>log_duration</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> and <code>standardize_time</code> is <code>TRUE</code> then time
-variable is log transformed.</p></td>
+      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> and <code>standardize_time</code> is
+<code>TRUE</code> then time variable is log transformed.</p></td>
     </tr>
     <tr>
       <th>with_mean</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> (default) and <code>standardize_time</code> is <code>TRUE</code> then time
+      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> (default) and
+<code>standardize_time</code> is <code>TRUE</code> then time
 variable is centered.</p></td>
     </tr>
     <tr>
       <th>with_std</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> (default) and <code>standardize_time</code> is <code>TRUE</code> then time
+      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> (default) and <code>standardize_time</code>
+is <code>TRUE</code> then time
 variable is scaled to unit variance.</p></td>
     </tr>
     <tr>
       <th>discretise</th>
-      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> then time is discretised. For use with the models
+      <td><p><code>(logical(1))</code><br /> If <code>TRUE</code> then time is discretised. For
+use with the models
 <a href='deephit.html'>deephit</a>, <a href='pchazard.html'>pchazard</a>, and <a href='loghaz.html'>loghaz</a>.</p></td>
     </tr>
     <tr>
       <th>cuts</th>
-      <td><p><code>(integer(1))</code><br /> If <code>discretise</code> is <code>TRUE</code> then determines number of cut-points
-for discretisation.</p></td>
+      <td><p><code>(integer(1))</code><br /> If <code>discretise</code> is <code>TRUE</code> then determines
+number of cut-points for discretisation.</p></td>
     </tr>
     <tr>
       <th>cutpoints</th>
-      <td><p><code>(numeric())</code> <br /> Alternative to <code>cuts</code> if <code>discretise</code> is true, provide
-exact cutpoints for discretisation. <code>cuts</code> is ignored if <code>cutpoints</code> is non-NULL.</p></td>
+      <td><p><code>(numeric())</code> <br /> Alternative to <code>cuts</code> if <code>discretise</code> is
+true, provide exact cutpoints for discretisation. <code>cuts</code> is ignored if
+<code>cutpoints</code> is non-NULL.</p></td>
     </tr>
     <tr>
       <th>scheme</th>
-      <td><p><code>(character(1))</code><br /> Method of discretisation, either <code>"equidistant"</code> (default)
-or <code>"quantiles"</code>. See <code><a href='https://rdrr.io/pkg/reticulate/man/py_help.html'>reticulate::py_help(pycox$models$LogisticHazard$label_transform)</a></code>.</p></td>
+      <td><p><code>(character(1))</code><br /> Method of discretisation, either
+<code>"equidistant"</code> (default) or <code>"quantiles"</code>. See
+<code><a href='https://rdrr.io/pkg/reticulate/man/py_help.html'>reticulate::py_help(pycox$models$LogisticHazard$label_transform)</a></code>.</p></td>
     </tr>
     <tr>
       <th>cut_min</th>
