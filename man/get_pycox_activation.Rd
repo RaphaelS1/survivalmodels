@@ -23,15 +23,15 @@ get_pycox_activation(
 )
 }
 \arguments{
-\item{activation}{\code{(character(1))}\cr Activation function method, see details for list of
-implemented methods.}
+\item{activation}{\code{(character(1))}\cr Activation function method, see
+details for list of implemented methods.}
 
-\item{construct}{\code{(logical(1))}\cr If \code{TRUE} (default) returns constructed object, otherwise
-a class.}
+\item{construct}{\code{(logical(1))}\cr If \code{TRUE} (default) returns constructed
+object, otherwise a class.}
 
 \item{alpha}{\code{(numeric(1))}\cr Passed to \code{celu} and \code{elu}.}
 
-\item{dim}{\code{(integer(1))}\cr Passed to \code{glu}, \code{logsoftmax}, \code{softmax}, and \code{softmin}.}
+\item{dim}{\code{(integer(1))}\cr Passed to \code{glu}, \code{logsoftmax}, \code{softmax}, and}
 
 \item{lambd}{\code{(numeric(1))}\cr Passed to \code{hardshrink} and \code{softshrink}.}
 
@@ -52,8 +52,8 @@ a class.}
 \item{value}{\code{(numeric(1))}\cr Passed to \code{threshold}.}
 }
 \description{
-Helper function to return a class or constructed object for pytorch activation
-function from \code{torch.nn.modules.activation}.
+Helper function to return a class or constructed object for
+pytorch activation function from \code{torch.nn.modules.activation}.
 }
 \details{
 Implemented methods (with help pages) are

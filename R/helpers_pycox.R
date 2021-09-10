@@ -502,8 +502,10 @@ get_pycox_callbacks <- function(early_stopping = FALSE, best_weights = FALSE,
 #' @param method,conda,pip See [reticulate::py_install].
 #' @param install_torch If `TRUE` installs the dependency `torch` package as
 #' well.
+#' @param ... Passed to [reticulate::py_install].
 #' @export
-install_pycox <- function(method = "auto", conda = "auto", pip = TRUE, install_torch = FALSE) {
+install_pycox <- function(method = "auto", conda = "auto", pip = TRUE,
+                          install_torch = FALSE, ...) {
   # nocov start
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     stop("Package 'reticulate' required but not installed.") # nocov
@@ -513,7 +515,7 @@ install_pycox <- function(method = "auto", conda = "auto", pip = TRUE, install_t
   if (install_torch) {
     pkg <- c("torch", pkg)
   }
-  reticulate::py_install(pkg, method = method, conda = conda, pip = pip)
+  reticulate::py_install(pkg, method = method, conda = conda, pip = pip, ...)
   # nocov end
 }
 

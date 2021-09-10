@@ -8,14 +8,18 @@ install_keras(
   method = "auto",
   conda = "auto",
   pip = TRUE,
-  install_tensorflow = FALSE
+  install_tensorflow = FALSE,
+  ...
 )
 }
 \arguments{
 \item{method, conda, pip}{See \link[reticulate:py_install]{reticulate::py_install}.}
 
 \item{install_tensorflow}{If \code{TRUE} installs the dependency \code{tensorflow} package as well.}
+
+\item{...}{Passed to \link[reticulate:py_install]{reticulate::py_install}.}
 }
 \description{
-Stripped back version of \link[keras:install_keras]{keras::install_keras}. Note the default for \code{pip} is changed to \code{TRUE}.
+Stripped back version of \link[keras:install_keras]{keras::install_keras}. Note the
+default for \code{pip} is changed to \code{TRUE}.
 }

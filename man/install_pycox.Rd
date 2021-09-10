@@ -8,14 +8,19 @@ install_pycox(
   method = "auto",
   conda = "auto",
   pip = TRUE,
-  install_torch = FALSE
+  install_torch = FALSE,
+  ...
 )
 }
 \arguments{
 \item{method, conda, pip}{See \link[reticulate:py_install]{reticulate::py_install}.}
 
-\item{install_torch}{If \code{TRUE} installs the dependency \code{torch} package as well.}
+\item{install_torch}{If \code{TRUE} installs the dependency \code{torch} package as
+well.}
+
+\item{...}{Passed to \link[reticulate:py_install]{reticulate::py_install}.}
 }
 \description{
-Installs the python 'pycox' package via reticulate. Note the default for \code{pip} is changed to \code{TRUE}.
+Installs the python 'pycox' package via reticulate.
+Note the default for \code{pip} is changed to \code{TRUE}.
 }

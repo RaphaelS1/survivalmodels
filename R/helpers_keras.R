@@ -149,9 +149,10 @@ build_keras_net <- function(n_in, n_out, nodes = c(32L, 32L), layer_pars = list(
 #' default for `pip` is changed to `TRUE`.
 #' @param method,conda,pip See [reticulate::py_install].
 #' @param install_tensorflow If `TRUE` installs the dependency `tensorflow` package as well.
+#' @param ... Passed to [reticulate::py_install].
 #' @export
 install_keras <- function(method = "auto", conda = "auto", pip = TRUE,
-                          install_tensorflow = FALSE) {
+                          install_tensorflow = FALSE, ...) {
   # nocov start
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     stop("Package 'reticulate' required but not installed.") # nocov
@@ -161,7 +162,7 @@ install_keras <- function(method = "auto", conda = "auto", pip = TRUE,
   if (install_tensorflow) {
     pkg <- c("tensorflow", pkg)
   }
-  reticulate::py_install(pkg, method = method, conda = conda, pip = pip)
+  reticulate::py_install(pkg, method = method, conda = conda, pip = pip, ...)
   # nocov end
 }
 
