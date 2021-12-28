@@ -12,11 +12,6 @@ test_that("silent", {
   expect_silent({predict(fit, newdata = rats[51:100, ])})
 })
 
-test_that("standardize", {
-  expect_silent(coxtime(Surv(time, status) ~ ., data = rats[1:50, ], verbose = FALSE,
-                        standardize_time = TRUE))
-})
-
 test_that("early_stopping", {
   expect_true("EarlyStopping" %in% names(coxtime(Surv(time, status) ~ ., data = rats[1:50, ],
                                                  verbose = FALSE,

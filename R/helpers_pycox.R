@@ -78,10 +78,17 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0,
 
   ret <- list(x_train = x_train, y_train = y_train)
 
-  if (standardize_time || discretise) {
+  if (standardize_time || discretise) { # nocov start
     if (standardize_time) {
-      labtrans <- pycox$models$CoxTime$label_transform()
-    } else {
+      labtrans <- do.call(
+        pycox$models$CoxTime$label_transform,
+        list(
+          log_duration = log_duration,
+          with_mean = with_mean,
+          with_std = with_std
+        )
+      )
+    } else { # nocov end
       if (!is.null(cutpoints)) {
         cuts <- reticulate::r_to_py(cutpoints) # nocov
       } else {
