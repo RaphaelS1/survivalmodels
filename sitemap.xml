@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://RaphaelS1.github.io/survivalmodels/404.html</loc>
+  </url>
+  <url>
+    <loc>https://RaphaelS1.github.io/survivalmodels/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://RaphaelS1.github.io/survivalmodels/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://RaphaelS1.github.io/survivalmodels/authors.html</loc>
+  </url>
+  <url>
     <loc>https://RaphaelS1.github.io/survivalmodels/index.html</loc>
+  </url>
+  <url>
+    <loc>https://RaphaelS1.github.io/survivalmodels/news/index.html</loc>
   </url>
   <url>
     <loc>https://RaphaelS1.github.io/survivalmodels/reference/akritas.html</loc>
@@ -41,6 +56,9 @@
   </url>
   <url>
     <loc>https://RaphaelS1.github.io/survivalmodels/reference/get_pycox_optim.html</loc>
+  </url>
+  <url>
+    <loc>https://RaphaelS1.github.io/survivalmodels/reference/index.html</loc>
   </url>
   <url>
     <loc>https://RaphaelS1.github.io/survivalmodels/reference/install_keras.html</loc>
