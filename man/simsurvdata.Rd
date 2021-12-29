@@ -4,14 +4,12 @@
 \alias{simsurvdata}
 \title{Simulate Survival Data}
 \usage{
-simsurvdata(n = 100, trt = 2, age = 2, sex = 1.5, cutoff = NULL, cens = 0.3)
+simsurvdata(n = 100, trt = 2, age = 2, sex = 1.5, cens = 0.3)
 }
 \arguments{
 \item{n}{\code{(integer(1))} \cr Number of samples}
 
 \item{trt, age, sex}{\code{(numeric(1))} \cr Coefficients for covariates.}
-
-\item{cutoff}{\code{(numeric(1))} \cr Deprecated, in future use \code{cens}.}
 
 \item{cens}{\code{(numeric(1))} \cr Proportion of censoring to be generated, cut-off time is then
 selected as the quantile that results in \code{cens}.}

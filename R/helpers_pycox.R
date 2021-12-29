@@ -78,7 +78,7 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0,
 
   ret <- list(x_train = x_train, y_train = y_train)
 
-  if (standardize_time || discretise) {
+  if (standardize_time || discretise) { # nocov start
     if (standardize_time) {
       labtrans <- do.call(
         pycox$models$CoxTime$label_transform,
@@ -88,7 +88,7 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0,
           with_std = with_std
         )
       )
-    } else {
+    } else { # nocov end
       if (!is.null(cutpoints)) {
         cuts <- reticulate::r_to_py(cutpoints) # nocov
       } else {
@@ -389,7 +389,7 @@ get_pycox_optim <- function(optimizer = "adam", net, rho = 0.9, eps = 1e-8, lr =
       weight_decay),
     rprop = opt$Rprop(params, learning_rate, etas, step_sizes),
     sgd = opt$SGD(params, learning_rate, momentum, weight_decay, dampening, nesterov),
-    sparse_adam = opt$SparseAdam(params, learning_rate, betas, eps)
+    sparse_adam = opt$SparseAdam(params, learning_rate, betas, eps) # nocov
   )
 }
 
@@ -780,7 +780,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       # cast to distr6
       cdf <- t(apply(surv, 1, function(x) {
         if (any(is.nan(x))) {
-          rep(1, ncol(surv))
+          rep(1, ncol(surv)) # nocov
         } else {
           sort(round(1 - x, 6))
         }
@@ -793,7 +793,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- surv_to_risk(1 - surv)
+    ret$risk <- surv_to_risk(surv)
   }
 
   if (length(ret) == 1) {
@@ -816,7 +816,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   torchtuples <- reticulate::import("torchtuples")
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y,
-                           reverse)
+                          reverse)
   data$activation <- get_pycox_activation(activation, construct = FALSE)
 
   c(data, pycox_prepare_train_data(data$x, data$y, frac, ...))

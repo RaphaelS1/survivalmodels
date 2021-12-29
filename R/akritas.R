@@ -175,7 +175,7 @@ predict.akritas <- function(object, newdata, times = NULL,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- surv_to_risk(1 - surv)
+    ret$risk <- surv_to_risk(surv)
   }
 
   if (length(ret) == 1) {

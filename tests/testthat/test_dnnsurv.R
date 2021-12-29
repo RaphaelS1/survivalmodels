@@ -48,6 +48,8 @@ test_that("predict distr6", {
 })
 
 test_that("auto sanity", {
-  sanity_check(model = "dnnsurv",
-               pars = list(early_stopping = TRUE, epochs = 100L, validation_split = 0.3))
+  sanity_check(
+    model = "dnnsurv",
+    pars = list(epochs = 100L, validation_split = 0.3)
+  )
 })

@@ -267,7 +267,7 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- surv_to_risk(1 - surv)
+    ret$risk <- surv_to_risk(surv)
   }
 
   if (length(ret) == 1) {
