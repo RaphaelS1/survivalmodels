@@ -13,7 +13,7 @@ sanity_check <- function(model, pars) {
 
   set.seed(42)
   if (model != "akritas") {
-    set_seed(1)
+    set_seed(42)
   }
 
   train <- simsurvdata(200, cens = 0.2)
