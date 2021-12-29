@@ -1,3 +1,8 @@
+# survivalmodels 0.1.10
+
+* Removed deprecated `cutoff` parameter from `simsurvdata`
+* Minor internal changes
+
 # survivalmodels 0.1.9
 
 * Added tutorial with survivalmodels and mlr3proba

@@ -389,7 +389,7 @@ get_pycox_optim <- function(optimizer = "adam", net, rho = 0.9, eps = 1e-8, lr =
       weight_decay),
     rprop = opt$Rprop(params, learning_rate, etas, step_sizes),
     sgd = opt$SGD(params, learning_rate, momentum, weight_decay, dampening, nesterov),
-    sparse_adam = opt$SparseAdam(params, learning_rate, betas, eps)
+    sparse_adam = opt$SparseAdam(params, learning_rate, betas, eps) # nocov
   )
 }
 
@@ -780,7 +780,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       # cast to distr6
       cdf <- t(apply(surv, 1, function(x) {
         if (any(is.nan(x))) {
-          rep(1, ncol(surv))
+          rep(1, ncol(surv)) # nocov
         } else {
           sort(round(1 - x, 6))
         }

@@ -19,7 +19,7 @@
 #' @export
 cindex <- function(risk, truth, ...) {
   if (!requireNamespace("survival", quietly = TRUE)) {
-    stop("concordance requires {survival} package")
+    stop("concordance requires {survival} package") # nocov
   }
   stopifnot(length(risk) == length(truth))
   survival::concordance(truth ~ risk, reverse = TRUE, ...)$concordance
