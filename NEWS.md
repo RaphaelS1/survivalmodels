@@ -1,6 +1,7 @@
 # survivalmodels 0.1.10
 
 * Removed deprecated `cutoff` parameter from `simsurvdata`
+* Update risk calculations to follow https://arxiv.org/abs/2112.04828
 * Minor internal changes
 
 # survivalmodels 0.1.9

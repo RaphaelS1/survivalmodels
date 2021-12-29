@@ -793,7 +793,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   }
 
   if (type %in% c("risk", "all")) {
-    ret$risk <- surv_to_risk(1 - surv)
+    ret$risk <- surv_to_risk(surv)
   }
 
   if (length(ret) == 1) {

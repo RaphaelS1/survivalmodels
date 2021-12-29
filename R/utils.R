@@ -4,8 +4,10 @@ setcollapse <- function(x) {
 
 
 surv_to_risk <- function(x) {
-  assert_cdf_matrix(x)
-  -apply(x, 1, function(.x) sum(c(.x[1], diff(.x)) * as.numeric(colnames(x))))
+  assert_cdf_matrix(1 - x)
+  cumH <- -log(x)
+  cumH[cumH == Inf] <- 0
+  rowSums(cumH)
 }
 
 
