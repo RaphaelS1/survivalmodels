@@ -28,6 +28,7 @@ sanity_check <- function(model, pars) {
 
   p <- predict(fit, newdata = test, type = "all", distr6 = TRUE)
 
+  print(cindex(p$risk, y))
   expect_true(cindex(p$risk, y) >= 0.5)
   expect_equal(length(p$risk), nrow(p$surv$modelTable))
 
