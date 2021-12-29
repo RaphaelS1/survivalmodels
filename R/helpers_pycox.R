@@ -816,7 +816,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   torchtuples <- reticulate::import("torchtuples")
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y,
-                           reverse)
+                          reverse)
   data$activation <- get_pycox_activation(activation, construct = FALSE)
 
   c(data, pycox_prepare_train_data(data$x, data$y, frac, ...))

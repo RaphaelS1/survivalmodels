@@ -16,7 +16,7 @@ sanity_check <- function(model, pars) {
     set_seed(42)
   }
 
-  train <- simsurvdata(300, cens = 0.1)
+  train <- simsurvdata(500, cens = 0.1)
   test <- simsurvdata(50, cens = 0.1)
 
   y <- survival::Surv(test$time, test$status)
