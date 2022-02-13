@@ -21,7 +21,8 @@ Suggests:
     survival,
     testthat
 Remotes:
-    alan-turing-institute/distr6
+    alan-turing-institute/distr6#268,
+    xoopR/param6
 LinkingTo:
     Rcpp
 Encoding: UTF-8
