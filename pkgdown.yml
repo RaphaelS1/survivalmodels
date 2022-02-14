@@ -1,8 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 2.0.1
+pkgdown: 2.0.2
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-12-29T23:32Z
+last_built: 2022-02-14T22:18Z
 urls:
   reference: https://RaphaelS1.github.io/survivalmodels/reference
   article: https://RaphaelS1.github.io/survivalmodels/articles
