@@ -35,3 +35,7 @@ sanity_check <- function(model, pars) {
   p <- predict(fit, newdata = test, type = "all", distr6 = FALSE)
   expect_equal(length(p$risk), nrow(p$surv))
 }
+
+expect_rounded_equal <- function(actual, expected, n = 4) {
+  expect_equal(round(actual, n), round(expected, n))
+}
