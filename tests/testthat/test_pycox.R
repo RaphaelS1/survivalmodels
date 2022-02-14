@@ -52,7 +52,7 @@ test_that("predict", {
   expect_is(p$surv, "matrix")
   expect_is(p$risk, "numeric")
   expect_equal(length(p$risk), 50)
-  expect_equal(dim(p$surv), c(50, 22))
+  expect_equal(dim(p$surv), c(50, 20))
 })
 
 test_that("predict distr6", {

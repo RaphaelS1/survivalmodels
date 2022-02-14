@@ -1,3 +1,8 @@
+# survivalmodels 0.1.11
+
+* Better handling of improper distributions
+* Fixes bug in Python conversion
+
 # survivalmodels 0.1.10
 
 * Removed deprecated `cutoff` parameter from `simsurvdata`
