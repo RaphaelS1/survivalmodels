@@ -16,14 +16,10 @@ Imports:
 Suggests:
     distr6 (>= 1.6.6),
     keras,
-    param6 (>= 0.2.4),
     pseudo,
     reticulate,
     survival,
     testthat
-Remotes:
-    xoopR/param6,
-    alan-turing-institute/distr6
 LinkingTo:
     Rcpp
 Encoding: UTF-8
