@@ -32,7 +32,7 @@
 #' @param model `(character(1))`\cr Corresponding pycox model.
 #'
 #' @export
-pycox_prepare_train_data <- function(x_train, y_train, frac = 0,
+pycox_prepare_train_data <- function(x_train, y_train, frac = 0, 
   standardize_time = FALSE, log_duration = FALSE,
   with_mean = TRUE, with_std = TRUE, discretise = FALSE, cuts = 10L,
   cutpoints = NULL, scheme = c("equidistant", "quantiles"),
@@ -54,7 +54,11 @@ pycox_prepare_train_data <- function(x_train, y_train, frac = 0,
   colnames(y_train) <- c("time", "status")
 
   if (frac) {
-    val <- sample(seq_len(nrow(x_train)), nrow(x_train) * frac)
+    if (is.integer(frac) && (length(frac) > 1)) {
+        val <- frac
+    } else {
+        val <- sample(seq_len(nrow(x_train)), nrow(x_train) * frac)
+    }
     x_val <- x_train[val, , drop = FALSE]
     y_val <- y_train[val, , drop = FALSE]
     x_train <- x_train[-val, , drop = FALSE]

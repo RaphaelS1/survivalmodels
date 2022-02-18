@@ -26,7 +26,8 @@ pycox_prepare_train_data(
 \item{y_train}{\code{(matrix(1))} \cr Training outcomes.}
 
 \item{frac}{\code{(numeric(1))}\cr Fraction of data to use for validation
-dataset, default is \code{0} and therefore no separate validation dataset.}
+dataset, default is \code{0} and therefore no separate validation dataset. If this is a vector of integers, it is used to select samples from the 
+training set to be included in the validation dataset.}
 
 \item{standardize_time}{\code{(logical(1))}\cr If \code{TRUE}, the time outcome to be
 standardized. For use with \link{coxtime}.}

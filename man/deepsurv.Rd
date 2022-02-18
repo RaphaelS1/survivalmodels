@@ -60,7 +60,8 @@ Alternative method to call the function. Required if \verb{formula, time_variabl
 
 \item{frac}{\code{(numeric(1))} \cr
 Fraction of data to use for validation dataset, default is \code{0} and therefore no separate
-validation dataset.}
+validation dataset. If this is a vector of integers, it is used to select samples from the 
+training set to be included in the validation dataset.}
 
 \item{activation}{\code{(character(1))} \cr
 See \link{get_pycox_activation}.}
