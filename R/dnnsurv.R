@@ -237,17 +237,9 @@ predict.dnnsurv <- function(object, newdata, batch_size = 32L, verbose = 0L,
   surv <- Reduce(cbind, ypred)
   colnames(surv) <- object$cutpoints
   stopifnot(nrow(newdata) == nrow(surv))
+  surv <- fill_na(round(surv, 4))
 
-  # ensure distribution not degenerate
   times <- as.numeric(colnames(surv))
-  if (!(0 %in% times)) {
-    surv <- cbind(1, surv)
-    times <- round(c(0, times), 5)
-  }
-  if (!all(surv[nrow(surv), ] %in% 0)) {
-    surv <- cbind(surv, 0)
-    times <- round(c(times, max(times) + 1e-3), 5)
-  }
   colnames(surv) <- times
 
   ret <- list()

@@ -18,12 +18,12 @@ test_that("silent", {
 
 test_that("kaplan", {
   fit <- akritas(Surv(time, status) ~ ., data = rats[1:100, ])
-  expect_equal(
+  expect_rounded_equal(
     as.numeric(predict(fit, newdata = rats[1:100, ], lambda = 1)[1, ]),
     survival::survfit(Surv(time, status) ~ 1, data = rats[1:100, ])$surv)
 
   fit <- akritas(Surv(time, status) ~ ., data = rats[1:100, ], reverse = TRUE)
-  expect_equal(
+  expect_rounded_equal(
     as.numeric(predict(fit, newdata = rats[1:100, ], lambda = 1)[1, ]),
     survival::survfit(Surv(time, 1 - status) ~ 1, data = rats[1:100, ])$surv)
 })

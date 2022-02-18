@@ -757,21 +757,9 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
     )
   }
 
-  surv <- as.matrix(surv)
+  surv <- fill_na(t(as.matrix(round(surv, 4))))
   ret <- list()
-  stopifnot(nrow(newdata) == ncol(surv))
-
-  times <- as.numeric(rownames(surv))
-  if (!(0 %in% times)) {
-    surv <- rbind(1, surv)
-    times <- round(c(0, times), 5)
-  }
-  if (!all(surv[nrow(surv), ] %in% 0)) {
-    surv <- rbind(surv, 0)
-    times <- round(c(times, max(times) + 1e-3), 5)
-  }
-  surv <- t(surv)
-  colnames(surv) <- times
+  stopifnot(nrow(newdata) == nrow(surv))
 
   type <- match.arg(type)
   if (type %in% c("survival", "all")) {
@@ -781,16 +769,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       }
       ret$surv <- surv
     } else {
-      # cast to distr6
-      cdf <- t(apply(surv, 1, function(x) {
-        if (any(is.nan(x))) {
-          rep(1, ncol(surv)) # nocov
-        } else {
-          sort(round(1 - x, 6))
-        }
-      }))
-
-      ret$surv <- distr6::as.Distribution(cdf, fun = "cdf",
+      ret$surv <- distr6::as.Distribution(1 - surv, fun = "cdf",
         decorators = c("CoreStatistics", "ExoticStatistics")
       )
     }
