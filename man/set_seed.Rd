@@ -7,11 +7,11 @@
 set_seed(seed_R, seed_np = seed_R, seed_torch = seed_R)
 }
 \arguments{
-\item{seed_R}{(\code{integer(1)}) \code{seed} passed to \link{set.seed}.}
+\item{seed_R}{(\code{integer(1)}) \cr \code{seed} passed to \link{set.seed}.}
 
-\item{seed_np}{(\code{integer(1)}) \code{seed} passed to \code{numpy$random$seed}. Default is same as \code{seed_R}.}
+\item{seed_np}{(\code{integer(1)}) \cr \code{seed} passed to \code{numpy$random$seed}. Default is same as \code{seed_R}.}
 
-\item{seed_torch}{(\code{integer(1)}) \code{seed} passed to \code{numpy$random$seed}.
+\item{seed_torch}{(\code{integer(1)}) \cr \code{seed} passed to \code{numpy$random$seed}.
 Default is same as \code{seed_R}.}
 }
 \description{
