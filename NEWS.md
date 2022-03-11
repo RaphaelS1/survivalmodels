@@ -1,4 +1,4 @@
-# survivalmodels 0.1.11.9000
+# survivalmodels 0.1.12
 
 * Exported `surv_to_risk` for reducing survival matrix distributions to relative risks / rankings
 
