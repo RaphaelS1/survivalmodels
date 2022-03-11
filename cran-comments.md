@@ -1,3 +1,5 @@
+I'm submitting again to clear the codecov link NOTE.
+
 ## Downstream dependencies
 
 None.
@@ -14,4 +16,3 @@ No ERRORs,  WARNINGs or NOTEs.
 * Microsoft Windows Server 2019, R Devel
 * Mac OS X, R Release
 * Ubuntu, R Release
-
