@@ -14,7 +14,7 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com
 
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/survivalmodels)](https://cran.r-project.org/package=survivalmodels)
-[![codecov](https://codecov.io/gh/RaphaelS1/survivalmodels/branch/master/graph/badge.svg)](https://codecov.io/gh/RaphaelS1/survivalmodels)
+[![codecov](http://app.codecov.io/gh/RaphaelS1/survivalmodels/branch/master/graph/badge.svg)](http://app.codecov.io/gh/RaphaelS1/survivalmodels)
 [![dependencies](https://tinyverse.netlify.com/badge/survivalmodels)](https://CRAN.R-project.org/package=survivalmodels)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
