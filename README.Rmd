@@ -29,6 +29,29 @@ and the Akritas non-parametric conditional estimator. Further updates will inclu
 
 For a hands-on demonstration of model training, tuning, and comparison see [this article](https://towardsdatascience.com/neural-networks-for-survival-analysis-in-r-1e0421584ab?source=friends_link&sk=e978a1b30a4da3370bea930e169326f3) I wrote, which uses the [mlr3proba](https://github.com/mlr-org/mlr3proba) interface with models from `survivalmodels`.
 
+## Basic Usage
+
+```{r}
+# load dependencies
+library(survival)
+
+train <- simsurvdata(100)
+test <- simsurvdata(50
+)
+fit <- akritas(Surv(time, status) ~ ., data = train)
+predict(fit, newdata = test)
+
+# Use distr6 = TRUE to return a distribution
+predict_distr <- predict(fit, newdata = test, distr6 = TRUE)
+predict_distr$survival(100)
+
+# Return a relative risk ranking with type = "risk"
+predict(fit, newdata = test, type = "risk")
+
+Or both survival probabilities and a rank
+predict(fit, newdata = test, type = "all", distr6 = TRUE)
+```
+
 ## Python Models
 
 `survivalmodels` implements models from Python using [reticulate](https://cran.r-project.org/package=reticulate). In order to use these models, the required Python packages must be installed following with [reticulate::py_install](https://rstudio.github.io/reticulate/reference/py_install.html). `survivalmodels` includes a helper function to install the required `pycox` function (with pytorch if also required). Before running any models in this package, if you have not already installed `pycox` please run

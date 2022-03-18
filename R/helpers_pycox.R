@@ -693,7 +693,7 @@ def init_weights(m):
 #' time so higher rank implies higher risk of event, or both (`"all"`).
 #' @param distr6 `(logical(1))`\cr
 #' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
-#' probabilities, otherwise returns a [distr6::VectorDistribution()].
+#' probabilities, otherwise returns a [distr6::Matdist()].
 #' @param ... `ANY` \cr
 #' Currently ignored.
 #'

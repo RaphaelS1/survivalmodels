@@ -35,6 +35,29 @@ I wrote, which uses the
 [mlr3proba](https://github.com/mlr-org/mlr3proba) interface with models
 from `survivalmodels`.
 
+## Basic Usage
+
+```r
+# load dependencies
+library(survival)
+
+train <- simsurvdata(100)
+test <- simsurvdata(50)
+
+fit <- akritas(Surv(time, status) ~ ., data = train)
+predict(fit, newdata = test)
+
+# Use distr6 = TRUE to return a distribution
+predict_distr <- predict(fit, newdata = test, distr6 = TRUE)
+predict_distr$survival(100)
+
+# Return a relative risk ranking with type = "risk"
+predict(fit, newdata = test, type = "risk")
+
+Or both survival probabilities and a rank
+predict(fit, newdata = test, type = "all", distr6 = TRUE)
+```
+
 ## Python Models
 
 `survivalmodels` implements models from Python using

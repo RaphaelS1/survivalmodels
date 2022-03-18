@@ -40,7 +40,7 @@ test_that("cpp", {
   expect_length(p, 2)
   expect_is(p$surv, "matrix")
   p <- predict(fit, rats, type = "all", distr6 = TRUE)
-  expect_is(p$surv, "VectorDistribution")
+  expect_is(p$surv, "Matdist")
   expect_silent(predict(fit, rats, times = 100))
 })
 
