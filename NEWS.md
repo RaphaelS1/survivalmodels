@@ -1,3 +1,8 @@
+# survivalmodels 0.1.12.9000
+
+* Added examples to readme
+* Fixes for distr6 1.6.8
+
 # survivalmodels 0.1.12
 
 * Exported `surv_to_risk` for reducing survival matrix distributions to relative risks / rankings
