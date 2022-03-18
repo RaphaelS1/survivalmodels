@@ -115,14 +115,14 @@ time so higher rank implies higher risk of event, or both (<code>"all"</code>).<
 <dt>distr6</dt>
 <dd><p><code>(logical(1))</code><br>
 If <code>FALSE</code> (default) and <code>type</code> is <code>"survival"</code> or <code>"all"</code> returns matrix of survival
-probabilities, otherwise returns a <code><a href="https://alan-turing-institute.github.io/distr6/reference/VectorDistribution.html" class="external-link">distr6::VectorDistribution()</a></code>.</p></dd>
+probabilities, otherwise returns a <code>distr6::Matdist()</code>.</p></dd>
 <dt>...</dt>
 <dd><p><code>ANY</code> <br>
 Currently ignored.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>numeric</code> if <code>type = "risk"</code>, a <code><a href="https://alan-turing-institute.github.io/distr6/reference/VectorDistribution.html" class="external-link">distr6::VectorDistribution()</a></code> (if <code>distr6 = TRUE</code>)
+    <p>A <code>numeric</code> if <code>type = "risk"</code>, a <code>distr6::Matdist()</code> (if <code>distr6 = TRUE</code>)
 and <code>type = "survival"</code>; a <code>matrix</code> if (<code>distr6 = FALSE</code>) and <code>type = "survival"</code> where
 entries are survival probabilities with rows of observations and columns are time-points;
 or a list combining above if <code>type = "all"</code>.</p>
