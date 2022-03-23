@@ -1,4 +1,4 @@
-# survivalmodels 0.1.12.9000
+# survivalmodels 0.1.13
 
 * Added examples to readme
 * Fixes for distr6 1.6.8
