@@ -30,7 +30,7 @@ sanity_check <- function(model, pars) {
 
   print(cindex(p$risk, y))
   expect_true(cindex(p$risk, y) >= 0.4)
-  expect_equal(length(p$risk), nrow(p$surv$modelTable))
+  expect_equal(length(p$risk), nrow(distr6::gprm(p$surv, "cdf")))
 
   p <- predict(fit, newdata = test, type = "all", distr6 = FALSE)
   expect_equal(length(p$risk), nrow(p$surv))
