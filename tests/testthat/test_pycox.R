@@ -62,7 +62,7 @@ test_that("predict distr6", {
   p <- predict(fit, type = "all", distr6 = TRUE)
   expect_is(p, "list")
   expect_is(p$surv, "Matdist")
-  expect_equal(p$surv$properties$support$power, 50)
+  expect_equal(nrow(distr6::gprm(p$surv, "cdf")), 50)
   p <- predict(fit, type = "survival")
   expect_is(p, "matrix")
 })
