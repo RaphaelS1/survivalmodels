@@ -313,12 +313,12 @@ get_pycox_activation <- function(activation = "relu", construct = TRUE,
       softmax = act$Softmax,
       softmax2d = act$Softmax2d,
       softmin = act$Softmin,
-      softplus = act$Softplus(beta, threshold),
-      softshrink = act$Softshrink(lambd),
-      softsign = act$Softsign(),
-      tanh = act$Tanh(),
-      tanhshrink = act$Tanhshrink(),
-      threshold = act$Threshold(threshold, value)
+      softplus = act$Softplus,
+      softshrink = act$Softshrink,
+      softsign = act$Softsign,
+      tanh = act$Tanh,
+      tanhshrink = act$Tanhshrink,
+      threshold = act$Threshold
     )
   }
 }
