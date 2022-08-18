@@ -1,35 +1,33 @@
 skip_on_os("windows")
 skip_if_not_installed("keras")
 
-print(class(get_keras_optimizer("adam")))
-
 test_that("inherits(get_keras_optimizer", {
   expect_true(inherits(
     get_keras_optimizer("adadelta"),
-    "keras.optimizer_v2.adadelta.Adadelta"
+    "keras.optimizers.optimizer_v2.adadelta.Adadelta"
   ))
   expect_true(inherits(
     get_keras_optimizer("adagrad"),
-    "keras.optimizer_v2.adagrad.Adagrad"
+    "keras.optimizers.optimizer_v2.adagrad.Adagrad"
   ))
   expect_true(inherits(
     get_keras_optimizer("adamax"),
-    "keras.optimizer_v2.adamax.Adamax"
+    "keras.optimizers.optimizer_v2.adamax.Adamax"
   ))
   expect_true(inherits(
     get_keras_optimizer("adam"),
-    "keras.optimizer_v2.adam.Adam"
+    "keras.optimizers.optimizer_v2.adam.Adam"
   ))
   expect_true(inherits(
     get_keras_optimizer("nadam"),
-    "keras.optimizer_v2.nadam.Nadam"
+    "keras.optimizers.optimizer_v2.nadam.Nadam"
   ))
   expect_true(inherits(
     get_keras_optimizer("rmsprop"),
-    "keras.optimizer_v2.rmsprop.RMSprop"
+    "keras.optimizers.optimizer_v2.rmsprop.RMSprop"
   ))
   expect_true(inherits(
     get_keras_optimizer("sgd"),
-    "keras.optimizer_v2.gradient_descent.SGD"
+    "keras.optimizers.optimizer_v2.gradient_descent.SGD"
   ))
 })
