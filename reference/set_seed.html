@@ -19,7 +19,7 @@ Therefore this function simplifies the process into one funciton."><!-- mathjax 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.14</span>
       </span>
     </div>
 
@@ -67,18 +67,23 @@ Therefore this function simplifies the process into one funciton.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">set_seed</span><span class="op">(</span><span class="va">seed_R</span>, seed_np <span class="op">=</span> <span class="va">seed_R</span>, seed_torch <span class="op">=</span> <span class="va">seed_R</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">set_seed</span><span class="op">(</span><span class="va">seed_R</span>, seed_np <span class="op">=</span> <span class="va">seed_R</span>, seed_torch <span class="op">=</span> <span class="va">seed_R</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>seed_R</dt>
 <dd><p>(<code>integer(1)</code>) <br><code>seed</code> passed to <a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a>.</p></dd>
+
+
 <dt>seed_np</dt>
 <dd><p>(<code>integer(1)</code>) <br><code>seed</code> passed to <code>numpy$random$seed</code>. Default is same as <code>seed_R</code>.</p></dd>
+
+
 <dt>seed_torch</dt>
 <dd><p>(<code>integer(1)</code>) <br><code>seed</code> passed to <code>numpy$random$seed</code>.
 Default is same as <code>seed_R</code>.</p></dd>
+
 </dl></div>
 
   </div>
@@ -93,7 +98,7 @@ Default is same as <code>seed_R</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

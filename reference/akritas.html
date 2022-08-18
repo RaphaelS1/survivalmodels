@@ -19,7 +19,7 @@ which do not assume that censoring is independent of the covariates."><!-- mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.14</span>
       </span>
     </div>
 
@@ -67,16 +67,16 @@ which do not assume that censoring is independent of the covariates.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">akritas</span><span class="op">(</span>
-  formula <span class="op">=</span> <span class="cn">NULL</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  reverse <span class="op">=</span> <span class="cn">FALSE</span>,
-  time_variable <span class="op">=</span> <span class="st">"time"</span>,
-  status_variable <span class="op">=</span> <span class="st">"status"</span>,
-  x <span class="op">=</span> <span class="cn">NULL</span>,
-  y <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">akritas</span><span class="op">(</span></span>
+<span>  formula <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reverse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  time_variable <span class="op">=</span> <span class="st">"time"</span>,</span>
+<span>  status_variable <span class="op">=</span> <span class="st">"status"</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,36 +85,53 @@ which do not assume that censoring is independent of the covariates.</p>
 <dd><p><code>(formula(1))</code><br>
 Object specifying the model fit, left-hand-side of formula should describe a <code><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">survival::Surv()</a></code>
 object.</p></dd>
+
+
 <dt>data</dt>
 <dd><p><code>(data.frame(1))</code><br>
 Training data of <code>data.frame</code> like object, internally is coerced with <code><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">stats::model.matrix()</a></code>.</p></dd>
+
+
 <dt>reverse</dt>
 <dd><p><code>(logical(1))</code><br>
 If <code>TRUE</code> fits estimator on censoring distribution, otherwise (default) survival distribution.</p></dd>
+
+
 <dt>time_variable</dt>
 <dd><p><code>(character(1))</code><br>
 Alternative method to call the function. Name of the 'time' variable, required if <code>formula</code>.
 or <code>x</code> and <code>Y</code> not given.</p></dd>
+
+
 <dt>status_variable</dt>
 <dd><p><code>(character(1))</code><br>
 Alternative method to call the function. Name of the 'status' variable, required if <code>formula</code>
 or <code>x</code> and <code>Y</code> not given.</p></dd>
+
+
 <dt>x</dt>
 <dd><p><code>(data.frame(1))</code><br>
 Alternative method to call the function. Required if <code>formula, time_variable</code> and
 <code>status_variable</code> not given. Data frame like object of features which is internally
 coerced with <code>model.matrix</code>.</p></dd>
+
+
 <dt>y</dt>
 <dd><p><code>([survival::Surv()])</code><br>
 Alternative method to call the function. Required if <code>formula, time_variable</code> and
 <code>status_variable</code> not given. Survival outcome of right-censored observations.</p></dd>
+
+
 <dt>...</dt>
 <dd><p><code>ANY</code> <br>
 Additional arguments, currently unused.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object inheriting from class <code>akritas</code>.</p>
+    
+
+<p>An object inheriting from class <code>akritas</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -127,15 +144,15 @@ and applying this to the new data.</p>
     <p>Akritas, M. G. (1994).
 Nearest Neighbor Estimation of a Bivariate Distribution Under Random Censoring.
 Ann. Statist., 22(3), 1299–1327.
-doi: <a href="https://doi.org/10.1214/aos/1176325630" class="external-link">10.1214/aos/1176325630</a></p>
+<a href="https://doi.org/10.1214/aos/1176325630" class="external-link">doi:10.1214/aos/1176325630</a></p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="requireNamespaces.html">requireNamespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"distr6"</span>,  <span class="st">"survival"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival" class="external-link">survival</a></span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">akritas</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">rats</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="requireNamespaces.html">requireNamespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"distr6"</span>,  <span class="st">"survival"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival" class="external-link">survival</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">akritas</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">rats</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Akritas Estimator </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -160,7 +177,7 @@ doi: <a href="https://doi.org/10.1214/aos/1176325630" class="external-link">10.1
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -18,7 +18,7 @@ and predictions of a discrete hazard function, also known as Nnet-Survival."><!-
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.14</span>
       </span>
     </div>
 
@@ -65,36 +65,36 @@ and predictions of a discrete hazard function, also known as Nnet-Survival.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">loghaz</span><span class="op">(</span>
-  formula <span class="op">=</span> <span class="cn">NULL</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  reverse <span class="op">=</span> <span class="cn">FALSE</span>,
-  time_variable <span class="op">=</span> <span class="st">"time"</span>,
-  status_variable <span class="op">=</span> <span class="st">"status"</span>,
-  x <span class="op">=</span> <span class="cn">NULL</span>,
-  y <span class="op">=</span> <span class="cn">NULL</span>,
-  frac <span class="op">=</span> <span class="fl">0</span>,
-  cuts <span class="op">=</span> <span class="fl">10</span>,
-  cutpoints <span class="op">=</span> <span class="cn">NULL</span>,
-  scheme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"equidistant"</span>, <span class="st">"quantiles"</span><span class="op">)</span>,
-  cut_min <span class="op">=</span> <span class="fl">0</span>,
-  activation <span class="op">=</span> <span class="st">"relu"</span>,
-  custom_net <span class="op">=</span> <span class="cn">NULL</span>,
-  num_nodes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">32L</span>, <span class="fl">32L</span><span class="op">)</span>,
-  batch_norm <span class="op">=</span> <span class="cn">TRUE</span>,
-  dropout <span class="op">=</span> <span class="cn">NULL</span>,
-  device <span class="op">=</span> <span class="cn">NULL</span>,
-  early_stopping <span class="op">=</span> <span class="cn">FALSE</span>,
-  best_weights <span class="op">=</span> <span class="cn">FALSE</span>,
-  min_delta <span class="op">=</span> <span class="fl">0</span>,
-  patience <span class="op">=</span> <span class="fl">10L</span>,
-  batch_size <span class="op">=</span> <span class="fl">256L</span>,
-  epochs <span class="op">=</span> <span class="fl">1L</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>,
-  num_workers <span class="op">=</span> <span class="fl">0L</span>,
-  shuffle <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">loghaz</span><span class="op">(</span></span>
+<span>  formula <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reverse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  time_variable <span class="op">=</span> <span class="st">"time"</span>,</span>
+<span>  status_variable <span class="op">=</span> <span class="st">"status"</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  frac <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  cuts <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  cutpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  scheme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"equidistant"</span>, <span class="st">"quantiles"</span><span class="op">)</span>,</span>
+<span>  cut_min <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  activation <span class="op">=</span> <span class="st">"relu"</span>,</span>
+<span>  custom_net <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  num_nodes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">32L</span>, <span class="fl">32L</span><span class="op">)</span>,</span>
+<span>  batch_norm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  dropout <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  device <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  early_stopping <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  best_weights <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  min_delta <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  patience <span class="op">=</span> <span class="fl">10L</span>,</span>
+<span>  batch_size <span class="op">=</span> <span class="fl">256L</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  num_workers <span class="op">=</span> <span class="fl">0L</span>,</span>
+<span>  shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -103,90 +103,139 @@ and predictions of a discrete hazard function, also known as Nnet-Survival.</p>
 <dd><p><code>(formula(1))</code><br>
 Object specifying the model fit, left-hand-side of formula should describe a <code><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">survival::Surv()</a></code>
 object.</p></dd>
+
+
 <dt>data</dt>
 <dd><p><code>(data.frame(1))</code><br>
 Training data of <code>data.frame</code> like object, internally is coerced with <code><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">stats::model.matrix()</a></code>.</p></dd>
+
+
 <dt>reverse</dt>
 <dd><p><code>(logical(1))</code><br>
 If <code>TRUE</code> fits estimator on censoring distribution, otherwise (default) survival distribution.</p></dd>
+
+
 <dt>time_variable</dt>
 <dd><p><code>(character(1))</code><br>
 Alternative method to call the function. Name of the 'time' variable, required if <code>formula</code>.
 or <code>x</code> and <code>Y</code> not given.</p></dd>
+
+
 <dt>status_variable</dt>
 <dd><p><code>(character(1))</code><br>
 Alternative method to call the function. Name of the 'status' variable, required if <code>formula</code>
 or <code>x</code> and <code>Y</code> not given.</p></dd>
+
+
 <dt>x</dt>
 <dd><p><code>(data.frame(1))</code><br>
 Alternative method to call the function. Required if <code>formula, time_variable</code> and
 <code>status_variable</code> not given. Data frame like object of features which is internally
 coerced with <code>model.matrix</code>.</p></dd>
+
+
 <dt>y</dt>
 <dd><p><code>([survival::Surv()])</code><br>
 Alternative method to call the function. Required if <code>formula, time_variable</code> and
 <code>status_variable</code> not given. Survival outcome of right-censored observations.</p></dd>
+
+
 <dt>frac</dt>
 <dd><p><code>(numeric(1))</code> <br>
 Fraction of data to use for validation dataset, default is <code>0</code> and therefore no separate
 validation dataset.</p></dd>
+
+
 <dt>cuts</dt>
 <dd><p><code>(integer(1))</code><br>
 If <code>discretise</code> is <code>TRUE</code> then determines number of cut-points for discretisation.</p></dd>
+
+
 <dt>cutpoints</dt>
 <dd><p><code>(numeric())</code> <br>
 Alternative to <code>cuts</code> if <code>discretise</code> is true, provide exact cutpoints for discretisation.
 <code>cuts</code> is ignored if <code>cutpoints</code> is non-NULL.</p></dd>
+
+
 <dt>scheme</dt>
 <dd><p><code>(character(1))</code><br>
 Method of discretisation, either <code>"equidistant"</code> (default) or <code>"quantiles"</code>.
 See <code>reticulate::py_help(pycox$models$LogisticHazard$label_transform)</code> for more detail.</p></dd>
+
+
 <dt>cut_min</dt>
 <dd><p><code>(integer(1))</code><br>
 Starting duration for discretisation, see
 <code>reticulate::py_help(pycox$models$LogisticHazard$label_transform)</code> for more detail.</p></dd>
+
+
 <dt>activation</dt>
 <dd><p><code>(character(1))</code> <br>
 See <a href="get_pycox_activation.html">get_pycox_activation</a>.</p></dd>
+
+
 <dt>custom_net</dt>
 <dd><p><code>(torch.nn.modules.module.Module(1))</code><br>
 Optional custom network built with <a href="build_pytorch_net.html">build_pytorch_net</a>, otherwise default architecture used.
 Note that if building a custom network the number of output channels depends on <code>cuts</code> or
 <code>cutpoints</code>.</p></dd>
+
+
 <dt>num_nodes, batch_norm, dropout</dt>
 <dd><p><code>(integer()/logical(1)/numeric(1))</code> <br>
 See <a href="build_pytorch_net.html">build_pytorch_net</a>.</p></dd>
+
+
 <dt>device</dt>
 <dd><p><code>(integer(1)|character(1))</code><br>
 Passed to <code>pycox.models.LogisticHazard</code>, specifies device to compute models on.</p></dd>
+
+
 <dt>early_stopping, best_weights, min_delta, patience</dt>
 <dd><p><code>(logical(1)/logical(1)/numeric(1)/integer(1)</code> <br>
 See <a href="get_pycox_callbacks.html">get_pycox_callbacks</a>.</p></dd>
+
+
 <dt>batch_size</dt>
 <dd><p><code>(integer(1))</code><br>
 Passed to <code>pycox.models.LogisticHazard.fit</code>, elements in each batch.</p></dd>
+
+
 <dt>epochs</dt>
 <dd><p><code>(integer(1))</code><br>
 Passed to <code>pycox.models.LogisticHazard.fit</code>, number of epochs.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p><code>(logical(1))</code><br>
 Passed to <code>pycox.models.LogisticHazard.fit</code>, should information be displayed during
 fitting.</p></dd>
+
+
 <dt>num_workers</dt>
 <dd><p><code>(integer(1))</code><br>
 Passed to <code>pycox.models.LogisticHazard.fit</code>, number of workers used in the
 dataloader.</p></dd>
+
+
 <dt>shuffle</dt>
 <dd><p><code>(logical(1))</code><br>
 Passed to <code>pycox.models.LogisticHazard.fit</code>, should order of dataset be shuffled?</p></dd>
+
+
 <dt>...</dt>
 <dd><p><code>ANY</code> <br>
 Passed to <a href="get_pycox_optim.html">get_pycox_optim</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object inheriting from class <code>loghaz</code>.
-An object of class <code>survivalmodel</code>.</p>
+    
+
+<p>An object inheriting from class <code>loghaz</code>.</p>
+
+
+<p>An object of class <code>survivalmodel</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -205,23 +254,19 @@ https://doi.org/arXiv:1910.06724.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="requireNamespaces.html">requireNamespaces</a></span><span class="op">(</span><span class="st">"reticulate"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="co"># all defaults</span></span>
-<span class="r-in">  <span class="fu">loghaz</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="simsurvdata.html">simsurvdata</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># common parameters</span></span>
-<span class="r-in">  <span class="fu">loghaz</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="simsurvdata.html">simsurvdata</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>, frac <span class="op">=</span> <span class="fl">0.3</span>, activation <span class="op">=</span> <span class="st">"relu"</span>,</span>
-<span class="r-in">    num_nodes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4L</span>, <span class="fl">8L</span>, <span class="fl">4L</span>, <span class="fl">2L</span><span class="op">)</span>, dropout <span class="op">=</span> <span class="fl">0.1</span>, early_stopping <span class="op">=</span> <span class="cn">TRUE</span>, epochs <span class="op">=</span> <span class="fl">100L</span>,</span>
-<span class="r-in">    batch_size <span class="op">=</span> <span class="fl">32L</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="requireNamespaces.html">requireNamespaces</a></span><span class="op">(</span><span class="st">"reticulate"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># all defaults</span></span></span>
+<span class="r-in"><span>  <span class="fu">loghaz</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="simsurvdata.html">simsurvdata</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># common parameters</span></span></span>
+<span class="r-in"><span>  <span class="fu">loghaz</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="simsurvdata.html">simsurvdata</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>, frac <span class="op">=</span> <span class="fl">0.3</span>, activation <span class="op">=</span> <span class="st">"relu"</span>,</span></span>
+<span class="r-in"><span>    num_nodes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4L</span>, <span class="fl">8L</span>, <span class="fl">4L</span>, <span class="fl">2L</span><span class="op">)</span>, dropout <span class="op">=</span> <span class="fl">0.1</span>, early_stopping <span class="op">=</span> <span class="cn">TRUE</span>, epochs <span class="op">=</span> <span class="fl">100L</span>,</span></span>
+<span class="r-in"><span>    batch_size <span class="op">=</span> <span class="fl">32L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in py_module_import(module, convert = convert):</span> ModuleNotFoundError: No module named 'pycox'</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Detailed traceback:</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   File "/Users/runner/work/_temp/Library/reticulate/python/rpytools/loader.py", line 39, in _import_hook</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>     module = _import(</span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -236,7 +281,7 @@ https://doi.org/arXiv:1910.06724.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
