@@ -19,9 +19,7 @@ jobs:
       matrix:
         config:
           - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04, r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -66,14 +64,14 @@ jobs:
           pak::local_install_dev_deps(upgrade = TRUE)
           pak::pkg_install("rcmdcheck")
         shell: Rscript {0}
-        
+
       - name: Install Python
         run: |
           pak::pkg_install('rstudio/reticulate')
           reticulate::install_miniconda()
           install.packages('keras')
           keras::install_keras(extra_packages = c('IPython', 'requests', 'certifi', 'urllib3', 'tensorflow-hub', 'tabnet==0.1.4.1'))
-          reticulate::py_install(c('torch', 'pycox==0.2.2'), pip = TRUE)
+          reticulate::py_install(c('torch', 'pycox'), pip = TRUE)
         shell: Rscript {0}
 
       - name: Session info
