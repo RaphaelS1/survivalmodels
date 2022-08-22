@@ -82,8 +82,8 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
 #' The default value of `0.5` is arbitrary and should be chosen by the user.
 #' @param type (`character(1)`)\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
-#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the negative mean survival
-#' time so higher rank implies higher risk of event, or both (`"all"`).
+#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the sum of the predicted 
+#' cumulative hazard function so higher rank implies higher risk of event, or both (`"all"`).
 #' @param distr6 (`logical(1)`)\cr
 #' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
 #' probabilities, otherwise returns a [distr6::Matdist()].
