@@ -1,6 +1,6 @@
 Package: survivalmodels
 Title: Models for Survival Analysis
-Version: 0.1.14
+Version: 0.1.15
 Authors@R:
     person(given = "Raphael",
            family = "Sonabend",
@@ -22,6 +22,8 @@ Suggests:
     testthat
 LinkingTo:
     Rcpp
+Remotes:
+    alan-turing-institute/distr6
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
