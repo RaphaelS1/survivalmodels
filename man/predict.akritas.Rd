@@ -32,8 +32,8 @@ The default value of \code{0.5} is arbitrary and should be chosen by the user.}
 
 \item{type}{(\code{character(1)})\cr
 Type of predicted value. Choices are survival probabilities over all time-points in training
-data (\code{"survival"}) or a relative risk ranking (\code{"risk"}), which is the negative mean survival
-time so higher rank implies higher risk of event, or both (\code{"all"}).}
+data (\code{"survival"}) or a relative risk ranking (\code{"risk"}), which is the sum of the predicted
+cumulative hazard function so higher rank implies higher risk of event, or both (\code{"all"}).}
 
 \item{distr6}{(\code{logical(1)})\cr
 If \code{FALSE} (default) and \code{type} is \code{"survival"} or \code{"all"} returns matrix of survival
