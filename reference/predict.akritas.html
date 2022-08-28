@@ -103,8 +103,8 @@ The default value of <code>0.5</code> is arbitrary and should be chosen by the u
 <dt>type</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Type of predicted value. Choices are survival probabilities over all time-points in training
-data (<code>"survival"</code>) or a relative risk ranking (<code>"risk"</code>), which is the negative mean survival
-time so higher rank implies higher risk of event, or both (<code>"all"</code>).</p></dd>
+data (<code>"survival"</code>) or a relative risk ranking (<code>"risk"</code>), which is the sum of the predicted
+cumulative hazard function so higher rank implies higher risk of event, or both (<code>"all"</code>).</p></dd>
 
 
 <dt>distr6</dt>
