@@ -40,7 +40,7 @@ Default is \code{"adam"}.}
 
 \item{epsilon}{\code{(numeric(1))} \cr Passed to \code{adadelta}, \code{adagrad}, \code{adam}, \code{adamax}, \code{nadam}, \code{rmsprop}}
 
-\item{decay, }{clipnorm,clipvalue,global_clipnorm \code{(numeric(1))} \cr Passed to all optimizers.}
+\item{decay, clipnorm, clipvalue, global_clipnorm}{\code{(numeric(1))} \cr Passed to all optimizers.}
 
 \item{momentum}{\code{(numeric(1))} \cr Passed to \code{rmsprop} and \code{sgd}.}
 

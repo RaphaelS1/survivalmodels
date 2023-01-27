@@ -8,7 +8,7 @@ keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop
 #' @param lr `(numeric(1))` \cr Learning rate passed to all optimizers.
 #' @param epsilon `(numeric(1))` \cr Passed to `adadelta`, `adagrad`, `adam`, `adamax`, `nadam`, `rmsprop`
 #' @param beta_1,beta_2 `(numeric(1))` \cr Passed to `adamax`, `adam`, and `nadam`.
-#' @param decay, clipnorm,clipvalue,global_clipnorm `(numeric(1))` \cr Passed to all optimizers.
+#' @param decay,clipnorm,clipvalue,global_clipnorm `(numeric(1))` \cr Passed to all optimizers.
 #' @param use_ema,jit_compile `(logical(1))` \cr Passed to all optimizers.
 #' @param ema_momentum,ema_overwrite_frequency `(numeric(1))` \cr Passed to all optimizers.
 #' @param momentum `(numeric(1))` \cr Passed to `rmsprop` and `sgd`.
