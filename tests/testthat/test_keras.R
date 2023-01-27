@@ -3,7 +3,7 @@ skip_if_not_installed("keras")
 
 
 test_that("inherits(get_keras_optimizer", {
-  expect_equals(class(get_keras_optimizer("adadelta")), "")
+  expect_equal(class(get_keras_optimizer("adadelta")), "")
   expect_true(inherits(
     get_keras_optimizer("adadelta"),
     "keras.optimizers.optimizer_v2.adadelta.Adadelta"
