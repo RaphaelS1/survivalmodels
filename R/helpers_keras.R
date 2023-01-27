@@ -1,4 +1,4 @@
-keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop", "sgd")
+keras_optimizers <- c("adadelta", "adagrad", "adam", "adamax", "ftrl", "nadam", "rmsprop", "sgd")
 
 #' @title Get Keras Optimizer
 #' @description Utility function to construct optimiser from \CRANpkg{keras}, primarily for
