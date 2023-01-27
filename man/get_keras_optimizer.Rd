@@ -22,9 +22,9 @@ get_keras_optimizer(
 \item{optimizer}{\code{(character(1))} \cr Optimizer to construct, see details for those available.
 Default is \code{"adam"}.}
 
-\item{lr}{\code{(numeric(1))} \cr Passed to all optimizers except \code{adadelta} and \code{adagrad}.}
+\item{lr}{\code{(numeric(1))} \cr Learning rate passed to all optimizers.}
 
-\item{beta_1, beta_2, epsilon}{\code{(numeric(1))} \cr Passed to \code{adamax}, \code{adam}, and \code{nadam}.}
+\item{beta_1, beta_2, epsilon}{\code{(numeric(1))} \cr Passed to \code{adamax}, \code{adam}, \code{nadam}, and \code{sgd}.}
 
 \item{decay}{\code{(numeric(1))} \cr Passed to \code{adamax}, \code{adam}, and \code{sgd}.}
 

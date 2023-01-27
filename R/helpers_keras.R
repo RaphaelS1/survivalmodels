@@ -5,8 +5,8 @@ keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop
 #' internal use.
 #' @param optimizer `(character(1))` \cr Optimizer to construct, see details for those available.
 #' Default is `"adam"`.
-#' @param lr `(numeric(1))` \cr Passed to all optimizers except `adadelta` and `adagrad`.
-#' @param beta_1,beta_2,epsilon `(numeric(1))` \cr Passed to `adamax`, `adam`, and `nadam`.
+#' @param lr `(numeric(1))` \cr Learning rate passed to all optimizers.
+#' @param beta_1,beta_2,epsilon `(numeric(1))` \cr Passed to `adamax`, `adam`, `nadam`, and `sgd`.
 #' @param decay `(numeric(1))` \cr Passed to `adamax`, `adam`, and `sgd`.
 #' @param clipnorm,clipvalue `(numeric(1))` \cr Passed to `adamax`, `adam`, `nadam`, and `sgd`.
 #' @param schedule_decay `(numeric(1))` \cr Passed to `nadam`.
@@ -41,15 +41,15 @@ get_keras_optimizer <- function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, bet
   }
 
   switch(optimizer,
-    adadelta = keras::optimizer_adadelta(),
-    adagrad = keras::optimizer_adagrad(),
+    adadelta = keras::optimizer_adadelta(lr),
+    adagrad = keras::optimizer_adagrad(lr),
     adamax = keras::optimizer_adamax(lr, beta_1, beta_2, epsilon, decay, clipnorm, clipvalue),
-    adam = keras::optimizer_adam(lr, beta_1, beta_2, epsilon, decay, clipnorm, clipvalue),
+    adam = keras::optimizer_adam(lr, beta_1, beta_2, epsilon, FALSE, decay, clipnorm, clipvalue),
     nadam = keras::optimizer_nadam(
       lr, beta_1, beta_2, epsilon, schedule_decay, clipnorm,
       clipvalue),
     rmsprop = keras::optimizer_rmsprop(lr),
-    sgd = keras::optimizer_sgd(lr, momentum, decay, nesterov, clipnorm, clipvalue)
+    sgd = keras::optimizer_sgd(lr, momentum, decay, nesterov, decay, clipnorm, clipvalue)
   )
 }
 
