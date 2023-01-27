@@ -6,16 +6,28 @@
 \usage{
 get_keras_optimizer(
   optimizer = "adam",
-  lr = 0.02,
+  lr = 0.001,
   beta_1 = 0.9,
   beta_2 = 0.999,
-  epsilon = NULL,
-  decay = 0,
+  epsilon = 1e-07,
+  decay = NULL,
   clipnorm = NULL,
   clipvalue = NULL,
-  schedule_decay = 0.004,
   momentum = 0,
-  nesterov = FALSE
+  nesterov = FALSE,
+  rho = 0.95,
+  global_clipnorm = NULL,
+  use_ema = FALSE,
+  ema_momentum = 0.99,
+  ema_overwrite_frequency = NULL,
+  jit_compile = TRUE,
+  initial_accumultator_value = 0.1,
+  amsgrad = FALSE,
+  lr_power = -0.5,
+  l1_regularization_strength = 0,
+  l2_regularization_strength = 0,
+  beta = 0,
+  centered = FALSE
 )
 }
 \arguments{
@@ -24,17 +36,29 @@ Default is \code{"adam"}.}
 
 \item{lr}{\code{(numeric(1))} \cr Learning rate passed to all optimizers.}
 
-\item{beta_1, beta_2, epsilon}{\code{(numeric(1))} \cr Passed to \code{adamax}, \code{adam}, \code{nadam}, and \code{sgd}.}
+\item{beta_1, beta_2}{\code{(numeric(1))} \cr Passed to \code{adamax}, \code{adam}, and \code{nadam}.}
 
-\item{decay}{\code{(numeric(1))} \cr Passed to \code{adamax}, \code{adam}, and \code{sgd}.}
+\item{epsilon}{\code{(numeric(1))} \cr Passed to \code{adadelta}, \code{adagrad}, \code{adam}, \code{adamax}, \code{nadam}, \code{rmsprop}}
 
-\item{clipnorm, clipvalue}{\code{(numeric(1))} \cr Passed to \code{adamax}, \code{adam}, \code{nadam}, and \code{sgd}.}
+\item{decay, }{clipnorm,clipvalue,global_clipnorm \code{(numeric(1))} \cr Passed to all optimizers.}
 
-\item{schedule_decay}{\code{(numeric(1))} \cr Passed to \code{nadam}.}
-
-\item{momentum}{\code{(numeric(1))} \cr Passed to \code{sgd}.}
+\item{momentum}{\code{(numeric(1))} \cr Passed to \code{rmsprop} and \code{sgd}.}
 
 \item{nesterov}{\code{(logical(1))} \cr Passed to \code{sgd}.}
+
+\item{rho}{\code{(numeric(1))} \cr Passed to \code{adadelta} and \code{rmsprop}.}
+
+\item{use_ema, jit_compile}{\code{(logical(1))} \cr Passed to all optimizers.}
+
+\item{ema_momentum, ema_overwrite_frequency}{\code{(numeric(1))} \cr Passed to all optimizers.}
+
+\item{initial_accumultator_value}{\code{(numeric(1))} \cr Passed to \code{adagrad} and \code{ftrl}.}
+
+\item{amsgrad}{\code{(logical(1))} \cr Passed to \code{adam} and \code{sgd}.}
+
+\item{lr_power, l1_regularization_strength, l2_regularization_strength, beta}{\code{(numeric(1))} \cr Passed to \code{ftrl}.}
+
+\item{centered}{\code{(logical(1))} \cr Passed to \code{rmsprop}.}
 }
 \description{
 Utility function to construct optimiser from \CRANpkg{keras}, primarily for
@@ -45,8 +69,9 @@ Implemented optimizers are
 \itemize{
 \item \code{"adadelta"} \cr \link[keras:optimizer_adadelta]{keras::optimizer_adadelta}
 \item \code{"adagrad"} \cr \link[keras:optimizer_adagrad]{keras::optimizer_adagrad}
-\item \code{"adamax"} \cr \link[keras:optimizer_adamax]{keras::optimizer_adamax}
 \item \code{"adam"} \cr \link[keras:optimizer_adam]{keras::optimizer_adam}
+\item \code{"adamax"} \cr \link[keras:optimizer_adamax]{keras::optimizer_adamax}
+\item \code{"ftrl"} \cr \link[keras:optimizer_ftrl]{keras::optimizer_ftrl}
 \item \code{"nadam"} \cr \link[keras:optimizer_nadam]{keras::optimizer_nadam}
 \item \code{"rmsprop"} \cr \link[keras:optimizer_rmsprop]{keras::optimizer_rmsprop}
 \item \code{"sgd"} \cr \link[keras:optimizer_sgd]{keras::optimizer_sgd}
