@@ -26,6 +26,7 @@ get_keras_optimizer(
   lr_power = -0.5,
   l1_regularization_strength = 0,
   l2_regularization_strength = 0,
+  l2_shrinkage_regularization_strength = 0,
   beta = 0,
   centered = FALSE
 )
@@ -56,7 +57,7 @@ Default is \code{"adam"}.}
 
 \item{amsgrad}{\code{(logical(1))} \cr Passed to \code{adam} and \code{sgd}.}
 
-\item{lr_power, l1_regularization_strength, l2_regularization_strength, beta}{\code{(numeric(1))} \cr Passed to \code{ftrl}.}
+\item{lr_power, l1_regularization_strength, l2_regularization_strength, l2_shrinkage_regularization_strength, beta}{\code{(numeric(1))} \cr Passed to \code{ftrl}.}
 
 \item{centered}{\code{(logical(1))} \cr Passed to \code{rmsprop}.}
 }

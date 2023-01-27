@@ -16,7 +16,7 @@ keras_optimizers <- c("adadelta", "adagrad", "adam", "adamax", "ftrl", "nadam", 
 #' @param rho `(numeric(1))` \cr Passed to `adadelta` and `rmsprop`.
 #' @param initial_accumultator_value `(numeric(1))` \cr Passed to `adagrad` and `ftrl`.
 #' @param amsgrad `(logical(1))` \cr Passed to `adam` and `sgd`.
-#' @param lr_power,l1_regularization_strength,l2_regularization_strength,beta `(numeric(1))` \cr Passed to `ftrl`.
+#' @param lr_power,l1_regularization_strength,l2_regularization_strength,l2_shrinkage_regularization_strength,beta `(numeric(1))` \cr Passed to `ftrl`.
 #' @param centered `(logical(1))` \cr Passed to `rmsprop`.
 #' @details Implemented optimizers are
 #'
@@ -45,7 +45,7 @@ get_keras_optimizer <- function(optimizer = "adam", lr = 0.001, beta_1 = 0.9, be
   use_ema = FALSE, ema_momentum = 0.99, ema_overwrite_frequency = NULL,
   jit_compile = TRUE, initial_accumultator_value = 0.1, amsgrad = FALSE,
   lr_power = -0.5, l1_regularization_strength = 0, l2_regularization_strength = 0,
-  beta = 0, centered = FALSE) {
+  l2_shrinkage_regularization_strength = 0, beta = 0, centered = FALSE) {
 
   if (!requireNamespace("keras", quietly = TRUE)) {
     stop("Package 'keras' required but not installed.") # nocov
@@ -62,7 +62,8 @@ get_keras_optimizer <- function(optimizer = "adam", lr = 0.001, beta_1 = 0.9, be
     adamax = keras::optimizer_adamax(lr, beta_1, beta_2, epsilon, decay, clipnorm, clipvalue,
     global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency, jit_compile),
     ftrl = keras::optimizer_ftrl(lr, lr_power, initial_accumultator_value,
-    l1_regularization_strength, l2_regularization_strength, beta, decay,
+    l1_regularization_strength, l2_regularization_strength,
+    l2_shrinkage_regularization_strength, beta, decay,
     clipnorm, clipvalue, global_clipnorm, use_ema, ema_momentum,
     ema_overwrite_frequency, jit_compile),
     nadam = keras::optimizer_nadam(lr, beta_1, beta_2, epsilon, decay, clipnorm, clipvalue,
