@@ -1,9 +1,9 @@
 skip_on_os("windows")
 skip_if_not_installed("keras")
 
-print(class(get_keras_optimizer("adadelta")))
 
 test_that("inherits(get_keras_optimizer", {
+  expect_equals(class(get_keras_optimizer("adadelta")), "")
   expect_true(inherits(
     get_keras_optimizer("adadelta"),
     "keras.optimizers.optimizer_v2.adadelta.Adadelta"
