@@ -1,6 +1,6 @@
 Package: survivalmodels
 Title: Models for Survival Analysis
-Version: 0.1.15
+Version: 0.1.16
 Authors@R:
     person(given = "Raphael",
            family = "Sonabend",
@@ -15,7 +15,7 @@ Imports:
     Rcpp (>= 1.0.5)
 Suggests:
     distr6 (>= 1.6.6),
-    keras,
+    keras (>= 2.11.0),
     pseudo,
     reticulate,
     survival,
@@ -28,4 +28,4 @@ Remotes:
     RaphaelS1/set6
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.2

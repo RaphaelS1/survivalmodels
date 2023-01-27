@@ -1,3 +1,7 @@
+# survivalmodels 0.1.16
+
+* Upgraded DNNSurv for keras 2.11.0
+
 # survivalmodels 0.1.13
 
 * Added examples to readme

@@ -1,23 +1,30 @@
-keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop", "sgd")
+keras_optimizers <- c("adadelta", "adagrad", "adam", "adamax", "ftrl", "nadam", "rmsprop", "sgd")
 
 #' @title Get Keras Optimizer
 #' @description Utility function to construct optimiser from \CRANpkg{keras}, primarily for
 #' internal use.
 #' @param optimizer `(character(1))` \cr Optimizer to construct, see details for those available.
 #' Default is `"adam"`.
-#' @param lr `(numeric(1))` \cr Passed to all optimizers except `adadelta` and `adagrad`.
-#' @param beta_1,beta_2,epsilon `(numeric(1))` \cr Passed to `adamax`, `adam`, and `nadam`.
-#' @param decay `(numeric(1))` \cr Passed to `adamax`, `adam`, and `sgd`.
-#' @param clipnorm,clipvalue `(numeric(1))` \cr Passed to `adamax`, `adam`, `nadam`, and `sgd`.
-#' @param schedule_decay `(numeric(1))` \cr Passed to `nadam`.
-#' @param momentum `(numeric(1))` \cr Passed to `sgd`.
+#' @param lr `(numeric(1))` \cr Learning rate passed to all optimizers.
+#' @param epsilon `(numeric(1))` \cr Passed to `adadelta`, `adagrad`, `adam`, `adamax`, `nadam`, `rmsprop`
+#' @param beta_1,beta_2 `(numeric(1))` \cr Passed to `adamax`, `adam`, and `nadam`.
+#' @param decay,clipnorm,clipvalue,global_clipnorm `(numeric(1))` \cr Passed to all optimizers.
+#' @param use_ema,jit_compile `(logical(1))` \cr Passed to all optimizers.
+#' @param ema_momentum,ema_overwrite_frequency `(numeric(1))` \cr Passed to all optimizers.
+#' @param momentum `(numeric(1))` \cr Passed to `rmsprop` and `sgd`.
 #' @param nesterov `(logical(1))` \cr Passed to `sgd`.
+#' @param rho `(numeric(1))` \cr Passed to `adadelta` and `rmsprop`.
+#' @param initial_accumultator_value `(numeric(1))` \cr Passed to `adagrad` and `ftrl`.
+#' @param amsgrad `(logical(1))` \cr Passed to `adam` and `sgd`.
+#' @param lr_power,l1_regularization_strength,l2_regularization_strength,l2_shrinkage_regularization_strength,beta `(numeric(1))` \cr Passed to `ftrl`.
+#' @param centered `(logical(1))` \cr Passed to `rmsprop`.
 #' @details Implemented optimizers are
 #'
 #' * `"adadelta"` \cr [keras::optimizer_adadelta]
 #' * `"adagrad"` \cr [keras::optimizer_adagrad]
-#' * `"adamax"` \cr [keras::optimizer_adamax]
 #' * `"adam"` \cr [keras::optimizer_adam]
+#' * `"adamax"` \cr [keras::optimizer_adamax]
+#' * `"ftrl"` \cr [keras::optimizer_ftrl]
 #' * `"nadam"` \cr [keras::optimizer_nadam]
 #' * `"rmsprop"` \cr [keras::optimizer_rmsprop]
 #' * `"sgd"` \cr [keras::optimizer_sgd]
@@ -32,24 +39,40 @@ keras_optimizers <- c("adadelta", "adagrad", "adamax", "adam", "nadam", "rmsprop
 #' }
 #'
 #' @export
-get_keras_optimizer <- function(optimizer = "adam", lr = 0.02, beta_1 = 0.9, beta_2 = 0.999,
-  epsilon = NULL, decay = 0, clipnorm = NULL, clipvalue = NULL,
-  schedule_decay = 0.004, momentum = 0, nesterov = FALSE) {
+get_keras_optimizer <- function(optimizer = "adam", lr = 0.001, beta_1 = 0.9, beta_2 = 0.999,
+  epsilon = 1e-7, decay = NULL, clipnorm = NULL, clipvalue = NULL,
+  momentum = 0, nesterov = FALSE, rho = 0.95, global_clipnorm = NULL,
+  use_ema = FALSE, ema_momentum = 0.99, ema_overwrite_frequency = NULL,
+  jit_compile = TRUE, initial_accumultator_value = 0.1, amsgrad = FALSE,
+  lr_power = -0.5, l1_regularization_strength = 0, l2_regularization_strength = 0,
+  l2_shrinkage_regularization_strength = 0, beta = 0, centered = FALSE) {
 
   if (!requireNamespace("keras", quietly = TRUE)) {
     stop("Package 'keras' required but not installed.") # nocov
   }
 
   switch(optimizer,
-    adadelta = keras::optimizer_adadelta(),
-    adagrad = keras::optimizer_adagrad(),
-    adamax = keras::optimizer_adamax(lr, beta_1, beta_2, epsilon, decay, clipnorm, clipvalue),
-    adam = keras::optimizer_adam(lr, beta_1, beta_2, epsilon, decay, clipnorm, clipvalue),
-    nadam = keras::optimizer_nadam(
-      lr, beta_1, beta_2, epsilon, schedule_decay, clipnorm,
-      clipvalue),
-    rmsprop = keras::optimizer_rmsprop(lr),
-    sgd = keras::optimizer_sgd(lr, momentum, decay, nesterov, clipnorm, clipvalue)
+    adadelta = keras::optimizer_adadelta(lr, rho, epsilon, decay, clipnorm,
+    clipvalue, global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency, jit_compile),
+    adagrad = keras::optimizer_adagrad(lr, initial_accumultator_value, epsilon, decay, clipnorm,
+    clipvalue, global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency,
+    jit_compile),
+    adam = keras::optimizer_adam(lr, beta_1, beta_2, epsilon, amsgrad, decay, clipnorm, clipvalue,
+    global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency, jit_compile),
+    adamax = keras::optimizer_adamax(lr, beta_1, beta_2, epsilon, decay, clipnorm, clipvalue,
+    global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency, jit_compile),
+    ftrl = keras::optimizer_ftrl(lr, lr_power, initial_accumultator_value,
+    l1_regularization_strength, l2_regularization_strength,
+    l2_shrinkage_regularization_strength, beta, decay,
+    clipnorm, clipvalue, global_clipnorm, use_ema, ema_momentum,
+    ema_overwrite_frequency, jit_compile),
+    nadam = keras::optimizer_nadam(lr, beta_1, beta_2, epsilon, decay, clipnorm, clipvalue,
+    global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency, jit_compile),
+    rmsprop = keras::optimizer_rmsprop(lr, rho, momentum, epsilon, centered,
+    decay, clipnorm, clipvalue, global_clipnorm, use_ema, ema_momentum,
+    ema_overwrite_frequency, jit_compile),
+    sgd = keras::optimizer_sgd(lr, momentum, nesterov, amsgrad, decay, clipnorm, clipvalue,
+    global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency, jit_compile)
   )
 }
 

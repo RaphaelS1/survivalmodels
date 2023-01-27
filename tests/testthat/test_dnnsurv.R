@@ -1,4 +1,3 @@
-skip_on_os("windows")
 skip_if_not_installed("keras")
 
 test_that("silent", {
