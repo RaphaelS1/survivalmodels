@@ -18,7 +18,7 @@ internal use."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/li
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.16</span>
       </span>
     </div>
 
@@ -67,16 +67,29 @@ internal use.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_keras_optimizer</span><span class="op">(</span></span>
 <span>  optimizer <span class="op">=</span> <span class="st">"adam"</span>,</span>
-<span>  lr <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span>  lr <span class="op">=</span> <span class="fl">0.001</span>,</span>
 <span>  beta_1 <span class="op">=</span> <span class="fl">0.9</span>,</span>
 <span>  beta_2 <span class="op">=</span> <span class="fl">0.999</span>,</span>
-<span>  epsilon <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  decay <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  epsilon <span class="op">=</span> <span class="fl">1e-07</span>,</span>
+<span>  decay <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  clipnorm <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  clipvalue <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  schedule_decay <span class="op">=</span> <span class="fl">0.004</span>,</span>
 <span>  momentum <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  nesterov <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  nesterov <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rho <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  global_clipnorm <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_ema <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ema_momentum <span class="op">=</span> <span class="fl">0.99</span>,</span>
+<span>  ema_overwrite_frequency <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  jit_compile <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  initial_accumultator_value <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  amsgrad <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  lr_power <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,</span>
+<span>  l1_regularization_strength <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  l2_regularization_strength <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  l2_shrinkage_regularization_strength <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  beta <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  centered <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -88,39 +101,64 @@ Default is <code>"adam"</code>.</p></dd>
 
 
 <dt>lr</dt>
-<dd><p><code>(numeric(1))</code> <br> Passed to all optimizers except <code>adadelta</code> and <code>adagrad</code>.</p></dd>
+<dd><p><code>(numeric(1))</code> <br> Learning rate passed to all optimizers.</p></dd>
 
 
-<dt>beta_1, beta_2, epsilon</dt>
+<dt>beta_1, beta_2</dt>
 <dd><p><code>(numeric(1))</code> <br> Passed to <code>adamax</code>, <code>adam</code>, and <code>nadam</code>.</p></dd>
 
 
-<dt>decay</dt>
-<dd><p><code>(numeric(1))</code> <br> Passed to <code>adamax</code>, <code>adam</code>, and <code>sgd</code>.</p></dd>
+<dt>epsilon</dt>
+<dd><p><code>(numeric(1))</code> <br> Passed to <code>adadelta</code>, <code>adagrad</code>, <code>adam</code>, <code>adamax</code>, <code>nadam</code>, <code>rmsprop</code></p></dd>
 
 
-<dt>clipnorm, clipvalue</dt>
-<dd><p><code>(numeric(1))</code> <br> Passed to <code>adamax</code>, <code>adam</code>, <code>nadam</code>, and <code>sgd</code>.</p></dd>
-
-
-<dt>schedule_decay</dt>
-<dd><p><code>(numeric(1))</code> <br> Passed to <code>nadam</code>.</p></dd>
+<dt>decay, clipnorm, clipvalue, global_clipnorm</dt>
+<dd><p><code>(numeric(1))</code> <br> Passed to all optimizers.</p></dd>
 
 
 <dt>momentum</dt>
-<dd><p><code>(numeric(1))</code> <br> Passed to <code>sgd</code>.</p></dd>
+<dd><p><code>(numeric(1))</code> <br> Passed to <code>rmsprop</code> and <code>sgd</code>.</p></dd>
 
 
 <dt>nesterov</dt>
 <dd><p><code>(logical(1))</code> <br> Passed to <code>sgd</code>.</p></dd>
+
+
+<dt>rho</dt>
+<dd><p><code>(numeric(1))</code> <br> Passed to <code>adadelta</code> and <code>rmsprop</code>.</p></dd>
+
+
+<dt>use_ema, jit_compile</dt>
+<dd><p><code>(logical(1))</code> <br> Passed to all optimizers.</p></dd>
+
+
+<dt>ema_momentum, ema_overwrite_frequency</dt>
+<dd><p><code>(numeric(1))</code> <br> Passed to all optimizers.</p></dd>
+
+
+<dt>initial_accumultator_value</dt>
+<dd><p><code>(numeric(1))</code> <br> Passed to <code>adagrad</code> and <code>ftrl</code>.</p></dd>
+
+
+<dt>amsgrad</dt>
+<dd><p><code>(logical(1))</code> <br> Passed to <code>adam</code> and <code>sgd</code>.</p></dd>
+
+
+<dt>lr_power, l1_regularization_strength, l2_regularization_strength, l2_shrinkage_regularization_strength, beta</dt>
+<dd><p><code>(numeric(1))</code> <br> Passed to <code>ftrl</code>.</p></dd>
+
+
+<dt>centered</dt>
+<dd><p><code>(logical(1))</code> <br> Passed to <code>rmsprop</code>.</p></dd>
 
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p>Implemented optimizers are</p><ul><li><p><code>"adadelta"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_adadelta.html" class="external-link">keras::optimizer_adadelta</a></p></li>
 <li><p><code>"adagrad"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_adagrad.html" class="external-link">keras::optimizer_adagrad</a></p></li>
-<li><p><code>"adamax"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_adamax.html" class="external-link">keras::optimizer_adamax</a></p></li>
 <li><p><code>"adam"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_adam.html" class="external-link">keras::optimizer_adam</a></p></li>
+<li><p><code>"adamax"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_adamax.html" class="external-link">keras::optimizer_adamax</a></p></li>
+<li><p><code>"ftrl"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_ftrl.html" class="external-link">keras::optimizer_ftrl</a></p></li>
 <li><p><code>"nadam"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_nadam.html" class="external-link">keras::optimizer_nadam</a></p></li>
 <li><p><code>"rmsprop"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_rmsprop.html" class="external-link">keras::optimizer_rmsprop</a></p></li>
 <li><p><code>"sgd"</code> <br><a href="https://rdrr.io/pkg/keras/man/optimizer_sgd.html" class="external-link">keras::optimizer_sgd</a></p></li>
@@ -136,16 +174,16 @@ Default is <code>"adam"</code>.</p></dd>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ python              : chr "/usr/local/bin/python3"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ libpython           : chr "/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/lib/python3.10/config-3.10-darwin/libpython3.10.dylib"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ pythonhome          : chr "/usr/local/Cellar/python@3.10/3.10.6_1/Frameworks/Python.framework/Versions/3.10:/usr/local/Cellar/python@3.10/"| __truncated__</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ pythonpath          : chr "/usr/local/Cellar/python@3.10/3.10.6_1/Frameworks/Python.framework/Versions/3.10/lib/python310.zip:/usr/local/C"| __truncated__</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ prefix              : chr "/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ exec_prefix         : chr "/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ base_exec_prefix    : chr "/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ libpython           : chr "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/config-3.11-darwin/libpython3.11.dylib"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ pythonhome          : chr "/Library/Frameworks/Python.framework/Versions/3.11:/Library/Frameworks/Python.framework/Versions/3.11"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ pythonpath          : chr "/Users/runner/work/_temp/Library/reticulate/config:/Library/Frameworks/Python.framework/Versions/3.11/lib/pytho"| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ prefix              : chr "/Library/Frameworks/Python.framework/Versions/3.11"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ exec_prefix         : chr "/Library/Frameworks/Python.framework/Versions/3.11"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ base_exec_prefix    : chr "/Library/Frameworks/Python.framework/Versions/3.11"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ virtualenv          : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ virtualenv_activate : chr ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ version_string      : chr "3.10.6 (main, Aug 11 2022, 13:49:01) [Clang 13.0.0 (clang-1300.0.29.30)]"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ version             : chr "3.10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ version_string      : chr "3.11.1 (v3.11.1:a7a450f84a, Dec  6 2022, 15:24:06) [Clang 13.0.0 (clang-1300.0.29.30)]"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ version             : chr "3.11"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ architecture        : chr "64bit"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ anaconda            : logi FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ conda               : logi FALSE</span>
@@ -177,7 +215,7 @@ Default is <code>"adam"</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
