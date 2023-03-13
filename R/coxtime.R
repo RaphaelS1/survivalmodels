@@ -1,5 +1,5 @@
 #' @description Cox-Time fits a neural network based on the Cox PH with
-#'  time-varying effects.
+#'  possibly time-dependent effects.
 #'
 #' @template pycox
 #' @templateVar call Coxtime
