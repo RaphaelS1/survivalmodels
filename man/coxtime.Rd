@@ -122,7 +122,7 @@ An object of class \code{survivalmodel}.
 }
 \description{
 Cox-Time fits a neural network based on the Cox PH with
-time-varying effects.
+possibly time-dependent effects.
 }
 \details{
 Implemented from the \code{pycox} Python package via \CRANpkg{reticulate}.
