@@ -5,3 +5,7 @@ C_Akritas <- function(truth, times, unique_times, FX_train, FX_predict, lambda) 
     .Call(`_survivalmodels_C_Akritas`, truth, times, unique_times, FX_train, FX_predict, lambda)
 }
 
+C_assert_increasing_surv <- function(x) {
+    .Call(`_survivalmodels_C_assert_increasing_surv`, x)
+}
+

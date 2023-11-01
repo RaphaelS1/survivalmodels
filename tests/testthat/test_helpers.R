@@ -35,7 +35,8 @@ test_that("set_seed", {
 
 
 test_that("surv_to_risk", {
-  expect_error(surv_to_risk(2), "0 <= x <= 1")
+  expect_error(surv_to_risk(matrix(2, 1, 1, FALSE, list(NULL, 1))), "decreasing")
+  expect_error(surv_to_risk(matrix(-1, 1, 1, FALSE, list(NULL, 1))), "decreasing")
   expect_error(surv_to_risk(matrix(0.5)), "increasing numeric")
   expect_error(surv_to_risk(matrix(0.5, 1, 2, dimnames = list(NULL, 2:1))),
               "increasing numeric")
