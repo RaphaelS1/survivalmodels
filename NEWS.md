@@ -1,3 +1,7 @@
+# survivalmodels 0.1.17
+
+* Add cpp method for asserting survival matrices 
+
 # survivalmodels 0.1.16
 
 * Upgraded DNNSurv for keras 2.11.0
