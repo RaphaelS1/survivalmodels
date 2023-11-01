@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.17</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@ cumulative hazard function so higher rank implies higher risk of event, or both 
 <dt>distr6</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 If <code>FALSE</code> (default) and <code>type</code> is <code>"survival"</code> or <code>"all"</code> returns matrix of survival
-probabilities, otherwise returns a <code><a href="https://alan-turing-institute.github.io/distr6/reference/Matdist.html" class="external-link">distr6::Matdist()</a></code>.</p></dd>
+probabilities, otherwise returns a <code><a href="https://rdrr.io/pkg/distr6/man/Matdist.html" class="external-link">distr6::Matdist()</a></code>.</p></dd>
 
 
 <dt>...</dt>
@@ -122,7 +122,7 @@ Currently ignored.</p></dd>
     <h2>Value</h2>
     
 
-<p>A <code>numeric</code> if <code>type = "risk"</code>, a <code><a href="https://alan-turing-institute.github.io/distr6/reference/Matdist.html" class="external-link">distr6::Matdist()</a></code> (if <code>distr6 = TRUE</code>)
+<p>A <code>numeric</code> if <code>type = "risk"</code>, a <code><a href="https://rdrr.io/pkg/distr6/man/Matdist.html" class="external-link">distr6::Matdist()</a></code> (if <code>distr6 = TRUE</code>)
 and <code>type = "survival"</code>; a <code>matrix</code> if (<code>distr6 = FALSE</code>) and <code>type = "survival"</code> where
 entries are survival probabilities with rows of observations and columns are time-points;
 or a list combining above if <code>type = "all"</code>.</p>
@@ -169,7 +169,7 @@ Ann. Statist., 22(3), 1299–1327.
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit</span>, newdata <span class="op">=</span> <span class="va">rats</span><span class="op">[</span><span class="va">test</span>, <span class="op">]</span>, type <span class="op">=</span> <span class="st">"all"</span>, distr6 <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $surv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Matdist(10) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matdist(10x38) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $risk</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 3.011104 3.011104 3.011104 3.011104 3.011104 2.786911 2.903377 2.903377</span>
