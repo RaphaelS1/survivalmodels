@@ -1,6 +1,6 @@
 # survivalmodels 0.1.17
 
-* Add cpp method for asserting survival matrices
+* Add cpp method for asserting survival matrices 
 
 # survivalmodels 0.1.16
 
