@@ -82,7 +82,7 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
 #' The default value of `0.5` is arbitrary and should be chosen by the user.
 #' @param type (`character(1)`)\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
-#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the sum of the predicted 
+#' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the sum of the predicted
 #' cumulative hazard function so higher rank implies higher risk of event, or both (`"all"`).
 #' @param distr6 (`logical(1)`)\cr
 #' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
@@ -127,15 +127,17 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
 predict.akritas <- function(object, newdata, times = NULL,
   lambda = 0.5,
   type = c("survival", "risk", "all"),
-  distr6 = FALSE, ...) {
+  distr6 = FALSE, ntime = 150, round_time = 2, ...) {
 
   type <- match.arg(type)
   unique_times <- sort(unique(object$y[, 1, drop = FALSE]))
-  if (is.null(times)) {
-    times <- unique_times
-  } else {
-    times <- sort(unique(times))
+  if (!is.logical(round_time) || round_time) {
+    unique_times <- unique(round(unique_times, round_time))
   }
+  # using same method as in ranger
+  unique_times <- unique_times[
+    unique(round(seq.int(1, length(unique_times), length.out = ntime)))
+  ]
 
   truth <- object$y
   newdata <- clean_test_data(object, newdata)
@@ -144,16 +146,22 @@ predict.akritas <- function(object, newdata, times = NULL,
   truth <- truth[ord, ]
   fx_train <- object$FX[ord]
 
+  if (is.null(times)) {
+    predict_times <- unique_times
+  } else {
+    predict_times <- sort(unique(predict_times))
+  }
+# browser()
   surv <- C_Akritas(
     truth = truth,
-    times = times,
+    predict_times = predict_times,
     unique_times = unique_times,
     FX_train = fx_train,
     FX_predict = object$Fhat$cdf(data = newdata),
     lambda = lambda
   )
 
-  colnames(surv) <- round(times, 6)
+  colnames(surv) <- round(unique_times, 6)
   surv <- fill_na(round(surv, 4))
 
   ret <- list()

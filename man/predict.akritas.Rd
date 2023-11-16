@@ -11,6 +11,8 @@
   lambda = 0.5,
   type = c("survival", "risk", "all"),
   distr6 = FALSE,
+  ntime = 150,
+  round_time = 2,
   ...
 )
 }
