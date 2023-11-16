@@ -151,7 +151,7 @@ predict.akritas <- function(object, newdata, times = NULL,
   } else {
     predict_times <- sort(unique(predict_times))
   }
-# browser()
+
   surv <- C_Akritas(
     truth = truth,
     predict_times = predict_times,
