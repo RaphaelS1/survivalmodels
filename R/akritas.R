@@ -149,7 +149,7 @@ predict.akritas <- function(object, newdata, times = NULL,
   if (is.null(times)) {
     predict_times <- unique_times
   } else {
-    predict_times <- sort(unique(predict_times))
+    predict_times <- sort(unique(times))
   }
 
   surv <- C_Akritas(
@@ -161,7 +161,7 @@ predict.akritas <- function(object, newdata, times = NULL,
     lambda = lambda
   )
 
-  colnames(surv) <- round(unique_times, 6)
+  colnames(surv) <- round(predict_times, 6)
   surv <- fill_na(round(surv, 4))
 
   ret <- list()
