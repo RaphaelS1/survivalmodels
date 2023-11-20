@@ -60,7 +60,7 @@ fitting on training data. This is achieved by fitting the empirical CDF on the t
 and applying this to the new data.
 }
 \examples{
-if (requireNamespaces(c("distr6",  "survival"))) {
+if (requireNamespaces(c("distr6", "survival"))) {
   library(survival)
   akritas(Surv(time, status) ~ ., data = rats[1:10, ])
 }

@@ -1,6 +1,10 @@
+# survivalmodels 0.1.18
+
+* Slight speed up in Akritas model by adding parameters to control number of unique time-points
+
 # survivalmodels 0.1.17
 
-* Add cpp method for asserting survival matrices 
+* Add cpp method for asserting survival matrices
 
 # survivalmodels 0.1.16
 
