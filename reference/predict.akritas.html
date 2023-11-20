@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.18</span>
       </span>
     </div>
 
@@ -71,6 +71,8 @@
 <span>  lambda <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"survival"</span>, <span class="st">"risk"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
 <span>  distr6 <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ntime <span class="op">=</span> <span class="fl">150</span>,</span>
+<span>  round_time <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -111,6 +113,16 @@ cumulative hazard function so higher rank implies higher risk of event, or both 
 <dd><p>(<code>logical(1)</code>)<br>
 If <code>FALSE</code> (default) and <code>type</code> is <code>"survival"</code> or <code>"all"</code> returns matrix of survival
 probabilities, otherwise returns a <code><a href="https://rdrr.io/pkg/distr6/man/Matdist.html" class="external-link">distr6::Matdist()</a></code>.</p></dd>
+
+
+<dt>ntime</dt>
+<dd><p><code>(numeric(1))</code><br>
+Number of unique time-points in the training set, default is 150.</p></dd>
+
+
+<dt>round_time</dt>
+<dd><p><code>(numeric(1))</code><br>
+Number of decimal places to round time-points to, default is 2, set to <code>FALSE</code> for no rounding.</p></dd>
 
 
 <dt>...</dt>
