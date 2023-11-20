@@ -24,15 +24,15 @@
 #' @return An object inheriting from class `akritas`.
 #'
 #' @examples
-#' if (requireNamespaces(c("distr6",  "survival"))) {
+#' if (requireNamespaces(c("distr6", "survival"))) {
 #'   library(survival)
 #'   akritas(Surv(time, status) ~ ., data = rats[1:10, ])
 #' }
 #' @export
-akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
-  time_variable = "time", status_variable = "status",
-  x = NULL, y = NULL, ...) {
-
+akritas <- function(
+    formula = NULL, data = NULL, reverse = FALSE,
+    time_variable = "time", status_variable = "status",
+    x = NULL, y = NULL, ...) {
   if (!requireNamespaces("distr6")) {
     stop("Package 'distr6' required but not installed.") # nocov
   }
@@ -48,13 +48,16 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
     Fhat <- distr6::EmpiricalMV$new(data$x)
   }
 
-  return(structure(list(y = data$y, x = data$x,
-                        xnames = colnames(data$x),
-                        Fhat = Fhat,
-                        FX = Fhat$cdf(data = data$x),
-                        call = call),
-                   name = "Akritas Estimator",
-                   class = c("akritas", "survivalmodel")
+  return(structure(
+    list(
+      y = data$y, x = data$x,
+      xnames = colnames(data$x),
+      Fhat = Fhat,
+      FX = Fhat$cdf(data = data$x),
+      call = call
+    ),
+    name = "Akritas Estimator",
+    class = c("akritas", "survivalmodel")
   ))
 }
 
@@ -87,6 +90,10 @@ akritas <- function(formula = NULL, data = NULL, reverse = FALSE,
 #' @param distr6 (`logical(1)`)\cr
 #' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
 #' probabilities, otherwise returns a [distr6::Matdist()].
+#' @param ntime `(numeric(1))`\cr
+#' Number of unique time-points in the training set, default is 150.
+#' @param round_time `(numeric(1))`\cr
+#' Number of decimal places to round time-points to, default is 2, set to `FALSE` for no rounding.
 #' @param ... `ANY` \cr
 #' Currently ignored.
 #'

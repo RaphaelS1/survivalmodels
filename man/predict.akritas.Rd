@@ -41,6 +41,12 @@ cumulative hazard function so higher rank implies higher risk of event, or both 
 If \code{FALSE} (default) and \code{type} is \code{"survival"} or \code{"all"} returns matrix of survival
 probabilities, otherwise returns a \code{\link[distr6:Matdist]{distr6::Matdist()}}.}
 
+\item{ntime}{\code{(numeric(1))}\cr
+Number of unique time-points in the training set, default is 150.}
+
+\item{round_time}{\code{(numeric(1))}\cr
+Number of decimal places to round time-points to, default is 2, set to \code{FALSE} for no rounding.}
+
 \item{...}{\code{ANY} \cr
 Currently ignored.}
 }
