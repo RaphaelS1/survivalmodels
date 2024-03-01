@@ -26,12 +26,12 @@ sanity_check <- function(model, pars) {
     c(list(formula = Surv(time, status) ~ ., data = train), pars)
   )
 
-  p <- predict(fit, newdata = test, type = "all", distr6 = TRUE)
-
-
+  p <- predict(fit, newdata = test, type = "all", distr6 = TRUE,
+    return_method = "discrete")
   expect_equal(length(p$risk), nrow(distr6::gprm(p$surv, "cdf")))
 
-  p <- predict(fit, newdata = test, type = "all", distr6 = FALSE)
+  p <- predict(fit, newdata = test, type = "all", distr6 = FALSE,
+    return_method = "discrete")
   expect_equal(length(p$risk), nrow(p$surv))
 }
 
