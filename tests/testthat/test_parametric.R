@@ -18,7 +18,7 @@ test_that("silent", {
 
 test_that("auto sanity", {
   sanity_check(model = "akritas",
-               pars = list())
+              pars = list())
 })
 
 test_that("confirm lp and risk directions the same", {
