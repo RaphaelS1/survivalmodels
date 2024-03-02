@@ -59,7 +59,6 @@ absolutely continuous distribution predictions using \pkg{distr6}.
 }
 \examples{
 if (requireNamespaces(c("distr6", "survival"))) {
-  library(survival)
-  parametric(Surv(time, status) ~ ., data = rats[1:10, ])
+  parametric(Surv(time, status) ~ ., data = simsurvdata(10))
 }
 }

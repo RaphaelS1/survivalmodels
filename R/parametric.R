@@ -16,8 +16,7 @@
 #'
 #' @examples
 #' if (requireNamespaces(c("distr6", "survival"))) {
-#'   library(survival)
-#'   parametric(Surv(time, status) ~ ., data = rats[1:10, ])
+#'   parametric(Surv(time, status) ~ ., data = simsurvdata(10))
 #' }
 #' @export
 parametric <- function(
@@ -126,23 +125,28 @@ parametric <- function(
 #'
 #' @examples
 #' if (requireNamespaces(c("distr6", "survival"))) {
+#'   library(survival)
 #'
-#' library(survival)
+#'   set.seed(42)
+#'   train <- simsurvdata(50)
+#'   test <- simsurvdata(50)
+#'   fit <- parametric(Surv(time, status) ~ ., data = train)
+#'   predict(fit, newdata = test)
 #'
-#' train <- 1:10
-#' test <- 11:20
-#' fit <- parametric(Surv(time, status) ~ ., data = rats[train, ])
-#' predict(fit, newdata = rats[test, ])
+#'   # distr6 parameter ignored when returning continuous distribution
+#'   predict_distr <- predict(fit, newdata = test, distr6 = FALSE)
+#'   predict_distr$survival(3)
 #'
-#' # Use distr6 = TRUE to return a distribution
-#' predict_distr <- predict(fit, newdata = rats[test, ], distr6 = TRUE)
-#' predict_distr$survival(100)
+#' # Return a discrete distribution survival matrix
+#' predict_distr <- predict(fit, newdata = test,
+#'  return_method = "discrete", distr6 = FALSE)
+#' predict_distr[1:5, 1:5]
 #'
 #' # Return a relative risk ranking with type = "risk"
-#' predict(fit, newdata = rats[test, ], type = "risk")
+#' predict(fit, newdata = test, type = "risk")[1:5]
 #'
 #' # Or survival probabilities and a rank
-#' predict(fit, newdata = rats[test, ], type = "all", distr6 = TRUE)
+#' predict(fit, newdata = test, type = "all", distr6 = TRUE)
 #' }
 #' @export
 predict.parametric <- function(object, newdata,
