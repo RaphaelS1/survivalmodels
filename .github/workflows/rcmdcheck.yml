@@ -71,7 +71,7 @@ jobs:
           reticulate::install_miniconda()
           install.packages('keras')
           keras::install_keras(extra_packages = c('IPython', 'requests', 'certifi', 'urllib3', 'tensorflow-hub', 'tabnet==0.1.4.1'))
-          reticulate::py_install(c('torch==1.9.0', 'pycox==0.2.2'), pip = TRUE)
+          reticulate::py_install(c('torch', 'pycox', 'pandas==1.4.4'), pip = TRUE)
         shell: Rscript {0}
 
       - name: Session info
