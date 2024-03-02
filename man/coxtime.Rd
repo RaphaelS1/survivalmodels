@@ -132,10 +132,12 @@ Calls \code{pycox.models.Coxtime}.
 \donttest{
 if (requireNamespaces("reticulate")) {
   # all defaults
-  coxtime(data = simsurvdata(50))
+  set.seed(42)
+  coxtime(data = simsurvdata(75))
 
   # common parameters
-  coxtime(data = simsurvdata(50), frac = 0.3, activation = "relu",
+  set.seed(42)
+  coxtime(data = simsurvdata(75), frac = 0.3, activation = "relu",
     num_nodes = c(4L, 8L, 4L, 2L), dropout = 0.1, early_stopping = TRUE, epochs = 100L,
     batch_size = 32L)
 }

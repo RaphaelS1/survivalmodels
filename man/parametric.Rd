@@ -12,6 +12,7 @@ parametric(
   status_variable = "status",
   x = NULL,
   y = NULL,
+  eps = 1e-15,
   ...
 )
 }
