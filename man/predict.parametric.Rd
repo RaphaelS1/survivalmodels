@@ -25,9 +25,18 @@ Object of class inheriting from \code{"parametric"}.}
 Testing data of \code{data.frame} like object, internally is coerced with \code{\link[stats:model.matrix]{stats::model.matrix()}}.
 If missing then training data from fitted object is used.}
 
+\item{form}{\code{(character(1))} \cr
+The form of the predicted distribution, see \code{details} for options.}
+
 \item{times}{\code{(numeric())}\cr
 Times at which to evaluate the estimator. If \code{NULL} (default) then evaluated at all unique times
 in the training set.}
+
+\item{return_method}{(\code{character(1)}) \cr
+If \code{"continuous"} (default) then distribution returned as a continuous
+distribution using \pkg{distr6} and the \code{distr6} parameter is ignored in this case.
+Otherwise if \code{"discrete"} then distribution either returned as a matrix or discrete
+distribution depending on \code{distr6} parameter.}
 
 \item{type}{(\code{character(1)})\cr
 Type of predicted value. Choices are survival probabilities over all time-points in training
@@ -55,6 +64,16 @@ or a list combining above if \code{type = "all"}.
 }
 \description{
 Predicted values from a fitted Parametric survival model.
+}
+\details{
+The \code{form} parameter determines how the distribution is created.
+Options are:
+\itemize{
+\item Accelerated failure time (\code{"aft"}) - $h(t) = exp(-lp)h0(t/exp(lp))$
+\item Proportional Hazards (\code{"ph"}) - $h(t) = h0(t)exp(lp)$
+\item Tobit (\code{"tobit"}) - Φ((t - lp) / scale)
+\item Proportional odds (\code{"po"}) - $h(t) = /h0(t){1 + (exp(lp)-1)S0(t)}^-1$
+}
 }
 \examples{
 if (requireNamespaces(c("distr6", "survival"))) {

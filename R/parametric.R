@@ -2,11 +2,13 @@
 #' @name parametric
 #'
 #' @description
+#' Fit/predict implementation of [survival::survreg()], which can return
+#' absolutely continuous distribution predictions using \pkg{distr6}.
 #'
-#' @details
-#'
+#' @param eps `(numeric(1))` \cr
+#' Used when the fitted `scale` parameter is too small. Default `1e-15`.
 #' @param ... `ANY` \cr
-#' Additional arguments, currently unused.
+#' Additional arguments passed to [survival::survreg()].
 #'
 #' @template param_traindata
 #'
@@ -22,7 +24,6 @@ parametric <- function(
     formula = NULL, data = NULL, reverse = FALSE,
     time_variable = "time", status_variable = "status",
     x = NULL, y = NULL, eps = 1e-15, ...) {
-
   if (!requireNamespaces("distr6")) {
     stop("Package 'distr6' required but not installed.") # nocov
   }
@@ -44,21 +45,31 @@ parametric <- function(
 
   if (location < -709 &&
     fit$dist %in% c("weibull", "exponential", "loglogistic")) {
-  location <- -709
+    location <- -709
   }
 
   basedist <- switch(fit$dist,
-    "weibull" = distr6::Weibull$new(shape = 1 / scale, scale = exp(location),
-      decorators = "ExoticStatistics"),
-    "exponential" = distr6::Exponential$new(scale = exp(location),
-      decorators = "ExoticStatistics"),
-    "gaussian" = distr6::Normal$new(mean = location, sd = scale,
-      decorators = "ExoticStatistics"),
-    "lognormal" = distr6::Lognormal$new(meanlog = location, sdlog = scale,
-      decorators = "ExoticStatistics"),
-    "loglogistic" = distr6::Loglogistic$new(scale = exp(location),
+    "weibull" = distr6::Weibull$new(
+      shape = 1 / scale, scale = exp(location),
+      decorators = "ExoticStatistics"
+    ),
+    "exponential" = distr6::Exponential$new(
+      scale = exp(location),
+      decorators = "ExoticStatistics"
+    ),
+    "gaussian" = distr6::Normal$new(
+      mean = location, sd = scale,
+      decorators = "ExoticStatistics"
+    ),
+    "lognormal" = distr6::Lognormal$new(
+      meanlog = location, sdlog = scale,
+      decorators = "ExoticStatistics"
+    ),
+    "loglogistic" = distr6::Loglogistic$new(
+      scale = exp(location),
       shape = 1 / scale,
-      decorators = "ExoticStatistics")
+      decorators = "ExoticStatistics"
+    )
   )
 
   return(structure(
@@ -73,6 +84,13 @@ parametric <- function(
 #' @description Predicted values from a fitted Parametric survival model.
 #'
 #' @details
+#' The `form` parameter determines how the distribution is created.
+#' Options are:
+#'
+#' * Accelerated failure time (`"aft"`) - $h(t) = exp(-lp)h0(t/exp(lp))$
+#' * Proportional Hazards (`"ph"`) - $h(t) = h0(t)exp(lp)$
+#' * Tobit (`"tobit"`) - Φ((t - lp) / scale)
+#' * Proportional odds (`"po"`) - $h(t) = /h0(t){1 + (exp(lp)-1)S0(t)}^-1$
 #'
 #' @template return_predict
 #'
@@ -81,9 +99,16 @@ parametric <- function(
 #' @param newdata `(data.frame(1))`\cr
 #' Testing data of `data.frame` like object, internally is coerced with [stats::model.matrix()].
 #' If missing then training data from fitted object is used.
+#' @param form `(character(1))` \cr
+#' The form of the predicted distribution, see `details` for options.
 #' @param times `(numeric())`\cr
 #' Times at which to evaluate the estimator. If `NULL` (default) then evaluated at all unique times
 #' in the training set.
+#' @param return_method (`character(1)`) \cr
+#' If `"continuous"` (default) then distribution returned as a continuous
+#' distribution using \pkg{distr6} and the `distr6` parameter is ignored in this case.
+#' Otherwise if `"discrete"` then distribution either returned as a matrix or discrete
+#' distribution depending on `distr6` parameter.
 #' @param type (`character(1)`)\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
 #' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the sum of the predicted
@@ -183,12 +208,6 @@ predict.parametric <- function(object, newdata,
 
 .predict_survreg_continuous <- function(object, newdata, form, basedist,
   fit, lp) {
-
-  # checks and parameterises the chosen model form: proportional hazard (ph), accelerated failure
-  # time (aft), odds.
-  # PH: h(t) = h0(t)exp(lp)
-  # AFT: h(t) = exp(-lp)h0(t/exp(lp))
-  # PO: h(t)/h0(t) = {1 + (exp(lp)-1)S0(t)}^-1
 
   dist <- toproper(fit$dist)
 
@@ -306,9 +325,6 @@ predict.parametric <- function(object, newdata,
 .predict_survreg_discrete <- function(object, newdata, form, predict_times,
   basedist, fit, lp) {
 
-  # PH: h(t) = h0(t)exp(lp)
-  # AFT: h(t) = exp(-lp)h0(t/exp(lp))
-  # PO: h(t)/h0(t) = {1 + (exp(lp)-1)S0(t)}^-1
   if (form == "tobit") {
     fun = function(y) stats::pnorm((predict_times - y - fit$coefficients[1]) / basedist$stdev())
   } else if (form == "ph") {

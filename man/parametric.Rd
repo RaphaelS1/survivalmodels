@@ -44,14 +44,18 @@ coerced with \code{model.matrix}.}
 Alternative method to call the function. Required if \verb{formula, time_variable} and
 \code{status_variable} not given. Survival outcome of right-censored observations.}
 
+\item{eps}{\code{(numeric(1))} \cr
+Used when the fitted \code{scale} parameter is too small. Default \code{1e-15}.}
+
 \item{...}{\code{ANY} \cr
-Additional arguments, currently unused.}
+Additional arguments passed to \code{\link[survival:survreg]{survival::survreg()}}.}
 }
 \value{
 An object inheriting from class \code{parametric}.
 }
 \description{
-Fully Parametric Survival Model
+Fit/predict implementation of \code{\link[survival:survreg]{survival::survreg()}}, which can return
+absolutely continuous distribution predictions using \pkg{distr6}.
 }
 \examples{
 if (requireNamespaces(c("distr6", "survival"))) {
