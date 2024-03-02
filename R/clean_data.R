@@ -48,12 +48,14 @@ clean_train_data <- function(formula = NULL, data = NULL, time_variable = NULL,
 }
 
 clean_test_data <- function(object, newdata) {
+
   if (missing(newdata)) {
-    newdata <- object$x
-  } else {
-    newdata <- stats::model.matrix(~., newdata)[, -1, drop = FALSE]
+    newdata <- object$x[, !(colnames(object$x) %in% "(Intercept)")]
+    colnames(newdata) <- gsub("data$x", "", colnames(newdata), fixed = TRUE)
+    return(newdata)
   }
 
+  newdata <- stats::model.matrix(~., newdata)[, -1, drop = FALSE]
   old_features <- setdiff(colnames(object$x), "(Intercept)")
   # fix for passing formula as data directly
   old_features <- gsub("data$x", "", old_features, fixed = TRUE)
@@ -66,5 +68,5 @@ clean_test_data <- function(object, newdata) {
     ))
   }
 
-  return(newdata)
+  newdata
 }

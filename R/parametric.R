@@ -72,7 +72,13 @@ parametric <- function(
   )
 
   return(structure(
-    list(model = fit, basedist = basedist),
+    list(
+      model = fit,
+      basedist = basedist,
+      call = call,
+      xnames = colnames(fit$x),
+      ynames = unique(colnames(fit$y))
+    ),
     name = "Parametric survival model",
     class = c("parametric", "survivalmodel")
   ))
@@ -341,9 +347,6 @@ predict.parametric <- function(object, newdata,
       1 - (surv * (exp(-y) + (1 - exp(-y)) * surv)^-1)
     }
   }
-
-  # linear predictor defined by the fitted cofficients multiplied by the model matrix
-  # (i.e. covariates)
 
   if (length(predict_times) == 1) { # edge case
     mat <- as.matrix(vapply(lp, fun, numeric(1)), ncol = 1)
