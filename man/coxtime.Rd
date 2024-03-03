@@ -129,16 +129,13 @@ Implemented from the \code{pycox} Python package via \CRANpkg{reticulate}.
 Calls \code{pycox.models.Coxtime}.
 }
 \examples{
-\donttest{
+\dontrun{
 if (requireNamespaces("reticulate")) {
- library(survival)
   # all defaults
-  set.seed(42)
-  coxtime(data = rats[1:50, ])
+  coxtime(data = simsurvdata(50))
 
   # common parameters
-  set.seed(42)
-  coxtime(data = rats[1:50, ], frac = 0.3, activation = "relu",
+  coxtime(data = simsurvdata(50), frac = 0.3, activation = "relu",
     num_nodes = c(4L, 8L, 4L, 2L), dropout = 0.1, early_stopping = TRUE, epochs = 100L,
     batch_size = 32L)
 }
