@@ -67,7 +67,7 @@ or a list combining above if \code{type = "all"}.
 Predicted values from a fitted pycox ANN.
 }
 \examples{
-\donttest{
+\dontrun{
 if (requireNamespaces("reticulate")) {
   fit <- coxtime(data = simsurvdata(50))
 

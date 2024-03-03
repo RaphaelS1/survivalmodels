@@ -698,7 +698,7 @@ def init_weights(m):
 #' Currently ignored.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespaces("reticulate")) {
 #'   fit <- coxtime(data = simsurvdata(50))
 #'
