@@ -1,6 +1,6 @@
 Package: survivalmodels
 Title: Models for Survival Analysis
-Version: 0.1.18
+Version: 0.1.19
 Authors@R:
     person(given = "Raphael",
            family = "Sonabend",

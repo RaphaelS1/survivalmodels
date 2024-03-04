@@ -1,3 +1,8 @@
+# survivalmodels 0.1.19
+
+* Add fully parametric survival models
+* Fix broken CI
+
 # survivalmodels 0.1.18
 
 * Slight speed up in Akritas model by adding parameters to control number of unique time-points
