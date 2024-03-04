@@ -32,7 +32,7 @@ parametric <- function(
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
 
-  fit <- survreg(Surv(data$y) ~ data$x, x = TRUE, ...)
+  fit <- survival::survreg(Surv(data$y) ~ data$x, x = TRUE, ...)
 
   location <- as.numeric(fit$coefficients[1])
   scale <- fit$scale

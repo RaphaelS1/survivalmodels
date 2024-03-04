@@ -16,8 +16,10 @@ Imports:
 Suggests:
     distr6 (>= 1.6.6),
     keras (>= 2.11.0),
+    param6,
     pseudo,
     reticulate,
+    set6,
     survival,
     testthat
 LinkingTo:

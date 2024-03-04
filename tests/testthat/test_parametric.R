@@ -20,7 +20,7 @@ test_that("silent", {
 })
 
 test_that("auto sanity", {
-  sanity_check(model = "akritas",
+  sanity_check(model = "parametric",
               pars = list())
 })
 
