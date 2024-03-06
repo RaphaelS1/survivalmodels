@@ -1,12 +1,16 @@
 Package: survivalmodels
 Title: Models for Survival Analysis
 Version: 0.1.19
-Authors@R:
-    person(given = "Raphael",
+Authors@R: 
+    c(person(given = "Raphael",
            family = "Sonabend",
-           role = c("aut", "cre"),
-           email = "raphaelsonabend@gmail.com",
-           comment = c(ORCID = "0000-0001-9225-4654"))
+           role = c("aut"),
+           comment = c(ORCID = "0000-0001-9225-4654")),
+      person(given = "Yohann",
+           family = "Foucher",
+           role = c("cre"),
+           email = "yohann.foucher@univ-poitiers.fr",
+           comment = c(ORCID = "0000-0003-0330-7457")))
 Description: Implementations of classical and machine learning models for survival analysis, including deep neural networks via 'keras' and 'tensorflow'. Each model includes a separated fit and predict interface with consistent prediction types for predicting risk, survival probabilities, or survival distributions with 'distr6' <https://CRAN.R-project.org/package=distr6>. Models are either implemented from 'Python' via 'reticulate' <https://CRAN.R-project.org/package=reticulate>, from code in GitHub packages, or novel implementations using 'Rcpp' <https://CRAN.R-project.org/package=Rcpp>. Novel machine learning survival models wil be included in the package in near-future updates. Neural networks are implemented from the 'Python' package 'pycox' <https://github.com/havakv/pycox> and are detailed by Kvamme et al. (2019) <https://jmlr.org/papers/v20/18-424.html>. The 'Akritas' estimator is defined in Akritas (1994) <doi:10.1214/aos/1176325630>. 'DNNSurv' is defined in Zhao and Feng (2020) <arXiv:1908.02337>.
 License: MIT + file LICENSE
 URL: https://github.com/RaphaelS1/survivalmodels/
