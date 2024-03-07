@@ -93,11 +93,18 @@ parametric <- function(
 #' The `form` parameter determines how the distribution is created.
 #' Options are:
 #'
-#' - Accelerated failure time (`"aft"`) \deqn{h(t) = h_0(t/exp(lp)) \times exp(-lp)}
-#' - Proportional Hazards (`"ph"`) \deqn{h(t) = h_0(t) \times exp(lp)}
-#' - Tobit (`"tobit"`) \deqn{h(t) = \Phi((t - lp) / scale)}
-#' - Proportional odds (`"po"`) \deqn{h(t) = /h_0(t){1 + (exp(lp)-1)S_0(t)}^-1}
+#' - Accelerated failure time (`"aft"`) \deqn{h(t) = h_0(\frac{t}{exp(lp)})exp(-lp)}
+#' - Proportional Hazards (`"ph"`) \deqn{h(t) = h_0(t)exp(lp)}
+#' - Tobit (`"tobit"`) \deqn{h(t) = \Phi(\frac{t - lp}{scale})}
+#' - Proportional odds (`"po"`) \deqn{h(t) = \frac{h_0(t)}{1 + (exp(lp)-1)S_0(t)}}
 #'
+#' where \eqn{h_0,S_0} are the estimated baseline hazard and survival functions
+#' (in this case with a given parametric form), \eqn{lp} is the predicted linear
+#' predictor calculated using the formula \eqn{lp = \hat{\beta} X_{new}} where
+#' \eqn{X_{new}} are the variables in the test data set and \eqn{\hat{\beta}}
+#' are the coefficients from the fitted parametric survival model (`object`).
+#' \eqn{\Phi} is the cdf of a N(0, 1) distribution, and \eqn{scale} is the
+#' fitted scale parameter.
 #' @template return_predict
 #'
 #' @param object (`parametric(1)`)\cr

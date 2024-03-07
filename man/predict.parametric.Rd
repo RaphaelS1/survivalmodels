@@ -69,11 +69,19 @@ Predicted values from a fitted Parametric survival model.
 The \code{form} parameter determines how the distribution is created.
 Options are:
 \itemize{
-\item Accelerated failure time (\code{"aft"}) \deqn{h(t) = h_0(t/exp(lp)) \times exp(-lp)}
-\item Proportional Hazards (\code{"ph"}) \deqn{h(t) = h_0(t) \times exp(lp)}
-\item Tobit (\code{"tobit"}) \deqn{h(t) = \Phi((t - lp) / scale)}
-\item Proportional odds (\code{"po"}) \deqn{h(t) = /h_0(t){1 + (exp(lp)-1)S_0(t)}^-1}
+\item Accelerated failure time (\code{"aft"}) \deqn{h(t) = h_0(\frac{t}{exp(lp)})exp(-lp)}
+\item Proportional Hazards (\code{"ph"}) \deqn{h(t) = h_0(t)exp(lp)}
+\item Tobit (\code{"tobit"}) \deqn{h(t) = \Phi(\frac{t - lp}{scale})}
+\item Proportional odds (\code{"po"}) \deqn{h(t) = \frac{h_0(t)}{1 + (exp(lp)-1)S_0(t)}}
 }
+
+where \eqn{h_0,S_0} are the estimated baseline hazard and survival functions
+(in this case with a given parametric form), \eqn{lp} is the predicted linear
+predictor calculated using the formula \eqn{lp = \hat{\beta} X_{new}} where
+\eqn{X_{new}} are the variables in the test data set and \eqn{\hat{\beta}}
+are the coefficients from the fitted parametric survival model (\code{object}).
+\eqn{\Phi} is the cdf of a N(0, 1) distribution, and \eqn{scale} is the
+fitted scale parameter.
 }
 \examples{
 if (requireNamespaces(c("distr6", "survival"))) {
