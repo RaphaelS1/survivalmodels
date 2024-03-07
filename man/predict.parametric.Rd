@@ -69,10 +69,10 @@ Predicted values from a fitted Parametric survival model.
 The \code{form} parameter determines how the distribution is created.
 Options are:
 \itemize{
-\item Accelerated failure time (\code{"aft"}) - $h(t) = exp(-lp)h0(t/exp(lp))$
-\item Proportional Hazards (\code{"ph"}) - $h(t) = h0(t)exp(lp)$
-\item Tobit (\code{"tobit"}) - Φ((t - lp) / scale)
-\item Proportional odds (\code{"po"}) - $h(t) = /h0(t){1 + (exp(lp)-1)S0(t)}^-1$
+\item Accelerated failure time (\code{"aft"}) \deqn{h(t) = h_0(t/exp(lp)) \times exp(-lp)}
+\item Proportional Hazards (\code{"ph"}) \deqn{h(t) = h_0(t) \times exp(lp)}
+\item Tobit (\code{"tobit"}) \deqn{h(t) = \Phi((t - lp) / scale)}
+\item Proportional odds (\code{"po"}) \deqn{h(t) = /h_0(t){1 + (exp(lp)-1)S_0(t)}^-1}
 }
 }
 \examples{
@@ -89,15 +89,15 @@ if (requireNamespaces(c("distr6", "survival"))) {
   predict_distr <- predict(fit, newdata = test, distr6 = FALSE)
   predict_distr$survival(3)
 
-# Return a discrete distribution survival matrix
-predict_distr <- predict(fit, newdata = test,
- return_method = "discrete", distr6 = FALSE)
-predict_distr[1:5, 1:5]
+  # Return a discrete distribution survival matrix
+  predict_distr <- predict(fit, newdata = test,
+    return_method = "discrete", distr6 = FALSE)
+  predict_distr[1:5, 1:5]
 
-# Return a relative risk ranking with type = "risk"
-predict(fit, newdata = test, type = "risk")[1:5]
+  # Return a relative risk ranking with type = "risk"
+  predict(fit, newdata = test, type = "risk")[1:5]
 
-# Or survival probabilities and a rank
-predict(fit, newdata = test, type = "all", distr6 = TRUE)
+  # Or survival probabilities and a rank
+  predict(fit, newdata = test, type = "all", distr6 = TRUE)
 }
 }

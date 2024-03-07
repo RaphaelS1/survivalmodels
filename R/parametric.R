@@ -93,10 +93,10 @@ parametric <- function(
 #' The `form` parameter determines how the distribution is created.
 #' Options are:
 #'
-#' * Accelerated failure time (`"aft"`) - $h(t) = exp(-lp)h0(t/exp(lp))$
-#' * Proportional Hazards (`"ph"`) - $h(t) = h0(t)exp(lp)$
-#' * Tobit (`"tobit"`) - Φ((t - lp) / scale)
-#' * Proportional odds (`"po"`) - $h(t) = /h0(t){1 + (exp(lp)-1)S0(t)}^-1$
+#' - Accelerated failure time (`"aft"`) \deqn{h(t) = h_0(t/exp(lp)) \times exp(-lp)}
+#' - Proportional Hazards (`"ph"`) \deqn{h(t) = h_0(t) \times exp(lp)}
+#' - Tobit (`"tobit"`) \deqn{h(t) = \Phi((t - lp) / scale)}
+#' - Proportional odds (`"po"`) \deqn{h(t) = /h_0(t){1 + (exp(lp)-1)S_0(t)}^-1}
 #'
 #' @template return_predict
 #'
@@ -144,16 +144,16 @@ parametric <- function(
 #'   predict_distr <- predict(fit, newdata = test, distr6 = FALSE)
 #'   predict_distr$survival(3)
 #'
-#' # Return a discrete distribution survival matrix
-#' predict_distr <- predict(fit, newdata = test,
-#'  return_method = "discrete", distr6 = FALSE)
-#' predict_distr[1:5, 1:5]
+#'   # Return a discrete distribution survival matrix
+#'   predict_distr <- predict(fit, newdata = test,
+#'     return_method = "discrete", distr6 = FALSE)
+#'   predict_distr[1:5, 1:5]
 #'
-#' # Return a relative risk ranking with type = "risk"
-#' predict(fit, newdata = test, type = "risk")[1:5]
+#'   # Return a relative risk ranking with type = "risk"
+#'   predict(fit, newdata = test, type = "risk")[1:5]
 #'
-#' # Or survival probabilities and a rank
-#' predict(fit, newdata = test, type = "all", distr6 = TRUE)
+#'   # Or survival probabilities and a rank
+#'   predict(fit, newdata = test, type = "all", distr6 = TRUE)
 #' }
 #' @export
 predict.parametric <- function(object, newdata,

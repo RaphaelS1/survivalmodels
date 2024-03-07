@@ -18,6 +18,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Raphael Sonabend \email{raphaelsonabend@gmail.com} (\href{https://orcid.org/0000-0001-9225-4654}{ORCID})
+\strong{Maintainer}: Yohann Foucher \email{yohann.foucher@univ-poitiers.fr} (\href{https://orcid.org/0000-0003-0330-7457}{ORCID})
+
+Authors:
+\itemize{
+  \item Raphael Sonabend (\href{https://orcid.org/0000-0001-9225-4654}{ORCID})
+}
 
 }
