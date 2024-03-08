@@ -6,8 +6,7 @@ test_that("silent", {
   expect_error(parametric(Surv(time, status) ~ .))
   expect_silent(parametric(Surv(time, status) ~ ., data = rats[1:10, ]))
   fit <- parametric(Surv(time, status) ~ ., data = rats[1:10, ])
-  expect_equal(predict(fit, return_method = "discrete"),
-    predict(fit, rats[1:10, ], return_method = "discrete"))
+  expect_equal(predict(fit), predict(fit, rats[1:10, ]))
   expect_error(parametric(x = "litter"), "Both 'x' and 'y'")
   expect_error(parametric(time_variable = "time"), "'time_variable'")
   expect_error(parametric(
@@ -32,10 +31,7 @@ test_that("confirm lp and risk directions the same", {
 
   for (form in form_opts) {
     fit <- parametric(Surv(time, status) ~ ., data = rats)
-    pred <- predict(fit,
-      newdata = rats, type = "all",
-      return_method = "discrete", form = form
-    )
+    pred <- predict(fit, newdata = rats, type = "all", form = form)
     expect_true(all.equal(order(surv_to_risk(pred$surv)), order(pred$risk)))
   }
 })
