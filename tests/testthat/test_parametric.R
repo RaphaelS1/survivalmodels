@@ -20,8 +20,10 @@ test_that("silent", {
 })
 
 test_that("auto sanity", {
-  sanity_check(model = "parametric",
-              pars = list())
+  sanity_check(
+    model = "parametric",
+    pars = list()
+  )
 })
 
 form_opts <- c("aft", "ph", "po", "tobit")
@@ -41,7 +43,7 @@ test_that("confirm lp and risk directions the same", {
 test_that("manualtest - aft", {
   df = simsurvdata(50)
   fit = parametric(Surv(time, status) ~ ., df, dist = "weibull")
-  p = predict(fit, df, type = "all")
+  p = predict(fit, df, type = "all", distr6 = TRUE)
 
   expect_equal(-p$risk, unname(predict(fit$model, type = "lp")))
   expect_equal(p$surv[1]$survival(predict(
@@ -53,7 +55,7 @@ test_that("manualtest - aft", {
   seq.int(0, 1, 0.1))
 
   fit = parametric(Surv(time, status) ~ ., df, dist = "lognormal")
-  p = predict(fit, df, type = "all")
+  p = predict(fit, df, type = "all", distr6 = TRUE)
 
   expect_equal(p$surv[15]$cdf(predict(
     fit$model, type = "quantile", p = seq.int(0, 1, 0.1)
@@ -64,13 +66,13 @@ test_that("quantile type", {
   df <- simsurvdata(50)
   fit <- parametric(Surv(time, status) ~ ., df)
 
-  p <- predict(fit, df, type = "all", form = "aft")
+  p <- predict(fit, df, type = "all", form = "aft", distr6 = TRUE)
   quantile <- p$surv$quantile(c(0.2, 0.8))
   expect_equal(matrix(t(quantile), ncol = 2),
     predict(fit$model, type = "quantile", p = c(0.2, 0.8)))
 
   for (form in form_opts) {
-    p <- predict(fit, df, type = "all", form = form)
+    p <- predict(fit, df, type = "all", form = form, distr6 = TRUE)
     quantile <- p$surv$quantile(0.5)
     expect_equal(unlist(p$surv$cdf(quantile), use.names = FALSE), rep(0.5, 50))
   }
@@ -86,9 +88,11 @@ test_that("quantile dist", {
     if (dist == "loglogistic") skip_if_not_installed("actuar")
     fit <- parametric(Surv(time, status) ~ ., df, dist = dist)
     form <- ifelse(dist == "gaussian", "tobit", "aft")
-    p <- predict(fit, df, form = form)$quantile(c(0.2, 0.8))
-    expect_equal(matrix(t(p), ncol = 2),
-      predict(fit$model, type = "quantile", p = c(0.2, 0.8)))
+    p <- predict(fit, df, form = form, distr6 = TRUE)$quantile(c(0.2, 0.8))
+    expect_equal(
+      matrix(t(p), ncol = 2),
+      predict(fit$model, type = "quantile", p = c(0.2, 0.8), distr6 = TRUE)
+    )
   }
 })
 
@@ -99,7 +103,7 @@ test_that("cdf dist", {
     if (dist == "loglogistic") skip_if_not_installed("actuar")
     fit <- parametric(Surv(time, status) ~ ., df, dist = dist)
     form <- ifelse(dist == "gaussian", "tobit", "aft")
-    p <- predict(fit, df, form = form)
+    p <- predict(fit, df, form = form, distr6 = TRUE)
     cdf <- predict(fit$model, type = "quantile", p = c(0.2, 0.8))
     expect_equal(unname(as.matrix(p$cdf(data = t(cdf)))),
       matrix(c(rep(0.2, 50), rep(0.8, 50)), byrow = TRUE, nrow = 2))
@@ -111,9 +115,8 @@ test_that("discrete = continuous when expected", {
   fit <- parametric(Surv(time, status) ~ ., rats)
 
   for (form in form_opts) {
-  p_cont <- predict(fit, rats, form = form, type = "all")
-  p_disc <- predict(fit, rats, form = form, type = "all",
-    return_method = "discrete")
+  p_cont <- predict(fit, rats, form = form, type = "all", distr6 = TRUE)
+  p_disc <- predict(fit, rats, form = form, type = "all")
   expect_equal(p_cont$risk, p_disc$risk)
   utimes <- sort(unique(rats$time))
   s_cont <- as.matrix(p_cont$surv$survival(utimes))

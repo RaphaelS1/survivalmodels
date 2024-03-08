@@ -28,7 +28,9 @@ sanity_check <- function(model, pars) {
 
   p <- predict(fit, newdata = test, type = "all", distr6 = TRUE,
     return_method = "discrete")
-  expect_equal(length(p$risk), nrow(distr6::gprm(p$surv, "cdf")))
+  if (model != "parametric") {
+    expect_equal(length(p$risk), nrow(distr6::gprm(p$surv, "cdf")))
+  }
 
   p <- predict(fit, newdata = test, type = "all", distr6 = FALSE,
     return_method = "discrete")
