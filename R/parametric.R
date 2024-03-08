@@ -145,15 +145,9 @@ parametric <- function(
 #'   train <- simsurvdata(50)
 #'   test <- simsurvdata(50)
 #'   fit <- parametric(Surv(time, status) ~ ., data = train)
-#'   predict(fit, newdata = test)
 #'
-#'   # distr6 parameter ignored when returning continuous distribution
+#'   # Return a discrete distribution survival matrix when distr6 = FALSE (default)
 #'   predict_distr <- predict(fit, newdata = test, distr6 = FALSE)
-#'   predict_distr$survival(3)
-#'
-#'   # Return a discrete distribution survival matrix
-#'   predict_distr <- predict(fit, newdata = test,
-#'     return_method = "discrete", distr6 = FALSE)
 #'   predict_distr[1:5, 1:5]
 #'
 #'   # Return a relative risk ranking with type = "risk"
@@ -165,11 +159,9 @@ parametric <- function(
 #' @export
 predict.parametric <- function(object, newdata,
   form = c("aft", "ph", "tobit", "po"), times = NULL,
-  return_method = c("continuous", "discrete"),
   type = c("survival", "risk", "all"), distr6 = FALSE,
   ntime = 150, round_time = 2, ...) {
 
-  return_method <- match.arg(return_method)
   form <- match.arg(form)
   type <- match.arg(type)
 
