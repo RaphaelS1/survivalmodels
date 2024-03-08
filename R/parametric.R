@@ -35,6 +35,11 @@ parametric <- function(
   fit <- survival::survreg(Surv(data$y) ~ data$x, x = TRUE, ...)
 
   location <- as.numeric(fit$coefficients[1])
+
+  if (is.na(location)) {
+    stop("Failed to fit survreg, coefficients all NA")
+  }
+
   scale <- fit$scale
 
   if (scale < eps) {
