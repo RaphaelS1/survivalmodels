@@ -110,7 +110,6 @@ parametric <- function(
 #' are the coefficients from the fitted parametric survival model (`object`).
 #' \eqn{\Phi} is the cdf of a N(0, 1) distribution, and \eqn{scale} is the
 #' fitted scale parameter.
-#' @template return_predict
 #'
 #' @param object (`parametric(1)`)\cr
 #' Object of class inheriting from `"parametric"`.
@@ -136,6 +135,11 @@ parametric <- function(
 #' @param ... `ANY` \cr
 #' Currently ignored.
 #'
+#' @return A `numeric` if `type = "risk"`, a [distr6::Distribution()]
+#' (if `distr6 = TRUE`) and `type = "survival"`; a `matrix` if
+#' (`distr6 = FALSE`) and `type = "survival"` where entries are survival
+#' probabilities with rows of observations and columns are time-points;
+#' or a list combining above if `type = "all"`.
 #'
 #' @examples
 #' if (requireNamespaces(c("distr6", "survival"))) {

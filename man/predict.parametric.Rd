@@ -50,9 +50,10 @@ Number of decimal places to round time-points to, default is 2, set to \code{FAL
 Currently ignored.}
 }
 \value{
-A \code{numeric} if \code{type = "risk"}, a \code{\link[distr6:Matdist]{distr6::Matdist()}} (if \code{distr6 = TRUE})
-and \code{type = "survival"}; a \code{matrix} if (\code{distr6 = FALSE}) and \code{type = "survival"} where
-entries are survival probabilities with rows of observations and columns are time-points;
+A \code{numeric} if \code{type = "risk"}, a \code{\link[distr6:Distribution]{distr6::Distribution()}}
+(if \code{distr6 = TRUE}) and \code{type = "survival"}; a \code{matrix} if
+(\code{distr6 = FALSE}) and \code{type = "survival"} where entries are survival
+probabilities with rows of observations and columns are time-points;
 or a list combining above if \code{type = "all"}.
 }
 \description{
