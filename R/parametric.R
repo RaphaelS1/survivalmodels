@@ -122,18 +122,13 @@ parametric <- function(
 #' @param times `(numeric())`\cr
 #' Times at which to evaluate the estimator. If `NULL` (default) then evaluated at all unique times
 #' in the training set.
-#' @param return_method (`character(1)`) \cr
-#' If `"continuous"` (default) then distribution returned as a continuous
-#' distribution using \pkg{distr6} and the `distr6` parameter is ignored in this case.
-#' Otherwise if `"discrete"` then distribution either returned as a matrix or discrete
-#' distribution depending on `distr6` parameter.
 #' @param type (`character(1)`)\cr
 #' Type of predicted value. Choices are survival probabilities over all time-points in training
 #' data (`"survival"`) or a relative risk ranking (`"risk"`), which is the sum of the predicted
 #' cumulative hazard function so higher rank implies higher risk of event, or both (`"all"`).
 #' @param distr6 (`logical(1)`)\cr
 #' If `FALSE` (default) and `type` is `"survival"` or `"all"` returns matrix of survival
-#' probabilities, otherwise returns a [distr6::Matdist()].
+#' probabilities, otherwise returns a [distr6::Distribution()].
 #' @param ntime `(numeric(1))`\cr
 #' Number of unique time-points in the training set, default is 150.
 #' @param round_time `(numeric(1))`\cr
@@ -200,12 +195,12 @@ predict.parametric <- function(object, newdata,
   fit <- object$model
   lp <- matrix(fit$coefficients[-1], nrow = 1) %*% t(newdata)
 
-  if (return_method == "discrete") {
-    surv <- .predict_survreg_discrete(object, newdata, form, predict_times,
-      basedist, fit, lp)
-  } else {
+  if (type %in% c("survival", "all") && distr6) {
     surv <- .predict_survreg_continuous(object, newdata, form,
       basedist, fit, lp)
+  } else {
+    surv <- .predict_survreg_discrete(object, newdata, form,
+      predict_times, basedist, fit, lp)
   }
 
   ret <- list()
@@ -215,11 +210,7 @@ predict.parametric <- function(object, newdata,
   }
 
   if (type %in% c("survival", "all")) {
-    if (distr6 || return_method == "continuous") {
-      ret$surv <- surv$distr
-    } else {
-      ret$surv <- 1 - distr6::gprm(surv$distr, "cdf")
-    }
+    ret$surv <- surv$distr
   }
 
   if (length(ret) == 1) {
@@ -370,6 +361,6 @@ predict.parametric <- function(object, newdata,
 
   list(
     lp = as.numeric(lp + fit$coefficients[1]),
-    distr = distr6::as.Distribution(mat, fun = "cdf")
+    distr = 1 - mat
   )
 }

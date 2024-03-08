@@ -32,12 +32,6 @@ The form of the predicted distribution, see \code{details} for options.}
 Times at which to evaluate the estimator. If \code{NULL} (default) then evaluated at all unique times
 in the training set.}
 
-\item{return_method}{(\code{character(1)}) \cr
-If \code{"continuous"} (default) then distribution returned as a continuous
-distribution using \pkg{distr6} and the \code{distr6} parameter is ignored in this case.
-Otherwise if \code{"discrete"} then distribution either returned as a matrix or discrete
-distribution depending on \code{distr6} parameter.}
-
 \item{type}{(\code{character(1)})\cr
 Type of predicted value. Choices are survival probabilities over all time-points in training
 data (\code{"survival"}) or a relative risk ranking (\code{"risk"}), which is the sum of the predicted
@@ -45,7 +39,7 @@ cumulative hazard function so higher rank implies higher risk of event, or both 
 
 \item{distr6}{(\code{logical(1)})\cr
 If \code{FALSE} (default) and \code{type} is \code{"survival"} or \code{"all"} returns matrix of survival
-probabilities, otherwise returns a \code{\link[distr6:Matdist]{distr6::Matdist()}}.}
+probabilities, otherwise returns a \code{\link[distr6:Distribution]{distr6::Distribution()}}.}
 
 \item{ntime}{\code{(numeric(1))}\cr
 Number of unique time-points in the training set, default is 150.}
