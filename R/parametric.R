@@ -31,8 +31,15 @@ parametric <- function(
   call <- match.call()
 
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
+  olddata <- data.frame(data$x, data$y)
+  # HACKY MESS
+  form <- as.formula(sprintf(
+    "survival::Surv(%s) ~ %s",
+    paste0(colnames(data$y), collapse = ","),
+    paste0(colnames(data$x), collapse = "+")
+  ))
+  fit <- survival::survreg(form, olddata, x = TRUE, ...)
 
-  fit <- survival::survreg(survival::Surv(data$y) ~ data$x, x = TRUE, ...)
 
   location <- as.numeric(fit$coefficients[1])
 
