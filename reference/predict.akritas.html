@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">survivalmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.18</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.19</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@ cumulative hazard function so higher rank implies higher risk of event, or both 
 <dt>distr6</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 If <code>FALSE</code> (default) and <code>type</code> is <code>"survival"</code> or <code>"all"</code> returns matrix of survival
-probabilities, otherwise returns a <code><a href="https://rdrr.io/pkg/distr6/man/Matdist.html" class="external-link">distr6::Matdist()</a></code>.</p></dd>
+probabilities, otherwise returns a <code><a href="https://xoopr.github.io/distr6/reference/Matdist.html" class="external-link">distr6::Matdist()</a></code>.</p></dd>
 
 
 <dt>ntime</dt>
@@ -134,7 +134,7 @@ Currently ignored.</p></dd>
     <h2>Value</h2>
     
 
-<p>A <code>numeric</code> if <code>type = "risk"</code>, a <code><a href="https://rdrr.io/pkg/distr6/man/Matdist.html" class="external-link">distr6::Matdist()</a></code> (if <code>distr6 = TRUE</code>)
+<p>A <code>numeric</code> if <code>type = "risk"</code>, a <code><a href="https://xoopr.github.io/distr6/reference/Matdist.html" class="external-link">distr6::Matdist()</a></code> (if <code>distr6 = TRUE</code>)
 and <code>type = "survival"</code>; a <code>matrix</code> if (<code>distr6 = FALSE</code>) and <code>type = "survival"</code> where
 entries are survival probabilities with rows of observations and columns are time-points;
 or a list combining above if <code>type = "all"</code>.</p>
@@ -197,7 +197,7 @@ Ann. Statist., 22(3), 1299–1327.
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Raphael Sonabend.</p>
+  <p></p><p>Developed by Raphael Sonabend, Yohann Foucher.</p>
 </div>
 
 <div class="pkgdown">

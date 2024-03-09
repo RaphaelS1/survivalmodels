@@ -73,6 +73,9 @@
     <loc>https://RaphaelS1.github.io/survivalmodels/reference/loghaz.html</loc>
   </url>
   <url>
+    <loc>https://RaphaelS1.github.io/survivalmodels/reference/parametric.html</loc>
+  </url>
+  <url>
     <loc>https://RaphaelS1.github.io/survivalmodels/reference/pchazard.html</loc>
   </url>
   <url>
@@ -80,6 +83,9 @@
   </url>
   <url>
     <loc>https://RaphaelS1.github.io/survivalmodels/reference/predict.dnnsurv.html</loc>
+  </url>
+  <url>
+    <loc>https://RaphaelS1.github.io/survivalmodels/reference/predict.parametric.html</loc>
   </url>
   <url>
     <loc>https://RaphaelS1.github.io/survivalmodels/reference/predict.pycox.html</loc>
