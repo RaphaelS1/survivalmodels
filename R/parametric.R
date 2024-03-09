@@ -146,16 +146,16 @@ parametric <- function(
 #'   library(survival)
 #'
 #'   set.seed(42)
-#'   train <- simsurvdata(50)
-#'   test <- simsurvdata(50)
+#'   train <- simsurvdata(10)
+#'   test <- simsurvdata(5)
 #'   fit <- parametric(Surv(time, status) ~ ., data = train)
 #'
-#'   # Return a discrete distribution survival matrix when distr6 = FALSE (default)
-#'   predict_distr <- predict(fit, newdata = test, distr6 = FALSE)
-#'   predict_distr[1:5, 1:5]
+#'   # Return a discrete distribution survival matrix
+#'   predict_distr <- predict(fit, newdata = test)
+#'   predict_distr
 #'
 #'   # Return a relative risk ranking with type = "risk"
-#'   predict(fit, newdata = test, type = "risk")[1:5]
+#'   predict(fit, newdata = test, type = "risk")
 #'
 #'   # Or survival probabilities and a rank
 #'   predict(fit, newdata = test, type = "all", distr6 = TRUE)
