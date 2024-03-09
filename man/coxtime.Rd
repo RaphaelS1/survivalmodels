@@ -129,7 +129,7 @@ Implemented from the \code{pycox} Python package via \CRANpkg{reticulate}.
 Calls \code{pycox.models.Coxtime}.
 }
 \examples{
-\donttest{
+\dontrun{
 if (requireNamespaces("reticulate")) {
   # all defaults
   coxtime(data = simsurvdata(50))

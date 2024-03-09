@@ -28,7 +28,7 @@
 #'
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespaces("reticulate")) {
 #'   # all defaults
 #'   coxtime(data = simsurvdata(50))

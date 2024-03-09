@@ -48,21 +48,25 @@ clean_train_data <- function(formula = NULL, data = NULL, time_variable = NULL,
 }
 
 clean_test_data <- function(object, newdata) {
+
   if (missing(newdata)) {
-    newdata <- object$x
-  } else {
-    newdata <- stats::model.matrix(~., newdata)[, -1, drop = FALSE]
+    newdata <- object$x[, !(colnames(object$x) %in% "(Intercept)")]
+    colnames(newdata) <- gsub("data$x", "", colnames(newdata), fixed = TRUE)
+    return(newdata)
   }
 
-  ord <- match(colnames(newdata), colnames(object$x), nomatch = NULL)
-  newdata <- newdata[, !is.na(ord), drop = FALSE]
+  newdata <- stats::model.matrix(~., newdata)[, -1, drop = FALSE]
+  old_features <- setdiff(colnames(object$x), "(Intercept)")
+  # fix for passing formula as data directly
+  old_features <- gsub("data$x", "", old_features, fixed = TRUE)
+  ord <- match(old_features, colnames(newdata), nomatch = NULL)
   newdata <- newdata[, ord[!is.na(ord)], drop = FALSE]
-  if (!all(suppressWarnings(colnames(newdata) == colnames(object$x)))) {
+  if (!all(suppressWarnings(colnames(newdata) == old_features))) {
     stop(sprintf(
       "Names in newdata should be identical to {%s}.",
       paste0(colnames(object$x), collapse = ", ")
     ))
   }
 
-  return(newdata)
+  newdata
 }

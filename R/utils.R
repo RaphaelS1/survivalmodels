@@ -27,3 +27,7 @@ fill_na <- function(x, along = 1) {
     .x
   }))
 }
+
+toproper <- function(str) {
+  paste0(toupper(substr(str, 1, 1)), substr(str, 2, 100))
+}
