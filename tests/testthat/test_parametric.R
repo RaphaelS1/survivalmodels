@@ -120,3 +120,12 @@ test_that("discrete = continuous when expected", {
   expect_equal(s_cont, t(p_disc$surv))
   }
 })
+
+test_that("fix formula bug", {
+  lung2 = survival::lung
+  lung2$status = lung2$status - 1
+  lung2 = lung2[-14, c("time", "status", "ph.ecog")]
+
+  fit = parametric(data = lung2, time_variable = "time", status_variable = "status")
+  expect_silent(predict(fit, newdata = lung2, form = "aft"))
+})
