@@ -29,9 +29,9 @@ Suggests:
 LinkingTo:
     Rcpp
 Remotes:
-    alan-turing-institute/distr6,
-    RaphaelS1/param6,
-    RaphaelS1/set6
+    xoopR/distr6,
+    xoopR/param6,
+    xoopR/set6
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
