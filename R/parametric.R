@@ -33,7 +33,7 @@ parametric <- function(
   data <- clean_train_data(formula, data, time_variable, status_variable, x, y, reverse)
   olddata <- data.frame(data$x, data$y)
   # HACKY MESS
-  form <- as.formula(sprintf(
+  form <- stats::as.formula(sprintf(
     "survival::Surv(%s) ~ %s",
     paste0(colnames(data$y), collapse = ","),
     paste0(colnames(data$x), collapse = "+")
