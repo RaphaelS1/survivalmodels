@@ -20,4 +20,9 @@ Useful links:
 \author{
 \strong{Maintainer}: Raphael Sonabend \email{raphaelsonabend@gmail.com} (\href{https://orcid.org/0000-0001-9225-4654}{ORCID})
 
+Authors:
+\itemize{
+  \item John Zobolas \email{bblodfon@gmail.com} (\href{https://orcid.org/0000-0002-3609-8674}{ORCID})
+}
+
 }
