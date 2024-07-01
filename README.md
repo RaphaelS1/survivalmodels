@@ -2,7 +2,6 @@ survivalmodels
 ================
 
 [![survivalmodels status badge](https://raphaels1.r-universe.dev/badges/survivalmodels)](https://raphaels1.r-universe.dev)
-[![tic](https://github.com/RaphaelS1/survivalmodels/workflows/tic/badge.svg)](https://github.com/RaphaelS1/survivalmodels/actions)
 [![CodeFactor](https://www.codefactor.io/repository/github/raphaels1/survivalmodels/badge)](https://www.codefactor.io/repository/github/raphaels1/survivalmodels)
 
 [![Repo
