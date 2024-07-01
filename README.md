@@ -16,6 +16,12 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/survivalmodels)](https:
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## Public archive
+
+I've decided to put this package into public archive, which means you can keep using it but I'm not maintaining it.
+I've made this decision as almost all issues that have been opened recently relate to problems in the pycox backend, which are outside my control.
+I am open to new maintainers taking over if they want to fix any R problems that occur, but I believe what must happen is this package needs to be re-written using R keras directly.
+
 ## What is survivalmodels?
 
 `survivalmodels` implements models for survival analysis that are either
