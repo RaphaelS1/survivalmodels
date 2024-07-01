@@ -9,10 +9,6 @@ survivalmodels
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/RaphaelS1/survivalmodels)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://github.com/RaphaelS1/survivalmodels)
 
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/survivalmodels)](https://cran.r-project.org/package=survivalmodels)
-[![codecov](https://app.codecov.io/gh/RaphaelS1/survivalmodels/branch/master/graph/badge.svg)](https://app.codecov.io/gh/RaphaelS1/survivalmodels)
-[![dependencies](https://tinyverse.netlify.com/badge/survivalmodels)](https://CRAN.R-project.org/package=survivalmodels)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
